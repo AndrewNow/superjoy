@@ -1,28 +1,18 @@
 ---
+import Landing from "../components/about/landing.astro";
+import Marquee from "../components/Marquee.astro";
 import Layout from "../layouts/PageLayout.astro";
 
 const seo = [];
 ---
 
 <Layout seo={seo}>
-  <section class="landing">
-    <div class="inner">
-      <span class="top">
-        <span>
-          <h4 id="top-text">We create</h4>
-          <h1 id="top-text">Imaginative</h1>
-        </span>
-        <span class="worlds">
-          <h1 id="top-text">worlds</h1>
-        </span>
-      </span>
-      <span class="middle">
-        <h1 id="middle-text">for disruptive</h1>
-        <h1 id="middle-text">marketing</h1>
-      </span>
-      <span class="bottom"><h1 id="middle-text">campaigns</h1></span>
-    </div>
-  </section>
+  <Landing />
+  <Marquee
+    text="our passion is CREATING IMAGINATIVE EXPERIENCES IN FORTNITE"
+    primaryColor={"var(--primary-dark)"}
+    secondaryColor={"var(--primary-light)"}
+  />
 </Layout>
 
 <script>
@@ -36,77 +26,6 @@ const seo = [];
     requestAnimationFrame(raf);
   }
   requestAnimationFrame(raf);
-
-  import { animate, stagger } from "motion";
-  const animateTopText = document.querySelectorAll("#top-text");
-  const animateMiddleText = document.querySelectorAll("#middle-text");
-  const animateBottomText = document.querySelectorAll("#bottom-text");
-
-  animate(
-    animateTopText,
-    { opacity: 1, transform: "translateY(0px)" },
-    { duration: 0.85, delay: stagger(0.41, { easing: [0.5, 0.5, 0, 1] }) }
-  ).finished.then(() => {
-    animate(
-      animateMiddleText,
-      { opacity: 1, transform: "translateY(0px)" },
-      { duration: 0.85, delay: stagger(0.1, { easing: [0.5, 0.5, 0, 1] }) }
-    );
-    // .finished.then(() => {
-    //   animate(
-    //     animateBottomText,
-    //     { opacity: 1, transform: "translateY(0px)" },
-    //     { duration: 0.85 }
-    //   );
-    // });
-  });
 </script>
 
-<style lang="scss">
-  .landing {
-    background: var(--accent-blue);
-    color: var(--primary-light);
-    h1 {
-      line-height: 100%;
-    }
-  }
-  .inner {
-    width: var(--max-width);
-    margin: 0 auto;
-    padding: 10rem 0;
-  }
-  #top-text,
-  #middle-text,
-  #bottom-text {
-    transform: translateY(150px);
-    opacity: 0;
-  }
-
-  .top {
-    overflow: hidden;
-    display: block;
-    width: 100%;
-    h4 {
-      margin: 0 2rem;
-    }
-    span {
-      display: flex;
-    }
-    span.worlds {
-      justify-content: flex-end;
-    }
-  }
-  .middle {
-    overflow: hidden;
-    display: block;
-    padding: 5rem 0;
-    width: 100%;
-  }
-  .bottom {
-    overflow: hidden;
-    display: flex;
-    justify-content: flex-end;
-    padding: 2rem 0;
-    width: 100%;
-  }
-</style>
+<style lang="scss"></style>

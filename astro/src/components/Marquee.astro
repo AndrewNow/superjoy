@@ -1,42 +1,44 @@
+---
+const { text, primaryColor, secondaryColor } = Astro.props;
+---
+
 <div class="wrapper">
   <div class="loop-container">
-    <div class="loop-container-item">
+    <div class="loop-item">
       <h5>
-        {" "}Want to chat about something other than a project?{" "}
-        {" "}Want to chat about something other than a project?{" "}
-        {" "}Want to chat about something other than a project?{" "}
+        {" "}{text}{" "}
       </h5>
     </div>
-    <div class="loop-container-item">
+    <div class="loop-item">
       <h5>
-        {" "}Want to chat about something other than a project?{" "}
-        {" "}Want to chat about something other than a project?{" "}
-        {" "}Want to chat about something other than a project?{" "}
+        {" "}{text}{" "}
       </h5>
     </div>
   </div>
 </div>
 
-<style class="scss">
+<style lang="scss" define:vars={{ primaryColor, secondaryColor }}>
   .wrapper {
-    position: relative;
     overflow: hidden;
+    position: relative;
     display: flex;
-    align-items: center;
     height: 155px;
-    background: var(--primary-dark);
-    color: var(--accent-yellow);
+    background: var(--secondaryColor);
+    color: var(--primaryColor);
   }
 
   .loop-container {
     white-space: nowrap;
   }
-  .loop-container-item {
+  .loop-item {
     position: absolute;
     top: 50%;
-    font-size: 9vw;
-    font-family: "Hamburg-Regular";
-    padding-right: 1.5rem;
+    padding-right: 2.5rem;
+
+    h5 {
+      text-transform: uppercase;
+      font-family: "Hamburg-Regular";
+    }
   }
 </style>
 
@@ -54,15 +56,24 @@
   }
   requestAnimationFrame(raf);
 
+  // if user is on mobile, disable the scroll direction effects
+  function isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  }
+
   class LoopingElement {
     constructor(element, currentTranslation, speed, lenis) {
       this.lenis = lenis;
+
       this.element = element;
       this.currentTranslation = currentTranslation;
       this.speed = speed;
+
       this.direction = true;
       this.scrollTop = 0;
-      this.metric = 100;
+      this.metric = 95;
       this.lerp = {
         current: this.currentTranslation,
         target: this.currentTranslation,
@@ -105,6 +116,7 @@
 
     goForward() {
       this.lerp.target += this.speed;
+      // if lerp target goes off the screen
       if (this.lerp.target > this.metric) {
         this.lerp.current -= this.metric * 3;
         this.lerp.target -= this.metric * 3;
@@ -120,9 +132,11 @@
     }
 
     animate() {
-      // if direction == true, go forward else go back
-      this.direction ? this.goForward() : this.goBackward();
-      this.lerpFunc(this.lerp.current, this.lerp.target, this.lerp.factor);
+      if (!isMobile()) {
+        // Check if user is not on a mobile device
+        this.direction ? this.goForward() : this.goBackward();
+        this.lerpFunc(this.lerp.current, this.lerp.target, this.lerp.factor);
+      }
       this.element.style.transform = `translate(${this.lerp.current}%, -50%)`;
     }
 
@@ -133,7 +147,7 @@
   }
 
   // ideally swap w/ something more specific & specify individually
-  let elements = document.querySelectorAll(".loop-container-item");
+  let elements = document.querySelectorAll(".loop-item");
 
   new LoopingElement(elements[0], 0, 0.05, lenis);
   new LoopingElement(elements[1], -100, 0.05, lenis);
