@@ -1,0 +1,14 @@
+---
+import Layout from "../layouts/PageLayout.astro";
+import { BaseHeadProps } from "../components/BaseHead.astro";
+import ArticleSchema from "../components/ArticleSchema.astro";
+
+const { seo } = Astro.props;
+---
+
+<Layout seo={seo}>
+  <Fragment>
+    <ArticleSchema {...seo} />
+  </Fragment>
+  <slot />
+</Layout>

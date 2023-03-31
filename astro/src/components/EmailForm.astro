@@ -1,0 +1,246 @@
+<div class="flex-container">
+  <div class="container">
+    <form
+      action="https://api.web3forms.com/submit"
+      method="POST"
+      id="form"
+      class="needs-validation"
+      novalidate
+    >
+      <input
+        type="hidden"
+        name="access_key"
+        value={import.meta.env.PUBLIC_EMAIL_ACCESS_KEY}
+      />
+      <input
+        type="hidden"
+        name="subject"
+        value="New Submission from Web3Forms"
+      />
+      <input type="checkbox" name="botcheck" id="" style="display: none;" />
+      <div class="form-group">
+        <label for="user_name">Your Name</label>
+        <input
+          type="text"
+          name="name"
+          id="user_name"
+          placeholder="John"
+          required
+        />
+        <div class="empty-feedback invalid-feedback">
+          Please provide your first name.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="you@company.com"
+          required
+        />
+        <div class="empty-feedback">Please provide your email address.</div>
+        <div class="invalid-feedback">
+          Please provide a valid email address.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="company_name">Company Name</label>
+        <input
+          type="text"
+          name="company_name"
+          id="company_name"
+          placeholder="Company name"
+          required
+        />
+        <div class="empty-feedback invalid-feedback">
+          Please provide your last name.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="project_type">Project Type</label>
+        <input
+          type="text"
+          name="project_type"
+          id="project_type"
+          placeholder="Project type"
+          required
+        />
+        <div class="empty-feedback invalid-feedback">
+          Please provide your last name.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="budget">Budget</label>
+        <input
+          type="text"
+          name="budget"
+          id="budget"
+          placeholder="Budget"
+          required
+        />
+        <div class="empty-feedback invalid-feedback">
+          Please provide your last name.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="budget">Subject</label>
+        <input
+          type="text"
+          name="budget"
+          id="budget"
+          placeholder="Subject"
+          required
+        />
+        <div class="empty-feedback invalid-feedback">
+          Please provide your last name.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="message">Your Message</label>
+        <textarea
+          rows="5"
+          name="message"
+          id="message"
+          placeholder="Your Message"
+          required></textarea>
+        <div class="empty-feedback invalid-feedback">
+          Please enter your message.
+        </div>
+      </div>
+      <div class="form-group">
+        <button type="submit">Submit</button>
+        <p id="result"></p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style lang="scss">
+  .invalid-feedback,
+  .empty-feedback {
+    display: none;
+  }
+
+  .was-validated :placeholder-shown:invalid ~ .empty-feedback {
+    display: block;
+  }
+
+  .was-validated :not(:placeholder-shown):invalid ~ .invalid-feedback {
+    display: block;
+  }
+
+  .is-invalid,
+  .was-validated :invalid {
+    border-color: #dc3545;
+  }
+
+  .flex-container {
+    background: var(--white);
+    border-radius: 2px 2px 40px 2px;
+    margin: 0 auto;
+    padding: 3rem 4rem;
+    position: relative;
+  }
+
+  .form-group {
+    display: flex;
+    width: 100%;
+    margin: 1rem 0;
+
+    label {
+      width: 30%;
+      color: var(--primary-dark);
+    }
+    input,
+    textarea {
+      width: 70%;
+    }
+    textarea {
+      border: unset;
+      border-radius: 4px;
+      border: 1px solid var(--primary-dark);
+      background: none;
+      padding: 1rem;
+    }
+    input {
+      border: unset;
+      border-bottom: 1px solid var(--primary-dark);
+      background: none;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    "use strict";
+    /*
+     * Form Validation
+     */
+
+    // Fetch all the forms we want to apply custom validation styles to
+    const forms = document.querySelectorAll(".needs-validation");
+    const result = document.getElementById("result");
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            form.querySelectorAll(":invalid")[0].focus();
+          } else {
+            /*
+             * Form Submission using fetch()
+             */
+            event.preventDefault();
+            event.stopPropagation();
+
+            const formData = new FormData(form);
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
+            result.innerHTML = "Please wait...";
+
+            fetch("https://api.web3forms.com/submit", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: json,
+            })
+              .then(async (response) => {
+                let json = await response.json();
+                if (response.status == 200) {
+                  result.innerHTML = json.message;
+                  // result.classList.remove("text-gray-500");
+                  // result.classList.add("text-green-500");
+                } else {
+                  console.log(response);
+                  result.innerHTML = json.message;
+                  // result.classList.remove("text-gray-500");
+                  // result.classList.add("text-red-500");
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+                result.innerHTML = "Something went wrong!";
+              })
+              .then(function () {
+                form.reset();
+                form.classList.remove("was-validated");
+                setTimeout(() => {
+                  result.style.display = "none";
+                }, 5000);
+              });
+          }
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+</script>

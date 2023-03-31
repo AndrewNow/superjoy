@@ -1,0 +1,104 @@
+---
+import Layout from "../layouts/PageLayout.astro";
+import Faq from "../components/faq/faq.astro";
+import { getFAQContent } from "../lib/api/faqContent";
+import EmailForm from "../components/EmailForm.astro";
+import JoinTheConversation from "../components/JoinTheConversation.astro";
+import Marquee from "../components/Marquee.astro";
+import ContactButtons from "../components/ContactButtons.astro";
+
+const seo = {
+  // title: "Mimotype",
+  // description: "Join us in shaping the future of the optoelectronics industry.",
+  // image: "https://i.imgur.com/hev2VXn.png",
+};
+
+const faqData = await getFAQContent();
+---
+
+<Layout seo={seo}>
+  <div class="page-wrapper">
+    <section class="form-section-wrapper">
+      <header class="header">
+        <h2>Work with us!</h2>
+        <h5>
+          SuperJoy Studios is here to help you create your premiere Fortnite
+          experience.
+        </h5>
+      </header>
+      <div class="form-flex">
+        <div class="form-flex-half">
+          <p>
+            If you're interested in working with us, drop us a message below. We
+            respond to all our inquiries in less than 48 hours :-)
+          </p>
+          <JoinTheConversation />
+        </div>
+        <div class="form-flex-half">
+          <EmailForm />
+        </div>
+      </div>
+    </section>
+    <Marquee />
+    <section class="section-wrapper">
+      <ContactButtons />
+    </section>
+    <section class="form-section">
+      <Faq data={faqData} />
+    </section>
+  </div>
+
+  <style lang="scss">
+    .page-wrapper {
+      background: var(--accent-yellow);
+      position: relative;
+    }
+    .section-wrapper {
+      width: var(--inner-width);
+      margin: 0 auto;
+    }
+    .form-section-wrapper {
+      width: var(--inner-width);
+      margin: 0 auto;
+      padding: 15rem 0;
+    }
+
+    .header {
+      width: 100%;
+      h2,
+      h5 {
+        color: var(--primary-dark);
+      }
+      h5 {
+        width: 70%;
+      }
+    }
+
+    .form-flex {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin: 5rem 0;
+    }
+
+    .form-flex-half {
+      flex-basis: 1;
+      max-width: 790px;
+      min-width: 50%;
+      padding: 0 2rem;
+    }
+
+    .form-flex-half:first-child {
+      padding-left: 0;
+      p {
+        color: var(--primary-dark);
+        width: 75%;
+        margin-bottom: 10rem;
+      }
+    }
+    .form-flex-half:nth-child(2) {
+      padding-right: 0;
+    }
+  </style>
+</Layout>

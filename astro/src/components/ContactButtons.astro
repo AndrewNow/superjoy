@@ -1,0 +1,133 @@
+---
+const data = [
+  {
+    text: "Press inquiries",
+    email: "test@email.com",
+  },
+  {
+    text: "Career opportunities",
+    email: "test@email.com",
+  },
+];
+---
+
+<div class="grid">
+  {
+    data.map((contact) => {
+      return (
+        <a
+          href={`mailto:${contact.email}`}
+          target="_blank"
+          rel="noreferrer"
+          class="buttonWrapper"
+        >
+          <div class="innerText">{contact.text}</div>
+          <div class="arrowWrapper">
+            <svg
+              width="43"
+              height="28"
+              viewBox="0 0 43 28"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20.9898 0C20.9898 1.02427 20.9067 2.84969 20.8355 4.0058C25.6173 6.51068 33.5552 10.3745 38.4674 12.7881C33.6857 12.8692 28.6311 12.8693 21.7966 12.8693C14.9622 12.8693 6.51407 12.8693 0 12.7171V15.2727C6.5734 15.1713 12.5417 15.1713 21.7254 15.1713C30.9092 15.1713 33.4247 15.1713 38.1352 15.222C33.0806 17.7168 25.5342 21.4487 20.8237 23.9232C20.9067 25.0083 20.9779 26.9149 20.9779 28C24.9528 25.0793 40.3778 17.2604 43 15.4958V12.6461C40.5439 10.8004 24.9647 3.19449 20.9898 0Z"
+                fill="var(--primary-dark)"
+              />
+            </svg>
+          </div>
+        </a>
+      );
+    })
+  }
+</div>
+
+<style lang="scss">
+  .grid {
+    width: 100%;
+    margin: 5rem auto;
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+  }
+  .buttonWrapper {
+    font-size: 25px;
+    text-decoration: none;
+    border: 2px solid var(--primary-dark);
+    box-sizing: content-box;
+    display: inline-flex;
+    justify-content: flex-end;
+    overflow: hidden;
+    align-items: center;
+    position: relative;
+    padding: 0rem;
+    margin: 1rem auto;
+    border-radius: 60px;
+    transition: var(--hover-transition);
+    box-sizing: content-box;
+    color: var(--primary-dark);
+    background: var(--primary-dark);
+  }
+  .buttonWrapper::after {
+    box-sizing: content-box;
+    transition: var(--hover-transition);
+    content: "";
+    // width: 100%;
+    // height: 100%;
+    display: block;
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: var(--accent-yellow);
+    // mix-blend-mode: difference;
+    border-radius: 60px;
+    transform-origin: right;
+    transform: translateX(0%);
+  }
+  .buttonWrapper:hover::after {
+    // width: 30%;
+    transform: translateX(78%);
+  }
+  .buttonWrapper:hover {
+    cursor: pointer;
+    .innerText {
+      color: var(--accent-yellow);
+      transition: var(--hover-transition);
+    }
+  }
+
+  .innerText {
+    font-family: "Hamburg-Bold";
+    white-space: nowrap;
+    padding: 2rem 4rem;
+    color: var(--primary-dark-);
+    color: inherit;
+    position: relative;
+    display: block;
+    z-index: 5;
+  }
+
+  .arrowWrapper {
+    display: grid;
+    place-items: center;
+    position: relative;
+    z-index: 2;
+    aspect-ratio: 1/1;
+    transition: var(--hover-transition);
+    color: var(--primary-dark);
+    width: 50%;
+    height: auto;
+    margin-right: 1.5rem;
+    border-radius: 60px;
+    svg {
+      display: block;
+      width: 80%;
+      margin: 0 auto;
+    }
+  }
+</style>

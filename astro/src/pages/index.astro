@@ -1,0 +1,125 @@
+---
+import Layout from "../layouts/PageLayout.astro";
+import Carousel from "../components/projectsection/carousel.jsx";
+import Loader from "../components/loader/index.astro";
+import Partners from "../components/Partners.astro";
+import { getLandingContent } from "../lib/api/landingContent";
+import CompanyStats from "../components/CompanyStats.astro";
+
+const seo = {
+  // title: "Mimotype",
+  // description: "Join us in shaping the future of the optoelectronics industry.",
+  // image: "https://i.imgur.com/hev2VXn.png",
+};
+
+const landingData = await getLandingContent();
+---
+
+<Layout seo={seo}>
+  <Loader
+    imageSrc={landingData.imageUrl}
+    description={landingData.description}
+  />
+  <div class="scroll-to" id="scrollTo">
+    <span class="blend-mode">
+      <svg
+        width="68"
+        height="104"
+        viewBox="0 0 68 104"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M68 50.766C65.5125 50.766 61.0793 50.5651 58.2716 50.3929C52.1883 61.9581 42.8048 81.1567 36.9431 93.0375C36.7461 81.4724 36.7461 69.2472 36.7461 52.7174C36.7461 36.1876 36.7461 15.755 37.1155 -1.35e-06L30.9091 -1.62129e-06C31.1554 15.8985 31.1554 30.3333 31.1554 52.5453C31.1554 74.7572 31.1554 80.8411 31.0322 92.234C24.9736 80.0088 15.9102 61.7572 9.90077 50.3642C7.26549 50.5651 2.63528 50.7373 5.4116e-06 50.7373C7.09309 60.351 26.0819 97.6578 30.3673 104L37.2879 104C41.7704 98.0596 60.2419 60.3797 68 50.766Z"
+          fill="var(--primary-light)"></path>
+      </svg>
+    </span>
+  </div>
+  <Partners partnerImages={landingData.partnerImages} />
+  <section id="projectsCarousel">
+    <Carousel client:load />
+  </section>
+  <section>
+    <CompanyStats />
+  </section>
+</Layout>
+
+<script>
+  // init lenis
+  import Lenis from "@studio-freight/lenis";
+  const lenis = new Lenis({
+    lerp: 0.075,
+  });
+  lenis.on("scroll", (e) => {
+    // console.log(e);
+  });
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
+  // scroll to Projects when button clicked
+  const scrollToDiv = document.getElementById("scrollTo");
+  const partnersDiv = document.getElementById("projectsCarousel");
+
+  scrollToDiv.addEventListener("click", function () {
+    lenis.scrollTo(partnersDiv, { duration: 1 });
+  });
+</script>
+
+<style lang="scss">
+  .blend-mode {
+    color: var(--primary-light);
+    mix-blend-mode: difference;
+  }
+  .scroll-to {
+    display: inline-block;
+    position: relative;
+    margin: 0 auto;
+    border: 2px solid var(--primary-dark);
+    border-radius: 100%;
+    aspect-ratio: 1/1;
+    display: grid;
+    place-items: center;
+    width: 175px;
+    height: auto;
+    overflow: hidden;
+    background: var(--primary-light);
+    svg {
+      transition: 0.5s all cubic-bezier(0.25, 1, 0.5, 1);
+      // transition-delay: 0.5s;
+      path {
+        fill: var(--primary-light);
+      }
+    }
+    &:before {
+      font-family: "Aktiv-Regular";
+      font-size: 26px;
+      transition: 0.85s all ease;
+      content: "MORE SUPERJOY";
+      text-align: center;
+      color: var(--primary-dark);
+      background: var(--primary-dark);
+      width: 110%;
+      height: 200%;
+      position: absolute;
+      display: grid;
+      place-items: center;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -200%);
+      border-radius: 100%;
+      color: var(--primary-light);
+    }
+    &:hover {
+      cursor: pointer;
+      svg {
+        transform: translateY(150%);
+      }
+    }
+    &:hover:before {
+      transform: translate(-50%, -50%);
+    }
+  }
+</style>

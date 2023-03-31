@@ -1,0 +1,47 @@
+---
+import MapQuestions from "./MapQuestions.astro";
+const { data } = Astro.props;
+---
+
+<section class="section-wrapper">
+  <div class="header">
+    <h1>FAQ</h1>
+
+  </div>
+  <div class="questions-wrapper">
+    <ul>
+      {
+        data.faqData.map((item, i) => {
+          return <MapQuestions item={item} i={i} />;
+        })
+      }
+    </ul>
+  </div>
+</section>
+
+<style lang="scss">
+  .section-wrapper {
+    padding: 5rem 0;
+    padding-bottom: 15rem;
+  }
+  .header {
+    margin: 0 auto;
+    text-align: center;
+
+    h1 {
+      color: var(--khaki);
+      margin: 2rem auto;
+    }
+  }
+
+  .questions-wrapper {
+    width: 90%;
+    margin: 0 auto;
+    ul {
+      margin: 0 auto !important;
+      padding: 0;
+      // list-style-position: inside;
+      overflow: hidden;
+    }
+  }
+</style>

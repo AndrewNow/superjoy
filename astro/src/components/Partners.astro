@@ -1,0 +1,95 @@
+---
+const { partnerImages } = Astro.props;
+---
+
+<div class="wrapper">
+  <h3 id="textInView">
+    <span class="word">Our</span>
+    <span class="word">Trusted</span>
+    <span class="word">Partners</span>
+  </h3>
+  <div class="partner-grid">
+    {
+      partnerImages.map((imageSrc) => {
+        return (
+          <div class="grid-item">
+            <img src={imageSrc} class="grid-item-image" />
+          </div>
+        );
+      })
+    }
+  </div>
+</div>
+
+<script>
+  import { animate, stagger, inView } from "motion";
+
+  const textInView = document.getElementById("textInView");
+  const words = document.querySelectorAll(".word");
+
+  inView(textInView, () => {
+    animate(
+      words,
+      { opacity: 1, transform: "translateY(0px)" },
+      { duration: 0.5, delay: stagger(0.1, { easing: "linear" }) }
+    );
+  });
+
+  const gridImage = document.querySelectorAll(".grid-item-image");
+
+  inView(textInView, () => {
+    animate(
+      gridImage,
+      { opacity: 1, transform: "translateY(0px)" },
+      {
+        duration: 0.5,
+        delay: stagger(0.1, { easing: "linear", from: "center" }),
+      }
+    );
+  });
+</script>
+
+<style lang="scss">
+  .wrapper {
+    width: 100%;
+    margin: 10rem auto;
+    h3 {
+      text-transform: capitalize;
+      color: var(--khaki);
+      text-align: center;
+      overflow: hidden;
+      margin: 3rem auto;
+
+      .word {
+        display: inline-block;
+        transform: translateY(50px);
+        opacity: 0;
+      }
+    }
+  }
+  .partner-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(100px, 1fr)
+    ); // each col has a min size of 100px and a max of 1fr
+    grid-gap: 20px;
+    justify-content: center;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .grid-item {
+    max-width: 100%;
+    height: auto;
+    display: grid;
+    place-items: center;
+
+    .grid-item-image {
+      display: inline-block;
+      transform: translateY(50px);
+      opacity: 0;
+    }
+  }
+</style>

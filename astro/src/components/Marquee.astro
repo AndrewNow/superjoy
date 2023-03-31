@@ -1,0 +1,140 @@
+<div class="wrapper">
+  <div class="loop-container">
+    <div class="loop-container-item">
+      <h5>
+        {" "}Want to chat about something other than a project?{" "}
+        {" "}Want to chat about something other than a project?{" "}
+        {" "}Want to chat about something other than a project?{" "}
+      </h5>
+    </div>
+    <div class="loop-container-item">
+      <h5>
+        {" "}Want to chat about something other than a project?{" "}
+        {" "}Want to chat about something other than a project?{" "}
+        {" "}Want to chat about something other than a project?{" "}
+      </h5>
+    </div>
+  </div>
+</div>
+
+<style class="scss">
+  .wrapper {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    height: 155px;
+    background: var(--primary-dark);
+    color: var(--accent-yellow);
+  }
+
+  .loop-container {
+    white-space: nowrap;
+  }
+  .loop-container-item {
+    position: absolute;
+    top: 50%;
+    font-size: 9vw;
+    font-family: "Hamburg-Regular";
+    padding-right: 1.5rem;
+  }
+</style>
+
+<script>
+  // init lenis
+  import Lenis from "@studio-freight/lenis";
+
+  const lenis = new Lenis({
+    lerp: 0.075,
+  });
+
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+
+  class LoopingElement {
+    constructor(element, currentTranslation, speed, lenis) {
+      this.lenis = lenis;
+      this.element = element;
+      this.currentTranslation = currentTranslation;
+      this.speed = speed;
+      this.direction = true;
+      this.scrollTop = 0;
+      this.metric = 100;
+      this.lerp = {
+        current: this.currentTranslation,
+        target: this.currentTranslation,
+        factor: 0.5,
+      };
+
+      this.events();
+      this.render();
+    }
+
+    events() {
+      let lastScrollTop = 0;
+      let scrollDelta = 0;
+
+      const update = () => {
+        scrollDelta = this.scrollTop - lastScrollTop;
+        lastScrollTop = this.scrollTop;
+        if (scrollDelta > 0) {
+          this.direction = true; // scroll right
+          this.lerp.target += this.speed * 3;
+        } else if (scrollDelta < 0) {
+          this.direction = false; // scroll left
+          this.lerp.target -= this.speed * 3;
+        }
+        requestAnimationFrame(update);
+      };
+
+      this.lenis.on("scroll", (e) => {
+        this.scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
+      });
+
+      update();
+    }
+
+    lerpFunc(current, target, factor) {
+      // lerp.current = how much we want to translate by
+      this.lerp.current = current * (1 - factor) + target * factor;
+    }
+
+    goForward() {
+      this.lerp.target += this.speed;
+      if (this.lerp.target > this.metric) {
+        this.lerp.current -= this.metric * 3;
+        this.lerp.target -= this.metric * 3;
+      }
+    }
+
+    goBackward() {
+      this.lerp.target -= this.speed;
+      if (this.lerp.target < -this.metric) {
+        this.lerp.current -= -this.metric * 3;
+        this.lerp.target -= -this.metric * 3;
+      }
+    }
+
+    animate() {
+      // if direction == true, go forward else go back
+      this.direction ? this.goForward() : this.goBackward();
+      this.lerpFunc(this.lerp.current, this.lerp.target, this.lerp.factor);
+      this.element.style.transform = `translate(${this.lerp.current}%, -50%)`;
+    }
+
+    render() {
+      this.animate();
+      window.requestAnimationFrame(() => this.render());
+    }
+  }
+
+  // ideally swap w/ something more specific & specify individually
+  let elements = document.querySelectorAll(".loop-container-item");
+
+  new LoopingElement(elements[0], 0, 0.05, lenis);
+  new LoopingElement(elements[1], -100, 0.05, lenis);
+</script>

@@ -1,0 +1,144 @@
+@import url("./reset.css");
+/*
+ * The Typekit service used to deliver this font or fonts for use on websites
+ * is provided by Adobe and is subject to these Terms of Use
+ * http://www.adobe.com/products/eulas/tou_typekit. For font license
+ * information, see the list below.
+ *
+ * aktiv-grotesk:
+ *   - http://typekit.com/eulas/000000000000000077359d4f
+ *   - http://typekit.com/eulas/000000000000000077359d51
+ *   - http://typekit.com/eulas/000000000000000077359d55
+ *   - http://typekit.com/eulas/000000000000000077359d58
+ *
+ * © 2009-2023 Adobe Systems Incorporated. All Rights Reserved.
+ */
+/*{"last_published":"2023-03-27 16:27:46 UTC"}*/
+
+@import url("https://p.typekit.net/p.css?s=1&k=fsm3wst&ht=tk&f=14032.14033.14034.14035&a=7411129&app=typekit&e=css");
+
+@font-face {
+font-family:"Aktiv-Regular";
+src:url("https://use.typekit.net/af/ab3e12/000000000000000077359d4f/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"),url("https://use.typekit.net/af/ab3e12/000000000000000077359d4f/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"),url("https://use.typekit.net/af/ab3e12/000000000000000077359d4f/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:400;font-stretch:normal;
+}
+
+@font-face {
+font-family:"Aktiv-Bold";
+src:url("https://use.typekit.net/af/a798a9/000000000000000077359d55/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"),url("https://use.typekit.net/af/a798a9/000000000000000077359d55/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"),url("https://use.typekit.net/af/a798a9/000000000000000077359d55/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:700;font-stretch:normal;
+}
+
+
+@font-face{
+  font-family: "Hamburg-Regular";
+  src: url('/fonts/bn-hamburg_hand.woff2') format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  /* font-display: swap; */
+}
+@font-face{
+  font-family: "Hamburg-Bold";
+  src: url('/fonts/bn-hamburg_hand_bold.woff2') format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  /* font-display: swap; */
+}
+@font-face{
+  font-family: "Hamburg-Black";
+  src: url('/fonts/bn-hamburg_hand_black.woff2') format("woff2");
+  font-weight: bolder;
+  font-style: normal;
+  /* font-display: swap; */
+}
+@font-face{
+  font-family: "Hamburg-Light";
+  src: url('/fonts/bn-hamburg_hand_light.woff2') format("woff2");
+  font-weight: 200;
+  font-style: normal;
+  /* font-display: swap; */
+}
+
+:root {
+  --hover-transition: 0.5s all ease;
+  --transition-smooth: 0.7s cubic-bezier(0.5, 0.5, 0, 1);
+  --stagger-transition: 1s all cubic-bezier(.25,1,.5,1);
+  --max-width: min(1700px, 90vw);
+  --inner-width: min(1575px, 80vw);
+  --primary-light: #F8FAFB;
+  --primary-dark: #3A4014;
+  --accent-yellow: #F5C900;
+  --accent-blue: #009CF4;
+  --accent-blue-secondary: #007AFF;
+  --accent-orange: #FA6300;
+  --accent-green: #C7D92E;
+  --accent-navy: #213D4D;
+  --accent-lightblue: #82D1E3;
+  /*  */
+  /* --blue: #007AFF;
+  --navy: #213D4D;
+  --lightpink: #F2D6D6;
+  --yellow: #F5C900;
+  --pink: #F24A70;
+  --khaki: #3A4014;
+  --green: #C7D92E;
+  --grey: #F4F4F4;
+  --black: #000;
+  --white: #F4F4F4; */
+}
+
+html {
+  background-color: var(--primary-light);
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  line-height: 125%;
+}
+
+h1 {
+  font-family: "Hamburg-Bold";
+  text-transform: uppercase;
+  font-size: 145px;
+}
+
+h2 {
+  font-family: "Hamburg-Bold";
+  font-size: 128px;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-family: "Hamburg-Bold";
+  font-size: 100px;
+}
+
+h4 {
+  font-size: 64px;
+  font-family: "Aktiv-Regular";
+}
+
+h5 {
+  font-size: 48px;
+  font-family: "Hamburg-Bold";
+}
+
+h6 {
+  font-size: 36px;
+  font-family: "Hamburg-Bold";
+}
+
+p, label, input, textarea {
+  font-size: 20px;
+  font-family: "Aktiv-Regular";
+  line-height: 160%;
+  letter-spacing: 0.01rem;
+}
+
+small {
+  font-size: 13px;
+  font-family: "Aktiv-Bold";
+}

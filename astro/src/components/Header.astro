@@ -1,0 +1,329 @@
+<header>
+  <div class="logo-container">
+    <a href="/">
+      <svg
+        width="61"
+        height="57"
+        viewBox="0 0 61 57"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          class="logo-color"
+          d="M60.9949 36.1335C60.9949 33.1257 59.5609 30.4477 57.346 28.7232C57.346 28.6471 57.3511 28.5761 57.3511 28.5C57.3511 12.7867 44.4856 0 28.6756 0C22.7557 0 17.0808 1.77523 12.2735 5.12787C4.58789 10.4536 0 19.1927 0 28.5C0 44.2133 12.8655 57 28.6756 57C32.3704 57 35.958 56.3102 39.3313 54.956C44.2458 53.0083 48.4611 49.7621 51.6303 45.5371C56.8051 45.4813 61 41.2816 61 36.1284L60.9949 36.1335ZM27.0119 11.8382C27.6396 12.2389 27.3232 13.2077 26.5832 13.1367C21.7912 12.665 12.2735 13.1012 7.28244 22.8294C6.94052 23.4786 5.94027 23.2555 5.94537 22.52C5.98109 19.5833 7.12934 14.5416 13.3656 9.4645C13.437 9.40363 13.5289 9.35798 13.6157 9.33262C14.5904 9.04859 20.2806 7.66898 27.0119 11.8433V11.8382ZM51.518 41.9867C48.9 41.9867 46.6801 40.2774 45.9146 37.929C45.8891 37.7109 45.8738 37.4877 45.8738 37.2645C45.8738 34.1351 48.4356 31.5889 51.5844 31.5889C54.7331 31.5889 57.295 34.1351 57.295 37.2595C56.7642 39.9528 54.3759 41.9867 51.518 41.9867ZM42.3831 41.6519C42.3729 44.2285 41.3624 49.3919 35.3813 50.6751C35.0292 50.7411 34.7995 50.2846 35.0955 50.0614C36.157 49.2144 37.3563 48.1188 38.525 46.7138C39.8314 45.1415 41.0409 42.8692 41.7197 41.4997C41.8881 41.17 42.3882 41.2867 42.3882 41.657L42.3831 41.6519ZM44.9092 42.8692C45.2614 43.2141 45.6441 43.5286 46.0524 43.8126C45.5676 45.3241 44.8939 46.7798 44.0825 48.1797C43.1996 48.8644 42.2759 49.4933 41.3063 50.0563C42.8424 47.8601 44.0672 45.4458 44.9092 42.8692ZM51.5844 30.9194C49.0991 30.9194 46.9454 32.3396 45.8942 34.4039C46.6393 32.02 48.8796 30.2803 51.518 30.2803C53.8962 30.2803 55.9426 31.6903 56.8714 33.7141C55.7232 32.0302 53.7788 30.9194 51.5844 30.9194ZM53.7125 26.9834C53.0082 26.8161 52.2733 26.7197 51.518 26.7197C50.5994 26.7197 49.7115 26.8566 48.8745 27.1001C45.8993 16.043 36.3561 7.1212 25.0675 5.17859C35.958 7.95809 44.5724 17.3871 46.3228 28.2718C46.0779 28.4341 45.838 28.6065 45.6084 28.7891C42.8424 16.1292 31.1303 6.59877 17.0298 6.42125C20.597 4.55473 24.5623 3.5606 28.6654 3.5606C41.9901 3.5606 52.9163 13.933 53.7074 26.9834H53.7125ZM45.6645 46.8558C46.1595 46.0697 46.6035 45.2531 47.0016 44.406C47.2261 44.5278 47.4609 44.6343 47.6956 44.7408C47.0577 45.4864 46.3841 46.1965 45.6645 46.8558Z"
+          fill="var(--primary-dark)"></path>
+      </svg>
+    </a>
+  </div>
+  <button class="hamburger-menu">
+    <span class="line"></span>
+    <span class="line"></span>
+  </button>
+</header>
+<nav class="menu-modal">
+  <div class="menu-modal-inner">
+    <ul>
+      <li class="menu-option about">
+        <h3>
+          <a href="/about">About</a>
+        </h3>
+      </li>
+      <li class="menu-option work">
+        <h3>
+          <a href="/work-with-us">Work with Us</a>
+        </h3>
+      </li>
+      <li class="menu-option contact">
+        <h3>
+          <a href="/contact">Contact</a>
+        </h3>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="modal-background-tint"></div>
+
+<style lang="scss">
+  .logo-color {
+    transition: var(--hover-transition);
+  }
+
+  header {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .logo-container {
+    width: 50px;
+    height: 50px;
+  }
+
+  .logo {
+    width: 100%;
+    height: 100%;
+    fill: #2d2d2d;
+  }
+
+  .hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 30px;
+    height: 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+  }
+
+  .line {
+    width: 100%;
+    height: 3px;
+    background-color: #2d2d2d;
+    transition: transform 0.3s ease-out;
+  }
+
+  .hamburger-menu .line:first-child {
+    transform-origin: top left;
+    margin-bottom: 6px; /* add margin to center line vertically */
+  }
+
+  .hamburger-menu .line:last-child {
+    transform-origin: bottom left;
+    margin-top: 6px; /* add margin to center line vertically */
+  }
+
+  .hamburger-menu.open .line:first-child {
+    transform: rotate(17.5deg);
+  }
+
+  .hamburger-menu.open .line:last-child {
+    transform: rotate(-18.25deg);
+  }
+
+  .modal-background-tint {
+    z-index: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: var(--hover-transition);
+    background-color: black;
+    backdrop-filter: brightness(60%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .modal-background-tint.open {
+    z-index: 997;
+    transition: var(--transition-smooth);
+    visibility: visible;
+    opacity: 0.5;
+  }
+
+  .menu-modal {
+    visibility: hidden;
+    position: fixed;
+    z-index: 998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    transition: var(--transition-smooth);
+    background-color: var(--primary-dark);
+    text-align: center;
+    opacity: 0;
+    transform: translate(0, -100%);
+  }
+
+  .menu-modal.open {
+    visibility: visible;
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  .menu-modal-inner {
+    position: relative;
+    width: 90%;
+    margin: 0 auto;
+    height: 100%;
+  }
+  .menu-modal-inner ul {
+    position: absolute;
+    bottom: 5%;
+    left: 0rem;
+    list-style: none;
+    margin: 2rem 0;
+    margin-bottom: 5rem;
+    padding: 0;
+    bottom: 0;
+  }
+
+  .menu-modal li {
+    text-align: left;
+    cursor: pointer;
+
+    h3 > a {
+      transition: var(--hover-transition);
+      color: unset;
+      text-decoration: none;
+    }
+  }
+  li > h3 {
+    transition: var(--hover-transition);
+    transform: translateX(0);
+  }
+  li.about > h3:hover {
+    color: var(--accent-yellow) !important;
+    transform: translateX(2rem);
+  }
+  li.work > h3:hover {
+    color: var(--accent-orange) !important;
+    transform: translateX(2rem);
+  }
+  li.contact > h3:hover {
+    color: var(--accent-yellow) !important;
+    transform: translateX(2rem);
+  }
+</style>
+
+<script>
+  // selectors
+  const logo = document.querySelector(".logo-color");
+  const hamburger = document.querySelector(".hamburger-menu");
+  const menuModal = document.querySelector(".menu-modal");
+  const background = document.querySelector(".modal-background-tint");
+  const menuOptions = document.querySelectorAll(".menu-option");
+  const hamburgerLines = document.querySelectorAll(".line");
+
+  // actions on open
+  const openModal = () => {
+    console.log("open modal fires");
+    hamburger.classList.toggle("open");
+    menuModal.classList.toggle("open");
+    menuModal.setAttribute("arial-modal", "true");
+    background.classList.toggle("open");
+    // when menu opens, change color of
+    // 1. hamburger icon
+    hamburgerLines.forEach((line) => {
+      line.style.backgroundColor = "var(--accent-green)";
+    });
+    // 2. logo
+    logo.style.fill = "var(--accent-green)";
+    // 3. menu options
+    menuOptions.forEach((menuOption) => {
+      menuOption.style.color = "var(--accent-green)";
+    });
+  };
+
+  // actions on close
+  const closeModal = () => {
+    console.log("close modal fires");
+    hamburger.classList.remove("open");
+    menuModal.classList.remove("open");
+    menuModal.setAttribute("arial-modal", "false");
+    background.classList.remove("open");
+    // when menu closes, change color of
+    // 1. hamburger icon
+    hamburgerLines.forEach((line) => {
+      line.style.backgroundColor = "var(--primary-dark)";
+    });
+    // 2. logo
+    logo.style.fill = "var(--primary-dark)";
+  };
+
+  // toggle modal when hamburger is clicked
+  hamburger.addEventListener("click", function () {
+    if (menuModal.classList.contains("open")) {
+      closeModal();
+    } else {
+      openModal();
+    }
+  });
+  // close when background is clicked
+  background.addEventListener("click", () => closeModal());
+
+  menuOptions.forEach((menuOption) => {
+    const className = menuOption.classList[1]; // select second classname, aka the "case"
+
+    // When a menu item is hovered
+    menuOption.addEventListener("mouseover", function () {
+      menuModal.style.backgroundColor = getBgHoverColor(className);
+      // change color of currently hovered element
+      this.style.color = getHoverColor(className);
+      // change logo color
+      logo.style.fill = getHoverColor(className);
+      // change hamburger lines color
+      hamburgerLines.forEach((line) => {
+        line.style.backgroundColor = getHoverColor(className);
+      });
+      menuOptions.forEach((otherMenuOption) => {
+        if (otherMenuOption !== this) {
+          // skip currently hovered element
+          otherMenuOption.style.color = getHoverColor(className);
+        }
+      });
+    });
+
+    // When a menu item is no longer hovered
+    menuOption.addEventListener("mouseout", function () {
+      // revert logo color
+      logo.style.fill = "var(--accent-green)";
+      // revert hamburger lines color
+      hamburgerLines.forEach((line) => {
+        line.style.backgroundColor = "var(--accent-green)";
+      });
+      // change bg modal color
+      menuModal.style.backgroundColor = "var(--primary-dark)";
+      // revert menu options colors
+      menuOptions.forEach((otherMenuOption) => {
+        otherMenuOption.style.color = "var(--accent-green)";
+      });
+    });
+  });
+
+  function getBgHoverColor(className) {
+    switch (className) {
+      case "about":
+        return "var(--accent-orange)";
+      case "work":
+        return "var(--accent-green)";
+      case "contact":
+        return "var(--accent-navy)";
+      default:
+        return "var(--primary-dark)";
+    }
+  }
+  function getHoverColor(className) {
+    switch (className) {
+      case "about":
+        return "var(--primary-dark)";
+      case "work":
+        return "var(--primary-dark)";
+      case "contact":
+        return "var(--accent-lightblue)";
+      default:
+        return "var(--accent-green)";
+    }
+  }
+</script>

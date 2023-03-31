@@ -1,0 +1,52 @@
+<div class="wrapper">
+  <div class="inner">
+    <div class="stats-wrapper">
+      <div class="stat-text">test</div>
+      <div class="bg1"></div>
+      <div class="bg2"></div>
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  .wrapper {
+    background: #82d1e3;
+    padding: 10rem 0;
+  }
+
+  .inner {
+    position: relative;
+    width: var(--inner-width);
+    margin: 0 auto;
+  }
+
+  .stats-wrapper {
+    position: relative;
+    height: calc(100px + 135px);
+    display: grid;
+    place-items: center;
+  }
+  .bg1 {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    border: 5px solid var(--blue);
+    height: 100px;
+    border-radius: 30px;
+  }
+  .bg2 {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border: 5px solid var(--blue);
+    height: 135px;
+    border-radius: 30px;
+  }
+  .stat-text {
+    width: 97%;
+    height: 90%;
+    margin: 0 auto;
+    background: #82d1e3;
+    z-index: 5;
+  }
+</style>

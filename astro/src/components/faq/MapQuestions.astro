@@ -1,0 +1,96 @@
+---
+const { item, i } = Astro.props;
+import SanityPortableText from "../SanityPortableText.astro";
+---
+
+<li class="tab">
+  <input type="checkbox" id={`check-${i}`} />
+  <label for={`check-${i}`} class="tab-label"><h6>{item.question}</h6></label>
+  <div class="tab-content">
+    <div class="markdown-wrapper">
+      <SanityPortableText portableText={item.answer} />
+    </div>
+  </div>
+</li>
+
+<style lang="scss">
+  input {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+  }
+
+  // :checked
+  input:checked {
+    + .tab-label {
+      h6 {
+        margin: 0!important;
+      }
+      // background: darken($midnight, 10%);
+      &::after {
+        transform: rotate(90deg);
+      }
+    }
+    ~ .tab-content {
+      max-height: 100vh;
+      // margin: 2rem;
+      transition: 2.35s all ease-out;
+
+      // margin-left: 2rem;
+      .markdown-wrapper {
+        opacity: 1;
+        transform: translate(0, 0);
+        width: 70%;
+      }
+    }
+  }
+
+  .tab {
+    border-bottom: 1px solid;
+    width: 100%;
+    color: var(--khaki);
+    overflow: hidden;
+    &-label {
+      display: flex;
+      justify-content: space-between;
+      padding: 2rem;
+      background: var(--yellow);
+      font-weight: bold;
+      cursor: pointer;
+      /* Icon */
+      &:hover {
+        // background: darken(10%);
+      }
+
+      // after == the chevron
+      &::after {
+        content: url("/svg/chevron.svg");
+        aspect-ratio: 1/1;
+        transform-origin: 50% 40%;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        transition: 0.35s all ease-in-out;
+      }
+    }
+    &-content {
+      max-height: 0;
+      margin: 0 2rem;
+      background: var(--yellow);
+      color: var(--khaki);
+      transition: 1.35s all ease-in-out;
+      overflow: hidden;
+      .markdown-wrapper {
+        margin: 2rem;
+        transition: 0.35s all ease-in-out;
+        transform: translate(0, -20px);
+        opacity: 0;
+        width: 70%;
+      }
+    }
+    :hover {
+      filter: brightness(95%);
+      transition: 0.25s filter ease-in-out;
+    }
+  }
+</style>
