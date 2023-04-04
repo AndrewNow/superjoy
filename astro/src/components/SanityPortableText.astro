@@ -4,9 +4,15 @@ import { sanityPortableText } from "../lib/sanityPortableText";
 const { portableText } = Astro.props;
 ---
 
-<div set:html={sanityPortableText(portableText)} class="styledMarkdown" />
+<div set:html={sanityPortableText(portableText)} class="styled-markdown" />
 
 <style is:global lang="scss">
+
+  .styled-markdown {
+    p {
+      margin-bottom: 1rem;
+    }
+  }
   // .styledMarkdown {
   //   a {
   //     text-decoration: underline;

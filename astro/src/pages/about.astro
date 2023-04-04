@@ -1,7 +1,13 @@
 ---
 import Landing from "../components/about/landing.astro";
+import OurMission from "../components/about/ourMission.astro";
+import WhoWeAre from "../components/about/whoWeAre.astro";
 import Marquee from "../components/Marquee.astro";
 import Layout from "../layouts/PageLayout.astro";
+import { getAboutPageContent } from "../lib/api/aboutPage";
+import Team from "../components/about/team.astro";
+
+const aboutData = await getAboutPageContent();
 
 const seo = [];
 ---
@@ -13,6 +19,9 @@ const seo = [];
     primaryColor={"var(--primary-dark)"}
     secondaryColor={"var(--primary-light)"}
   />
+  <OurMission data={aboutData.ourMission} />
+  <WhoWeAre data={aboutData.whoWeAre} />
+  <Team data={aboutData.team} />
 </Layout>
 
 <script>

@@ -1,0 +1,237 @@
+---
+const { data } = Astro.props;
+import { m } from "framer-motion";
+import Button from "../Button.astro";
+import SanityPortableText from "../SanityPortableText.astro";
+
+const values = [
+  { value: "Creativity" },
+  { value: "Innovation" },
+  { value: "Quality" },
+  { value: "Focus" },
+];
+---
+
+<section class="section-wrapper" id="scroll-parent">
+  <div class="sticky-wrapper">
+    <div class="inner">
+      <div class="flex-container">
+        <div class="left">
+          <h2>Our <br /> mission</h2>
+          {
+            data.descriptionOurMission ? (
+              <SanityPortableText portableText={data.descriptionOurMission} />
+            ) : (
+              <p>
+                We integrate brands into the world of Fortnite, providing them
+                with an interactive space to reach the gaming audience and
+                expand their market. Our work focuses on immersive storytelling
+                in the Fortnite Metaverse. We believe that the future of
+                marketing is immersive, participatory, and community focused.
+                <br />
+                <br />
+                The Superjoy team leverages its expert understanding of Fortnite
+                content development and highly successful influencer campaigns
+                to build tailored Fortnite creative experiences that activate
+                the Fortnite community, convert players into brand advocates,
+                and drive revenue.
+              </p>
+            )
+          }
+          <div class="button-padding">
+            <Button
+              input="Our process"
+              url="/work-with-us"
+              textColor={"var(--primary-light)"}
+              backgroundColor={"var(--primary-dark)"}
+            />
+          </div>
+        </div>
+        <div class="right">
+          <p id="progress"></p>
+          <div class="blue-circle">
+            <svg
+              class="svg-avatar"
+              width="271"
+              height="267"
+              viewBox="0 0 271 267"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M269.444 203.546C272.778 189.91 269.312 176.218 261.292 165.969C261.374 165.635 261.478 165.306 261.56 164.971C278.97 93.7621 235.494 21.7393 164.641 4.41602C138.127 -2.06665 110.732 -0.240362 85.4682 9.68661C45.1397 25.399 14.8863 59.9619 4.57407 102.139C-12.8364 173.349 30.6399 245.372 101.493 262.695C118.053 266.744 134.888 267.554 151.506 265.124C175.677 261.683 198.183 251.601 217.029 235.925C240.283 241.328 263.707 226.913 269.422 203.541L269.444 203.546ZM220.507 219.68C208.78 216.813 200.716 206.648 199.906 195.163C200.04 194.133 200.196 193.109 200.447 192.084C203.912 177.913 218.217 169.18 232.317 172.627C246.416 176.074 255.084 190.401 251.619 204.572C246.267 216.179 233.299 222.808 220.485 219.675L220.507 219.68ZM179.959 208.137C177.054 219.824 166.806 242.135 138.571 241.347C136.92 241.274 136.435 238.936 137.966 238.248C143.691 235.586 150.271 231.929 157.061 226.836C164.651 221.16 172.605 212.172 177.135 206.715C178.253 205.406 180.384 206.494 179.981 208.142L179.959 208.137ZM50.7804 177.026C50.0061 175.868 51.1408 174.398 52.4329 174.88C76.1174 184 99.5733 192.71 124.825 186.676C132.033 185.062 139.203 182.258 146.964 178.96C148.246 178.424 149.426 179.845 148.688 181.035C126.673 216.785 72.816 209.899 50.7859 177.003L50.7804 177.026ZM53.688 112.282C57.0437 98.5573 66.3852 89.0821 74.5656 91.0822C82.7461 93.0823 86.6396 105.793 83.2839 119.518C79.9282 133.243 70.5976 142.674 62.4393 140.679C54.2811 138.685 50.3432 125.963 53.688 112.282ZM117.574 154.159C109.416 152.165 105.5 139.448 108.845 125.768C112.19 112.088 121.542 102.568 129.7 104.562C137.859 106.557 141.797 119.279 138.441 133.004C135.085 146.729 125.755 156.16 117.574 154.159ZM140.718 61.6129C119.759 54.2217 76.621 45.7761 43.4991 84.3838C41.2503 86.9509 36.9951 84.8479 37.8566 81.5166C41.2694 68.2307 51.9965 46.6504 85.5737 30.4916C85.9549 30.2778 86.4252 30.1803 86.8514 30.1664C91.5347 29.942 118.582 29.9198 144.102 56.2301C146.471 58.7455 143.979 62.7879 140.735 61.6406L140.718 61.6129ZM189.903 216.377C191.117 218.327 192.476 220.17 193.978 221.907C190.133 228.216 185.5 234.096 180.317 239.535C175.591 241.662 170.743 243.523 165.755 244.995C175.084 236.721 183.257 227.125 189.88 216.372L189.903 216.377ZM233.063 169.574C221.934 166.853 210.716 170.935 203.706 179.138C209.674 169.145 221.645 163.713 233.483 166.607C244.147 169.215 251.761 177.853 253.668 188.024C250.393 179.124 242.912 171.959 233.069 169.552L233.063 169.574ZM246.954 154.081C243.969 152.548 240.819 151.305 237.427 150.476C233.304 149.468 229.183 149.122 225.147 149.292C224.07 95.9471 191.17 45.0463 142.754 23.8817C188.471 48.4004 216.619 100.572 212.411 151.798C211.123 152.262 209.868 152.782 208.619 153.374C210.249 92.993 168.354 36.9884 105.373 20.7162C123.427 16.1575 142.28 16.0208 160.68 20.5196C220.382 35.1165 257.837 94.0969 246.932 154.075L246.954 154.081ZM188.871 235.298C191.96 232.275 194.859 229.065 197.57 225.666C198.431 226.467 199.353 227.212 200.303 227.94C196.62 230.605 192.816 233.099 188.871 235.298Z"
+                fill="var(--primary-dark)"></path>
+            </svg>
+
+            {
+              values.map((item, i) => {
+                return <h4 id={`value-${i}`}>{item.value}</h4>;
+              })
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { scroll, timeline } from "motion";
+  
+  // get scroll container
+  const parent = document.getElementById("scroll-parent");
+
+  // get h4's
+  const value1 = document.getElementById("value-0");
+  const value2 = document.getElementById("value-1");
+  const value3 = document.getElementById("value-2");
+  const value4 = document.getElementById("value-3");
+
+  // debug scroll
+  // const progress = document.getElementById("progress");
+  // scroll(({ y }) => (progress.innerHTML = y.progress.toFixed(2)), {
+  //   target: parent,
+  // });
+
+  const sequence = [
+    [
+      value1,
+      {
+        opacity: [1, 0],
+        y: ["-50%", -50],
+        x: ["-50%", "-50%"],
+        rotate: ["0", "30deg"],
+      },
+      { duration: 1 },
+    ],
+    [
+      value2,
+      {
+        opacity: [0, 1, 0],
+        y: [50, "-50%", -50],
+        x: ["-50%", "-50%", "-50%"],
+        rotate: ["-30deg", "0", "30deg"],
+      },
+      { duration: 1 },
+    ],
+    [
+      value3,
+      {
+        opacity: [0, 1, 0],
+        y: [50, "-50%", -50],
+        x: ["-50%", "-50%", "-50%"],
+        rotate: ["-30deg", "0", "30deg"],
+      },
+      { duration: 1 },
+    ],
+    [
+      value4,
+      {
+        opacity: [0, 1],
+        y: [50, "-50%"],
+        x: ["-50%", "-50%"],
+        rotate: ["-30deg", "0"],
+      },
+      { duration: 1 },
+    ],
+  ];
+
+  // animate through the sequence on scroll
+  scroll(timeline(sequence), { target: parent });
+</script>
+
+<style lang="scss">
+  .section-wrapper {
+    height: 400vh;
+    border-top: 1px solid var(--primary-dark);
+    padding-bottom: 10rem;
+  }
+  .inner {
+    width: var(--inner-width);
+    margin: 0 auto;
+    height: 100%;
+  }
+  .sticky-wrapper {
+    position: sticky;
+    height: 90vmin;
+    top: 3rem;
+    padding: 5rem 0;
+  }
+  .flex-container {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .left {
+    flex-basis: 50%;
+    position: relative;
+    color: var(--primary-dark);
+
+    .button-padding {
+      padding-top: 2rem;
+      display: block;
+    }
+
+    h2 {
+      font-family: "Hamburg-Regular";
+      line-height: 100%;
+      margin-bottom: 3rem;
+    }
+  }
+  .right {
+    flex-basis: 50%;
+    position: relative;
+  }
+
+  .blue-circle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: var(--accent-blue-secondary);
+    width: 70%;
+    aspect-ratio: 1/1;
+    height: auto;
+    border-radius: 100%;
+
+    h4 {
+      font-family: "Hamburg-Bold";
+      line-height: unset;
+      color: var(--primary-light);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+    }
+
+    .svg-avatar {
+      position: absolute;
+      top: -25%;
+      right: 0;
+      animation: shake 5s ease-in-out infinite alternate;
+      animation-delay: 1s;
+    }
+  }
+
+  @keyframes shake {
+    0% {
+      transform: rotate(0deg);
+    }
+    20% {
+      transform: rotate(-3deg);
+    }
+    40% {
+      transform: rotate(3deg);
+    }
+    60% {
+      transform: rotate(-3deg);
+    }
+    80% {
+      transform: rotate(3deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+</style>

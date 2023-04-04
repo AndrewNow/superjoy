@@ -1,0 +1,101 @@
+---
+import { log } from "astro/dist/core/logger/core";
+
+const { data } = Astro.props;
+---
+
+<section class="bg">
+  <div class="inner">
+    <h2>Founders</h2>
+    <div class="flex-area">
+      <div class="bio">
+        <p>{data.founderBio}</p>
+      </div>
+      <div class="founder-wrapper">
+        <div class="founder">
+          <div class="founder-blue-block left"></div>
+          <div class="founder-blue-block right"></div>
+        </div>
+        <div class="founder">
+          <div class="founder-yellow-block top"></div>
+          <div class="founder-yellow-block bottom"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .bg {
+    background: var(--primary-light);
+  }
+  .inner {
+    width: var(--inner-width);
+    margin: 0 auto;
+    padding: 10rem 0;
+    h2 {
+      font-family: "Hamburg-Light";
+      color: var(--primary-dark);
+      text-transform: uppercase;
+      line-height: 100%;
+    }
+  }
+
+  .flex-area {
+    display: flex;
+    position: relative;
+    color: var(--primary-dark);
+    margin: 5rem auto;
+    .bio {
+      p {
+        width: 90%;
+      }
+    }
+    :nth-child(1) {
+      flex-basis: 40%;
+    }
+    :nth-child(2) {
+      flex-basis: 60%;
+      // margin-left: 2rem;
+    }
+    .founder-wrapper {
+      display: flex;
+      flex-basis: 50%;
+    }
+    .founder {
+      margin: 2rem;
+      aspect-ratio: 1/1;
+      height: 380px;
+      width: auto;
+      position: relative;
+    }
+    .founder-blue-block {
+      background: var(--accent-blue-secondary);
+      border-radius: 40px;
+      height: 100%;
+      width: 50%;
+      position: absolute;
+      top: 0;
+    }
+    .left {
+      left: 0;
+    }
+    .right {
+      right: 0;
+    }
+    .founder-yellow-block {
+      background: var(--accent-yellow);
+      border-radius: 40px;
+      width: 100%;
+      position: absolute;
+    }
+    .top {
+      height: 40%;
+      top: 0;
+    }
+    .bottom {
+      height: 60%;
+      bottom: 0;
+    }
+  }
+</style>
