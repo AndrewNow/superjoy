@@ -1,5 +1,21 @@
+---
+import Button from "./Button.astro";
+---
+
 <div class="wrapper">
   <div class="inner">
+    <div class="flex-area">
+      <h3>Superjoy at a glance</h3>
+      <div class="text">
+        <p>
+          The Superjoy team leverages its expert understanding of Fortnite content development and highly successful influencer campaigns to build tailored Fortnite creative user-generated games that activate the Fortnite community, convert players into brand advocates, and drive revenue.
+        </p>
+        <div>
+
+          <Button input="Our process" url="/work-with-us"/>
+        </div>
+      </div>
+    </div>
     <div class="stats-wrapper">
       <div class="stat-text">test</div>
       <div class="bg1"></div>
@@ -10,19 +26,43 @@
 
 <style lang="scss">
   .wrapper {
-    background: #82d1e3;
+    background: var(--primary-light);
+    color: var(--primary-dark);
     padding: 10rem 0;
   }
-
+  
   .inner {
     position: relative;
     width: var(--inner-width);
     margin: 0 auto;
   }
+  .flex-area {
+    display: flex;
+    position: relative;
 
+    .text {
+      flex-basis: 60%;
+      margin-left: 5rem;
+      display: flex;
+      justify-content: space-between;
+      align-content: flex-start;
+      flex-direction: column;
+      p {
+        margin-bottom: 3rem;
+      };
+
+    }
+
+    h3 {
+      text-transform: uppercase;
+      flex-basis: 40%;
+      line-height: 100%;
+    }
+  }
   .stats-wrapper {
     position: relative;
     height: calc(100px + 135px);
+    margin: 5rem auto;
     display: grid;
     place-items: center;
   }
@@ -30,7 +70,7 @@
     position: absolute;
     top: 0;
     width: 100%;
-    border: 5px solid var(--blue);
+    border: 5px solid var(--primary-dark);
     height: 100px;
     border-radius: 30px;
   }
@@ -38,7 +78,7 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    border: 5px solid var(--blue);
+    border: 5px solid var(--primary-dark);
     height: 135px;
     border-radius: 30px;
   }
@@ -46,7 +86,7 @@
     width: 97%;
     height: 90%;
     margin: 0 auto;
-    background: #82d1e3;
+    background: var(--primary-light);
     z-index: 5;
   }
 </style>
