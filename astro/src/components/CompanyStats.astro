@@ -8,15 +8,33 @@ import Button from "./Button.astro";
       <h3>Superjoy at a glance</h3>
       <div class="text">
         <p>
-          The Superjoy team leverages its expert understanding of Fortnite content development and highly successful influencer campaigns to build tailored Fortnite creative user-generated games that activate the Fortnite community, convert players into brand advocates, and drive revenue.
+          The Superjoy team leverages its expert understanding of Fortnite
+          content development and highly successful influencer campaigns to
+          build tailored Fortnite creative user-generated games that activate
+          the Fortnite community, convert players into brand advocates, and
+          drive revenue.
         </p>
         <div>
-          <Button input="Our process" url="/work-with-us"/>
+          <Button input="Our process" url="/work-with-us" />
         </div>
       </div>
     </div>
     <div class="stats-wrapper">
-      <div class="stat-text">test</div>
+      <div class="stat-text">
+        <h6>Company <br />stats</h6>
+        <div class="stat">
+          <h3>20</h3>
+          <small>staff count</small>
+        </div>
+        <div class="stat">
+          <h3>10M</h3>
+          <small>lifetime plays</small>
+        </div>
+        <div class="stat">
+          <h3>15k</h3>
+          <small>social media following</small>
+        </div>
+      </div>
       <div class="bg1"></div>
       <div class="bg2"></div>
     </div>
@@ -29,7 +47,7 @@ import Button from "./Button.astro";
     color: var(--primary-dark);
     padding: 10rem 0;
   }
-  
+
   .inner {
     position: relative;
     width: var(--inner-width);
@@ -48,8 +66,7 @@ import Button from "./Button.astro";
       flex-direction: column;
       p {
         margin-bottom: 3rem;
-      };
-
+      }
     }
 
     h3 {
@@ -61,7 +78,7 @@ import Button from "./Button.astro";
   .stats-wrapper {
     position: relative;
     height: calc(100px + 135px);
-    margin: 5rem auto;
+    margin: 10rem auto;
     display: grid;
     place-items: center;
   }
@@ -85,7 +102,30 @@ import Button from "./Button.astro";
     width: 97%;
     height: 90%;
     margin: 0 auto;
+    padding: 0 5rem;
     background: var(--primary-light);
     z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h6 {
+      text-transform: uppercase;
+    }
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h3 {
+      font-family: "Hamburg-Light";
+      text-transform: uppercase;
+      line-height: 100%;
+    }
+    small {
+      font-family: "Aktiv-Regular";
+    }
   }
 </style>

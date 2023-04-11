@@ -6,6 +6,8 @@ import Marquee from "../components/Marquee.astro";
 import Layout from "../layouts/PageLayout.astro";
 import { getAboutPageContent } from "../lib/api/aboutPage";
 import Team from "../components/about/team.astro";
+import LetsChat from "../components/LetsChat.astro";
+import JoinTheConversation from "../components/JoinTheConversation.astro";
 
 const aboutData = await getAboutPageContent();
 
@@ -22,19 +24,99 @@ const seo = [];
   <OurMission data={aboutData.ourMission} />
   <WhoWeAre data={aboutData.whoWeAre} />
   <Team data={aboutData.team} />
+  <!-- <p id="debugIndicator"></p> -->
+  <div class="join-the-conversation">
+    <div class="svg-wrapper">
+      <div class="svg-wrapper-text">
+        <JoinTheConversation />
+      </div>
+      <svg
+        class="separator"
+        width="100%"
+        height="349"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path id="separator"></path>
+      </svg>
+    </div>
+    <LetsChat />
+  </div>
 </Layout>
 
 <script>
-  // init lenis
-  import Lenis from "@studio-freight/lenis";
-  const lenis = new Lenis({
-    lerp: 0.075,
-  });
-  function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
-  requestAnimationFrame(raf);
+  const shapeStates = {
+    initialShape: {
+      color: "var(--accent-yellow)",
+      d: "M960 0C562.503 0 211.323 87.0731 0 220.149V349H1920V220.149C1708.68 87.0731 1357.5 0 960 0Z",
+    },
+    targetShape: {
+      color: "var(--accent-yellow)",
+      d: "M 960 0 C 562.503 0 226 -1 -1 0 V 349 H 1920 V -1 C 1723 -1 1357.5 0 960 0 Z",
+    },
+  };
+
+  import { interpolate } from "flubber";
+  import { animate, scroll } from "motion";
+  const path = document.getElementById("separator");
+  const parent = document.querySelector(".join-the-conversation");
+
+  let currentPath = shapeStates.initialShape;
+
+  // set svg attributes to that of stateShapes
+  path.setAttribute("fill", currentPath.color);
+  path.setAttribute("d", currentPath.d);
+
+  // toggle between shape states
+  currentPath =
+    currentPath === shapeStates.initialShape
+      ? shapeStates.targetShape
+      : shapeStates.initialShape;
+  const mixshapeStates = interpolate(path.getAttribute("d"), currentPath.d);
+
+  // animate on scroll
+  scroll(
+    animate((progress) => path.setAttribute("d", mixshapeStates(progress))),
+    { target: parent, offset: ["0 0.5", "0.45 0.5"] }
+  );
+
+  // debug
+  // const debugIndicator = document.querySelector("#debugIndicator");
+  // scroll(
+  //   ({ y }) => {
+  //     debugIndicator.innerHTML = y.progress.toFixed(2);
+  //   },
+  //   { target: parent, offset: ["0 0.5", "0.45 0.5"] }
+  // );
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+  .join-the-conversation {
+    width: 100%;
+    position: relative;
+    .separator {
+      // margin: 0 auto;
+      // width: 150%;
+    }
+
+    .svg-wrapper {
+      transform: translateY(5px);
+      position: relative;
+
+      .svg-wrapper-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+
+  // #debugIndicator {
+  //   position: fixed;
+  //   top: 10rem;
+  //   left: 5rem;
+  //   z-index: 10;
+  //   color: black;
+  // }
+</style>

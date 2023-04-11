@@ -7,7 +7,11 @@ export async function getAboutPageContent() {
     team {
       "aliImageUrl": aliPortrait.asset->url,
       "danielaImageUrl": danielaPortrait.asset->url,
-      founderBio
+      founderBio,
+      teamMembers[] {
+        ...,
+        "portraitUrl": memberPortrait.asset->url,
+      }
     }
   }`;
   const aboutPageContent = await useSanityClient().fetch(query);

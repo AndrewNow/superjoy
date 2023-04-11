@@ -1,54 +1,43 @@
 ---
-import { Image} from '@astrojs/image/components';
+import { Image } from "@astrojs/image/components";
 const { data } = Astro.props;
-
-
-const teamData = [
-  {member: "Troy",
-  role: "UGC Developer"},
-  {member: "G",
-  role: "UGC Developer"},
-  {member: "Richard",
-  role: "Manager of UGC Development"},
-  {member: "Troy",
-  role: "UGC Developer"},
-  {member: "Troy",
-  role: "UGC Developer"},
-  {member: "G",
-  role: "UGC Developer"},
-  {member: "Troy",
-  role: "UGC Developer"},
-  {member: "Richard",
-  role: "Manager of UGC Development"},
-  {member: "Troy",
-  role: "UGC Developer"},
-  {member: "G",
-  role: "UGC Developer"},
-  {member: "Richard",
-  role: "Manager of UGC Development"},
-  {member: "Troy",
-  role: "UGC Developer"},
-]
 ---
 
-<section class="bg">
+<section class="bg" id="bg">
   <div class="inner">
     <h2>Founders</h2>
     <div class="flex-area">
       <div class="bio">
         <p>{data.founderBio}</p>
       </div>
-      <div class="founder-wrapper">
+      <div class="founder-wrapper" id="container1">
         <div class="founder">
-          <Image class="founder-portrait" src={data.danielaImageUrl} quality={100} alt="Portrait of" width={330} height={330}/>
-          <div class="founder-blue-block left"></div>
-          <div class="founder-blue-block right">
+          <div class="parallax-item">
+            <Image
+              class="founder-portrait"
+              src={data.danielaImageUrl}
+              quality={100}
+              alt="Portrait of"
+              width={330}
+              height={330}
+            />
+            <div class="founder-blue-block left"></div>
+            <div class="founder-blue-block right"></div>
           </div>
         </div>
         <div class="founder">
-          <Image class="founder-portrait" src={data.aliImageUrl} quality={100} alt="Portrait of" width={330} height={330}/>
-          <div class="founder-yellow-block top"></div>
-          <div class="founder-yellow-block bottom"></div>
+          <div class="parallax-item2">
+            <Image
+              class="founder-portrait"
+              src={data.aliImageUrl}
+              quality={100}
+              alt="Portrait of"
+              width={330}
+              height={330}
+            />
+            <div class="founder-yellow-block top"></div>
+            <div class="founder-yellow-block bottom"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -56,23 +45,99 @@ const teamData = [
   <div class="inner">
     <h2>Our Team</h2>
     <div class="team-flex">
-      {teamData.map((member)=>{return(
-        <div class="member-wrapper">
-          <div class="member-inner">
-            <div class="member-image">
-              </div>
-            <div class="member-text">
-              <h6>
-                {member.member}
-                </h6>
-                <small>{member.role}</small>
+      {
+        data.teamMembers.map((member) => {
+          return (
+            <div class="member-wrapper">
+              <div class="member-inner">
+                <div class="member-image">
+                  {member.portraitUrl ? (
+                    <Image
+                      src={member.portraitUrl}
+                      alt={`Portrait of ${member.memberName}`}
+                      width={70}
+                      height={70}
+                    />
+                  ) : (
+                    <div class="member-fallback">
+                      <h6>{member.memberName.charAt(0)}</h6>
+                    </div>
+                  )}
+                </div>
+                <div class="member-text">
+                  <h6>{member.memberName}</h6>
+                  <small>{member.memberRole}</small>
+                </div>
               </div>
             </div>
-          </div>
-      )})}
+          );
+        })
+      }
     </div>
   </div>
 </section>
+
+<script>
+  // parallax scroll
+  import { animate, scroll } from "motion";
+  const parent = document.getElementById("bg");
+
+  const item = document.querySelector(".parallax-item");
+  const item2 = document.querySelector(".parallax-item2");
+
+  scroll(animate(item, { y: "30%" }), {
+    target: parent,
+    offset: ["0 0.5", "1 1"],
+  });
+
+  scroll(animate(item2, { y: "30%" }), {
+    target: parent,
+    offset: ["0 0.5", "1 1"],
+  });
+
+  // randomize placeholders
+  const colorPairs = [
+    {
+      color: "var(--accent-orange)",
+      backgroundColor: "var(--accent-green)",
+    },
+    {
+      color: "var(--accent-green)",
+      backgroundColor: "var(--accent-blue-secondary)",
+    },
+    {
+      color: "var(--accent-pink)",
+      backgroundColor: "var(--accent-blue-secondary)",
+    },
+    {
+      color: "var(--accent-blue)",
+      backgroundColor: "var(--accent-yellow)",
+    },
+  ];
+
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const memberFallbacks = document.querySelectorAll(".member-fallback");
+    let lastColorPairIndex = -1;
+
+    memberFallbacks.forEach((fallback) => {
+      let colorPairIndex;
+
+      do {
+        colorPairIndex = getRandomInt(colorPairs.length);
+      } while (colorPairIndex === lastColorPairIndex);
+
+      const colorPair = colorPairs[colorPairIndex];
+      fallback.style.color = colorPair.color;
+      fallback.style.backgroundColor = colorPair.backgroundColor;
+
+      lastColorPairIndex = colorPairIndex;
+    });
+  });
+</script>
 
 <style lang="scss">
   .bg {
@@ -149,6 +214,12 @@ const teamData = [
       width: 100%;
       position: absolute;
     }
+    .parallax-item,
+    .parallax-item2 {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
     .top {
       height: 40%;
       top: 0;
@@ -179,14 +250,27 @@ const teamData = [
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: .5rem 2rem;
+    padding: 0.5rem 2rem;
   }
   .member-image {
+    position: relative;
     aspect-ratio: 1/1;
     height: 70px;
     width: auto;
     border-radius: 100%;
     background: var(--primary-light);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .member-fallback {
+    display: grid;
+    place-items: center;
+    // position: absolute;
+    // top: 50%;
+    width: 100%;
+    height: 100%;
+    line-height: 100%;
   }
   .member-text {
     margin: 0 1rem;

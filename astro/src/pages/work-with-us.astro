@@ -1,0 +1,150 @@
+---
+import Layout from "../layouts/PageLayout.astro";
+import Landing from "../components/whoWeAre/landing.astro";
+const seo = {
+  // title: "Mimotype",
+  // description: "Join us in shaping the future of the optoelectronics industry.",
+  // image: "https://i.imgur.com/hev2VXn.png",
+};
+---
+
+<Layout seo={seo}>
+  <Landing />
+  <div class="content-wrapper">
+    <div class="context-bar">
+      <p class="context-item" id="item-1">Our service promise</p>
+      <p class="context-item" id="item-2">Why Fortnite?</p>
+      <p class="context-item" id="item-3">Projects</p>
+      <p class="context-item" id="item-4">Project Roadmap</p>
+      <div class="context-bar__blue"></div>
+    </div>
+    <section class="section section1">
+      <h1 id="headerSection1">section 1</h1>
+    </section>
+    <section class="section section2">
+      <h1 id="headerSection2">section 2</h1>
+    </section>
+    <section class="section section3">
+      <h1 id="headerSection3">section 3</h1>
+    </section>
+    <section class="section section4">
+      <h1 id="headerSection4">section 4</h1>
+    </section>
+  </div>
+</Layout>
+
+<script>
+  import Lenis from "@studio-freight/lenis";
+  import { inView } from "motion";
+
+  const lenis = new Lenis({
+    lerp: 0.075,
+  });
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+  // Select the active section in the context bar
+  const activeSection = document.querySelector(".context-bar__blue");
+
+  const contextItems = [
+    document.getElementById("item-1"),
+    document.getElementById("item-2"),
+    document.getElementById("item-3"),
+    document.getElementById("item-4"),
+  ];
+  const headerSections = [
+    document.getElementById("headerSection1"),
+    document.getElementById("headerSection2"),
+    document.getElementById("headerSection3"),
+    document.getElementById("headerSection4"),
+  ];
+  const sections = [
+    document.querySelector(".section1"),
+    document.querySelector(".section2"),
+    document.querySelector(".section3"),
+    document.querySelector(".section4"),
+  ];
+
+  let isScrolling = false; // variable to keep track of scrolling state
+
+  // update the active section div
+  function updateActiveSection(leftPosition) {
+    activeSection.style.left = `${leftPosition}%`;
+  }
+  // loop through the header sections
+  for (let i = 0; i < headerSections.length; i++) {
+    const headerSection = headerSections[i];
+    const contextItem = contextItems[i];
+    const section = sections[i];
+    const leftPosition = i * 25;
+
+    inView(headerSection, () => {
+      // check if scrolling is not currently happening
+      if (!isScrolling) {
+        updateActiveSection(leftPosition); // update the active section
+      }
+      return (leaveInfo) => console.log(leaveInfo);
+    });
+
+    // add a click event listener to each context menu item
+    contextItem.addEventListener("click", function () {
+      isScrolling = true; // disable inView function during scroll animation
+      updateActiveSection(leftPosition); // update the active section
+      lenis.scrollTo(section, {
+        duration: 0.5,
+        onComplete: () => {
+          isScrolling = false; // re-enable inView function after scroll animation completes
+        },
+      });
+    });
+  }
+</script>
+
+<style lang="scss">
+  .content-wrapper {
+    position: relative;
+  }
+  .context-bar {
+    width: var(--max-width);
+    margin: 0 auto;
+    top: 5rem;
+    position: sticky;
+    z-index: 10;
+    background: var(--accent-lightblue);
+    display: grid;
+    place-items: center;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-radius: 50px;
+
+    .context-item {
+      position: relative;
+      z-index: 2;
+      border-radius: 50px;
+      padding: 2rem 0.5rem;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      border: 1px solid red;
+      color: var(--accent-blue-secondary);
+    }
+
+    .context-bar__blue {
+      z-index: -1;
+      position: absolute;
+      height: 8px;
+      bottom: 0;
+      z-index: 9;
+      background-color: blue;
+      width: 25%;
+      left: 0;
+      height: 100%;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+  .section {
+    height: 200vh;
+    background: greenyellow;
+  }
+</style>

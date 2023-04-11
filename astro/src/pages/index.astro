@@ -5,6 +5,8 @@ import Loader from "../components/loader/index.astro";
 import Partners from "../components/Partners.astro";
 import { getLandingContent } from "../lib/api/landingContent";
 import CompanyStats from "../components/CompanyStats.astro";
+import MarketingCampaign from "../components/MarketingCampaign.astro";
+import LetsChat from "../components/LetsChat.astro";
 
 const seo = {
   // title: "Mimotype",
@@ -42,6 +44,8 @@ const landingData = await getLandingContent();
   <section>
     <CompanyStats />
   </section>
+  <MarketingCampaign />
+  <LetsChat />
 </Layout>
 
 <script>
@@ -50,9 +54,7 @@ const landingData = await getLandingContent();
   const lenis = new Lenis({
     lerp: 0.075,
   });
-  lenis.on("scroll", (e) => {
-    // console.log(e);
-  });
+
   function raf(time) {
     lenis.raf(time);
     requestAnimationFrame(raf);

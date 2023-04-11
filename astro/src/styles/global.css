@@ -73,7 +73,8 @@ font-display:auto;font-style:normal;font-weight:700;font-stretch:normal;
   --accent-orange: #FA6300;
   --accent-green: #C7D92E;
   --accent-navy: #213D4D;
-  --accent-lightblue: #82D1E3;
+  --accent-lightblue: #D6E8F2;
+  --accent-pink: #F2D6D6;
 }
 
 html {
@@ -130,5 +131,6 @@ p, label, input, textarea {
 
 small {
   font-size: 13px;
+  letter-spacing: 3%;
   font-family: "Aktiv-Bold";
 }

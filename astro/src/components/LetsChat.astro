@@ -1,0 +1,52 @@
+---
+import EmailForm from "./EmailForm.astro";
+---
+
+<section class="wrapper">
+  <div class="flex">
+    <div class="flex-item">
+      <div class="text-wrapper">
+        <h2>Let's chat</h2>
+        <p>
+          We know this new Metaverse thing can be confusing but won't worry, we
+          can help!
+          <br />
+          <br />
+          Send us a message and we'll get all your questions squared away :-)
+        </p>
+      </div>
+    </div>
+    <div class="flex-item">
+      <EmailForm />
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .wrapper {
+    background: var(--accent-yellow);
+    border-bottom: 1px solid var(--primary-dark);
+  }
+  .flex {
+    width: var(--inner-width);
+    margin: 0 auto;
+    padding: 5rem 0;
+    padding-top: 10rem;
+    display: flex;
+    position: relative;
+  }
+  .flex-item {
+    flex-basis: 50%;
+  }
+
+  .text-wrapper {
+    color: var(--primary-dark);
+    h2 {
+      line-height: 100%;
+      margin: 3rem 0;
+    }
+    p {
+      width: 60%;
+    }
+  }
+</style>
