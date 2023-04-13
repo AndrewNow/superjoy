@@ -2,22 +2,49 @@
 import Marquee from "./Marquee.astro";
 
 const string = "Why include Fortnite in your next marketing campaign?";
+
+const { isHomepage } = Astro.props;
+
+let textAccentColor;
+let accentColor;
+
+if (isHomepage) {
+  accentColor = "var(--accent-yellow)";
+  textAccentColor = "var(--primary-dark)";
+} else {
+  accentColor = "var(--accent-green)";
+  textAccentColor = "var(--accent-blue-secondary)";
+}
 ---
 
 <section>
   <div class="bg">
-    <Marquee
-      text="Fortnite is much more than a game - it's a cultural phenomenon"
-      primaryColor="var(--accent-yellow)"
-      secondaryColor="var(--accent-blue-secondary)"
-    />
+    {
+      isHomepage && (
+        <Marquee
+          text="Fortnite is much more than a game - it's a cultural phenomenon"
+          primaryColor="var(--accent-yellow)"
+          secondaryColor="var(--accent-blue-secondary)"
+        />
+      )
+    }
     <div class="inner" id="inner">
       <h2>
-        {
-          string.split(" ").map((word) => {
+        {isHomepage ?
+        
+        (  string.split(" ").map((word) => {
             return <span id="word">{word}</span>;
-          })
-        }
+          })) :
+          <span id="word">Why</span>
+          <span id="word" class="word-flex">include<h6>02</h6></span>
+          <span id="word">Fortnite</span>
+          <span id="word">in</span>
+          <span id="word">your</span>
+          <span id="word">next</span>
+          <span id="word">marketing</span>
+          <span id="word">campaign</span>
+        
+      }
       </h2>
       <p id="paragraph">
         The metaverse is a vast, uncharted expanse of potential. It's exciting,
@@ -49,6 +76,116 @@ const string = "Why include Fortnite in your next marketing campaign?";
     </div>
   </div>
 </section>
+
+<style lang="scss" define:vars={{ accentColor, textAccentColor }}>
+  .bg {
+    background: var(--accent-blue-secondary);
+    padding: 5rem 0;
+    padding-bottom: 15rem;
+  }
+  .inner {
+    width: var(--max-width);
+    margin: 0 auto;
+    position: relative;
+    color: var(--primary-light);
+
+    #word {
+      display: inline-block;
+      margin-right: 0.5em;
+      opacity: 0;
+      transform: translateY(80px);
+    }
+    .word-flex {
+      display: inline-flex!important;
+      h6 {
+        padding-left: 1.5rem;
+        padding-top: .5rem;
+      }
+    }
+    #paragraph {
+      opacity: 0;
+      transform: translateY(80px);
+    }
+
+    h2 {
+      padding-bottom: 10rem;
+    }
+    p {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 30%;
+    }
+  }
+
+  .smaller-inner {
+    width: var(--inner-width);
+    margin: 0 auto;
+    display: flex;
+  }
+
+  .stat-wrapper {
+    display: flex;
+    height: 550px;
+    justify-content: space-between;
+    flex-basis: 75%;
+    :nth-child(1) {
+      align-self: flex-start;
+    }
+    :nth-child(2) {
+      align-self: flex-end;
+    }
+    :nth-child(3) {
+      align-self: center;
+    }
+  }
+  #circle {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  .stat-circle {
+    aspect-ratio: 1/1;
+    width: 30%;
+    height: auto;
+    background: var(--accentColor);
+    border-radius: 100%;
+
+    color: var(--textAccentColor);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    h3 {
+      width: 100%;
+      text-align: center;
+      font-family: "Hamburg-Light";
+      text-transform: uppercase;
+      line-height: 100%;
+    }
+    small {
+      width: 100%;
+      text-align: center;
+      font-family: "Aktiv-Regular";
+    }
+  }
+
+  .descriptor {
+    flex-basis: 30%;
+    position: relative;
+
+    small {
+      font-family: "Aktiv-Bold";
+      text-align: right;
+      letter-spacing: 0.02rem;
+      color: var(--primary-light);
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
+</style>
 
 <script>
   import { animate, stagger, inView } from "motion";
@@ -96,106 +233,3 @@ const string = "Why include Fortnite in your next marketing campaign?";
     );
   });
 </script>
-
-<style lang="scss">
-  .bg {
-    background: var(--accent-blue-secondary);
-    padding: 5rem 0;
-    padding-bottom: 15rem;
-  }
-  .inner {
-    width: var(--max-width);
-    margin: 0 auto;
-    position: relative;
-    color: var(--primary-light);
-
-    #word {
-      display: inline-block;
-      margin-right: 0.5em;
-      opacity: 0;
-      transform: translateY(80px);
-    }
-    #paragraph {
-      opacity: 0;
-      transform: translateY(80px);
-    }
-
-    h2 {
-      padding-bottom: 10rem;
-    }
-    p {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 30%;
-    }
-  }
-
-  .smaller-inner {
-    width: var(--inner-width);
-    margin: 0 auto;
-    display: flex;
-  }
-
-  .stat-wrapper {
-    display: flex;
-    height: 550px;
-    justify-content: space-between;
-    flex-basis: 75%;
-    :nth-child(1) {
-      align-self: flex-start;
-    }
-    :nth-child(2) {
-      align-self: flex-end;
-    }
-    :nth-child(3) {
-      align-self: center;
-    }
-  }
-  #circle {
-    transform: scale(0.5);
-    opacity: 0;
-  }
-  .stat-circle {
-    aspect-ratio: 1/1;
-    width: 30%;
-    height: auto;
-    background: var(--accent-yellow);
-    border-radius: 100%;
-
-    color: var(--primary-dark);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-    h3 {
-      width: 100%;
-      text-align: center;
-      font-family: "Hamburg-Light";
-      text-transform: uppercase;
-      line-height: 100%;
-    }
-    small {
-      width: 100%;
-      text-align: center;
-      font-family: "Aktiv-Regular";
-    }
-  }
-
-  .descriptor {
-    flex-basis: 30%;
-    position: relative;
-
-    small {
-      font-family: "Aktiv-Bold";
-      text-align: right;
-      letter-spacing: 0.02rem;
-      color: var(--primary-light);
-      position: absolute;
-      bottom: 0;
-      right: 0;
-    }
-  }
-</style>

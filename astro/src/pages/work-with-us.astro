@@ -1,6 +1,13 @@
 ---
 import Layout from "../layouts/PageLayout.astro";
-import Landing from "../components/whoWeAre/landing.astro";
+import Landing from "../components/workWithUs/Landing.astro";
+import OurServicePromise from "../components/workWithUs/OurServicePromise.astro";
+import Marquee from "../components/Marquee.astro";
+import MarketingCampaign from "../components/MarketingCampaign.astro";
+import LetsChat from "../components/LetsChat.astro";
+import JoinTheConversation from "../components/JoinTheConversation.astro";
+import Roadmap from "../components/workWithUs/Roadmap.astro";
+
 const seo = {
   // title: "Mimotype",
   // description: "Join us in shaping the future of the optoelectronics industry.",
@@ -11,27 +18,139 @@ const seo = {
 <Layout seo={seo}>
   <Landing />
   <div class="content-wrapper">
-    <div class="context-bar">
-      <p class="context-item" id="item-1">Our service promise</p>
-      <p class="context-item" id="item-2">Why Fortnite?</p>
-      <p class="context-item" id="item-3">Projects</p>
-      <p class="context-item" id="item-4">Project Roadmap</p>
-      <div class="context-bar__blue"></div>
+    <section class="section">
+      <OurServicePromise />
+      <div class="marquee-container">
+        <div class="marquee-wrapper">
+          <Marquee
+            text="Fortnite is much more than a game - It's a cultural phenomenon."
+            primaryColor="var(--accent-blue-secondary)"
+            secondaryColor="var(--accent-green)"
+          />
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <MarketingCampaign />
+    </section>
+    <section class="section"></section>
+    <section class="section section-white">
+      <Roadmap />
+    </section>
+    <nav class="navbar">
+      <p class="nav-item">Our service promise</p>
+      <p class="nav-item">Why Fortnite?</p>
+      <p class="nav-item">Projects</p>
+      <p class="nav-item">Project Roadmap</p>
+      <div class="nav-active"></div>
+    </nav>
+  </div>
+  <div class="join-the-conversation">
+    <div class="svg-wrapper">
+      <div class="svg-wrapper-text">
+        <JoinTheConversation textColor="var(--color-navy)" />
+      </div>
+      <svg
+        class="separator"
+        width="100%"
+        height="349"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path id="separator"></path>
+      </svg>
     </div>
-    <section class="section section1">
-      <h1 id="headerSection1">section 1</h1>
-    </section>
-    <section class="section section2">
-      <h1 id="headerSection2">section 2</h1>
-    </section>
-    <section class="section section3">
-      <h1 id="headerSection3">section 3</h1>
-    </section>
-    <section class="section section4">
-      <h1 id="headerSection4">section 4</h1>
-    </section>
+    <LetsChat
+      backgroundColor="var(--accent-lightblue)"
+      textColor="var(--color-navy)"
+    />
   </div>
 </Layout>
+
+<style lang="scss">
+  .content-wrapper {
+    position: relative;
+  }
+  .navbar {
+    width: var(--max-width);
+    margin: 5rem auto;
+    position: sticky;
+    bottom: 3rem;
+    z-index: 10;
+    border-radius: 50px;
+    background: #d6e8f2;
+    // backdrop-filter: blur(35px);
+    // filter: saturate(1.05) brightness(1.05);
+    display: grid;
+    place-items: center;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+    .nav-item {
+      position: relative;
+      z-index: 2;
+      border-radius: 50px;
+      padding: 2rem 0.5rem;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      color: var(--accent-blue-secondary);
+      cursor: pointer;
+      font-family: "Hamburg-Bold";
+      text-transform: uppercase;
+    }
+    .nav-item.active {
+      color: var(--accent-lightblue);
+      transition: var(--hover-transition);
+    }
+
+    .nav-active {
+      border-radius: 50px;
+      z-index: -1;
+      position: absolute;
+      height: 8px;
+      bottom: 0;
+      background-color: var(--accent-blue-secondary);
+      border: 2px solid var(--accent-lightblue);
+      width: 25%;
+      left: 0;
+      height: 100%;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+  .section:not(.section-white) {
+    background: var(--accent-blue-secondary);
+  }
+  .marquee-container {
+    overflow: hidden;
+    width: 100%;
+  }
+  .marquee-wrapper {
+    margin: 5rem 0;
+    overflow-x: hidden;
+    transform: rotate(4.35deg) scale(1.01);
+  }
+
+  .join-the-conversation {
+    width: 100%;
+    position: relative;
+    .separator {
+      // margin: 0 auto;
+      // width: 150%;
+    }
+
+    .svg-wrapper {
+      transform: translateY(5px);
+      position: relative;
+
+      .svg-wrapper-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+</style>
 
 <script>
   import Lenis from "@studio-freight/lenis";
@@ -45,106 +164,87 @@ const seo = {
     requestAnimationFrame(raf);
   }
   requestAnimationFrame(raf);
-  // Select the active section in the context bar
-  const activeSection = document.querySelector(".context-bar__blue");
 
-  const contextItems = [
-    document.getElementById("item-1"),
-    document.getElementById("item-2"),
-    document.getElementById("item-3"),
-    document.getElementById("item-4"),
-  ];
-  const headerSections = [
-    document.getElementById("headerSection1"),
-    document.getElementById("headerSection2"),
-    document.getElementById("headerSection3"),
-    document.getElementById("headerSection4"),
-  ];
-  const sections = [
-    document.querySelector(".section1"),
-    document.querySelector(".section2"),
-    document.querySelector(".section3"),
-    document.querySelector(".section4"),
-  ];
+  // Page navbar logic
+  const activeSection = document.querySelector(".nav-active");
+  const navbarItems = document.querySelectorAll(".nav-item");
+  const sections = document.querySelectorAll(".section");
 
-  let isScrolling = false; // variable to keep track of scrolling state
+  let isScrolling = false; // keep track of scrolling state
 
-  // update the active section div
-  function updateActiveSection(leftPosition) {
+  const updateActiveSection = (leftPosition) => {
     activeSection.style.left = `${leftPosition}%`;
   }
-  // loop through the header sections
-  for (let i = 0; i < headerSections.length; i++) {
-    const headerSection = headerSections[i];
-    const contextItem = contextItems[i];
-    const section = sections[i];
-    const leftPosition = i * 25;
 
-    inView(headerSection, () => {
-      // check if scrolling is not currently happening
+  let activeContextItem = navbarItems[0]; // set the first context item as active
+  activeContextItem.classList.add("active"); // add active class to the first context item
+
+  sections.forEach((section, i) => {
+    const contextItem = navbarItems[i];
+    const leftPosition = i * (100 / sections.length);
+
+    inView(section, () => {
+      // don't run inView if scrollTo scrolling is active
       if (!isScrolling) {
-        updateActiveSection(leftPosition); // update the active section
+        updateActiveSection(leftPosition); // Update active section position in context bar
+        activeContextItem.classList.remove("active"); // Remove active class from previous active item and add it to the current item
+        contextItem.classList.add("active");
+        activeContextItem = contextItem; // Update active context item
       }
-      return (leaveInfo) => console.log(leaveInfo);
+      return (leaveInfo) => console.log(leaveInfo); // Return a function to be called when the section is no longer in view
     });
 
-    // add a click event listener to each context menu item
     contextItem.addEventListener("click", function () {
-      isScrolling = true; // disable inView function during scroll animation
-      updateActiveSection(leftPosition); // update the active section
+      isScrolling = true;
+
+      updateActiveSection(leftPosition); // Update active section position in context bar
+      activeContextItem.classList.remove("active"); // Remove active class from previous active item and add it to the clicked item
+      contextItem.classList.add("active");
+      activeContextItem = contextItem; // Update active context item
+      // Scroll to the clicked section
       lenis.scrollTo(section, {
         duration: 0.5,
+        offset: -200,
         onComplete: () => {
-          isScrolling = false; // re-enable inView function after scroll animation completes
+          isScrolling = false;
         },
       });
     });
-  }
+  });
+
+  // LET'S CHAT svg animation
+  const shapeStates = {
+    initialShape: {
+      color: "var(--accent-lightblue)",
+      d: "M960 0C562.503 0 211.323 87.0731 0 220.149V349H1920V220.149C1708.68 87.0731 1357.5 0 960 0Z",
+    },
+    targetShape: {
+      color: "var(--accent-lightblue)",
+      d: "M 960 0 C 562.503 0 226 -1 -1 0 V 349 H 1920 V -1 C 1723 -1 1357.5 0 960 0 Z",
+    },
+  };
+
+  import { interpolate } from "flubber";
+  import { animate, scroll } from "motion";
+  const path = document.getElementById("separator");
+  const parent = document.querySelector(".join-the-conversation");
+
+  let currentPath = shapeStates.initialShape;
+
+  // set svg attributes to that of stateShapes
+  path.setAttribute("fill", currentPath.color);
+  path.setAttribute("d", currentPath.d);
+
+  // toggle between shape states
+  currentPath =
+    currentPath === shapeStates.initialShape
+      ? shapeStates.targetShape
+      : shapeStates.initialShape;
+  const mixshapeStates = interpolate(path.getAttribute("d"), currentPath.d);
+
+  // animate on scroll
+  scroll(
+    animate((progress) => path.setAttribute("d", mixshapeStates(progress))),
+    { target: parent, offset: ["0 0.5", "0.45 0.5"] }
+  );
 </script>
-
-<style lang="scss">
-  .content-wrapper {
-    position: relative;
-  }
-  .context-bar {
-    width: var(--max-width);
-    margin: 0 auto;
-    top: 5rem;
-    position: sticky;
-    z-index: 10;
-    background: var(--accent-lightblue);
-    display: grid;
-    place-items: center;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    border-radius: 50px;
-
-    .context-item {
-      position: relative;
-      z-index: 2;
-      border-radius: 50px;
-      padding: 2rem 0.5rem;
-      text-align: center;
-      width: 100%;
-      height: 100%;
-      border: 1px solid red;
-      color: var(--accent-blue-secondary);
-    }
-
-    .context-bar__blue {
-      z-index: -1;
-      position: absolute;
-      height: 8px;
-      bottom: 0;
-      z-index: 9;
-      background-color: blue;
-      width: 25%;
-      left: 0;
-      height: 100%;
-      transition: all 0.3s ease-in-out;
-    }
-  }
-  .section {
-    height: 200vh;
-    background: greenyellow;
-  }
-</style>

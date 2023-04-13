@@ -1,93 +1,246 @@
+---
+import { Image } from "@astrojs/image/components";
+---
+
 <section class="landing">
   <div class="inner">
-    <span class="top">
-      <span>
-        <h4 id="top-text">We create</h4>
-        <h1 id="top-text">Imaginative</h1>
-      </span>
-      <span class="worlds">
-        <h1 id="top-text">worlds</h1>
+    <span class="top" id="top-text">
+      <div class="top-flex">
+        <span class="top-flex-left">
+          <h5 id="we-create">
+            <span class="we-create-word">We</span>
+            <span class="we-create-word">create</span>
+          </h5>
+          <span id="imaginative">
+            <h1 class="imaginative-word">imaginative</h1>
+          </span>
+        </span>
+        <span class="top-flex-image">
+          <div class="top-flex-image-inner">
+            <div class="hide-image"></div>
+            <div class="image-container">
+              <Image
+                class="image"
+                src="/images/snipersvoctane.png"
+                alt="cover image"
+                width={250}
+                height={140}
+              />
+            </div>
+          </div>
+        </span>
+      </div>
+      <span id="worlds">
+        <h1 class="worlds-word">worlds</h1>
       </span>
     </span>
-    <span class="middle">
-      <h1 id="middle-text">for disruptive</h1>
-      <h1 id="middle-text">marketing</h1>
-    </span>
-    <span class="bottom"><h1 id="middle-text">campaigns</h1></span>
+    <div class="bottom">
+      <div class="bottom-flex">
+        <h5 id="for">
+          <span class="for-word">For</span>
+        </h5>
+        <h3 id="disruptive">
+          <span class="disruptive-word">Disruptive</span>
+        </h3>
+      </div>
+    </div>
+    <div>
+      <h3 class="marketing-campaigns">
+        <span class="marketing-campaigns-word">Marketing</span>
+        <span class="marketing-campaigns-word">Campaigns</span>
+      </h3>
+    </div>
   </div>
 </section>
 
 <script>
-  import { animate, stagger } from "motion";
-  const animateTopText = document.querySelectorAll("#top-text");
-  const animateMiddleText = document.querySelectorAll("#middle-text");
-  const animateBottomText = document.querySelectorAll("#bottom-text");
+  import { animate, stagger, inView } from "motion";
+
+  const weCreate = document.querySelectorAll(".we-create-word");
+  const imaginativeWord = document.querySelector(".imaginative-word");
+  const worldsWord = document.querySelector(".worlds-word");
+  const hideImage = document.querySelector(".hide-image");
+  const image = document.querySelector(".image");
+  const bottomSection = document.querySelector(".bottom-flex");
+  const forWord = document.querySelector(".for-word");
+  const disruptiveWord = document.querySelector(".disruptive-word");
 
   animate(
-    animateTopText,
+    weCreate,
     { opacity: 1, transform: "translateY(0px)" },
-    { duration: 0.65, delay: stagger(0.41, { easing: [0.5, 0.5, 0, 1] }) }
+    { duration: 0.65, delay: stagger(0.05, { easing: [0.5, 0.5, 0, 1] }) }
   ).finished.then(() => {
     animate(
-      animateMiddleText,
-      { opacity: 1, transform: "translateY(0px)" },
-      { duration: 0.65, delay: stagger(0.1, { easing: [0.5, 0.5, 0, 1] }) }
-    );
-    // .finished.then(() => {
-    //   animate(
-    //     animateBottomText,
-    //     { opacity: 1, transform: "translateY(0px)" },
-    //     { duration: 0.85 }
-    //   );
-    // });
+      imaginativeWord,
+      { transform: "translateY(0px) rotate(0deg)" },
+      { duration: 1.325, easing: [0.5, 0.5, 0, 1] }
+    ),
+      animate(
+        hideImage,
+        { transform: "translateY(-100%) scaleY(0)" },
+        { duration: 1.325, delay: 0.325, easing: [0.5, 0.5, 0, 1] }
+      ),
+      animate(
+        image,
+        { scale: [1.3, 1] },
+        { duration: 2.325, easing: [0.5, 0.5, 0, 1] }
+      ),
+      animate(
+        worldsWord,
+        { transform: "translateY(0px)" },
+        { duration: 1, delay: 0.35, easing: [0.5, 0.5, 0, 1] }
+      );
+  });
+
+  inView(bottomSection, () => {
+    animate(
+      forWord,
+      { transform: "translateY(0px)" },
+      { duration: 1, delay: .35, easing: [0.5, 0.5, 0, 1] }
+    ),
+      animate(
+        disruptiveWord,
+        { transform: "translateY(0px)" },
+        { duration: 1, delay: 0.5, easing: [0.5, 0.5, 0, 1] }
+      );
   });
 </script>
 
 <style lang="scss">
+  // initial animation states
+  .imaginative-word,
+  .worlds-word,
+  .we-create-word {
+    // opacity: 0;
+  }
+  .we-create-word {
+    transform: translateY(100px);
+  }
+  .for-word {
+    display: block;
+    transform: translateY(100px);
+  }
+  .disruptive-word {
+    display: block;
+  }
+  .imaginative-word,
+  .worlds-word,
+  .marketing-campaigns-word,
+  .disruptive-word {
+    transform: translateY(250px) rotate(0deg);
+  }
+
   .landing {
-    background: var(--accent-blue);
-    color: var(--primary-light);
+    width: var(--inner-width);
+    margin: 0 auto;
+    color: var(--primary-dark);
+    padding-top: 10vh;
     h1 {
       line-height: 100%;
     }
-  }
-  .inner {
-    width: var(--max-width);
-    margin: 0 auto;
-    padding: 10rem 0;
-  }
-  #top-text,
-  #middle-text,
-  #bottom-text {
-    transform: translateY(150px);
-    opacity: 0;
+    h5 {
+      text-transform: uppercase;
+      font-family: "Hamburg-Light";
+    }
   }
 
   .top {
-    overflow: hidden;
-    display: block;
     width: 100%;
-    h4 {
-      margin: 0 2rem;
-    }
-    span {
-      display: flex;
-    }
-    span.worlds {
-      justify-content: flex-end;
-    }
-  }
-  .middle {
-    overflow: hidden;
-    display: block;
-    padding: 5rem 0;
-    width: 100%;
-  }
-  .bottom {
-    overflow: hidden;
+    margin: 0 auto;
     display: flex;
     justify-content: flex-end;
-    padding: 2rem 0;
+    flex-direction: column;
+  }
+  #we-create {
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+    overflow: hidden;
+    .we-create-word {
+      margin-left: 1.25rem;
+      display: block;
+    }
+  }
+  .top-flex {
+    display: flex;
+    justify-content: flex-end;
+    // margin-right: 12vw;
+  }
+  .top-flex-left {
+    display: flex;
+    flex-direction: column;
+  }
+  .top-flex-image {
+    aspect-ratio: 250/140;
+    position: relative;
+    display: flex;
+    align-items: bottom;
+    justify-content: flex-start;
+
+    .hide-image {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      background: var(--primary-light);
+    }
+    .top-flex-image-inner {
+      display: flex;
+      align-items: bottom;
+      justify-content: flex-start;
+      position: relative;
+      height: auto;
+      margin-left: 3rem;
+      height: auto;
+      .image-container {
+        position: relative;
+        border-radius: 200px;
+        aspect-ratio: 250/140;
+        width: 100%;
+        align-self: flex-end;
+        overflow: hidden;
+      }
+      .image {
+        // scale: 1.3;
+      }
+    }
+  }
+  #imaginative {
+    display: flex;
+    overflow: hidden;
+  }
+  #worlds {
+    text-align: right;
+    display: block;
+    overflow: hidden;
+  }
+
+  .inner {
+    margin: 0 auto;
+    padding: 10rem 0;
+  }
+  .bottom {
+    margin: 22rem 0;
+  }
+
+  #for,
+  #disruptive {
+    overflow: hidden;
+  }
+
+  .disruptive-word {
+    text-transform: uppercase;
+  }
+
+  .marketing-campaigns {
+    overflow: hidden;
+    text-align: right;
     width: 100%;
+    .marketing-campaigns-word {
+      text-transform: uppercase;
+      font-family: "Hamburg-Light";
+    }
   }
 </style>

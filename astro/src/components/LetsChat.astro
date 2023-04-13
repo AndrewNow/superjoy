@@ -1,5 +1,6 @@
 ---
 import EmailForm from "./EmailForm.astro";
+const { textColor, backgroundColor } = Astro.props;
 ---
 
 <section class="wrapper">
@@ -22,10 +23,10 @@ import EmailForm from "./EmailForm.astro";
   </div>
 </section>
 
-<style lang="scss">
+<style lang="scss" define:vars={{ textColor, backgroundColor }}>
   .wrapper {
-    background: var(--accent-yellow);
-    border-bottom: 1px solid var(--primary-dark);
+    background: var(--backgroundColor);
+    // border-bottom: 1px solid var(--textColor);
   }
   .flex {
     width: var(--inner-width);
@@ -40,7 +41,7 @@ import EmailForm from "./EmailForm.astro";
   }
 
   .text-wrapper {
-    color: var(--primary-dark);
+    color: var(--textColor);
     h2 {
       line-height: 100%;
       margin: 3rem 0;

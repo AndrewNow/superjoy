@@ -66,7 +66,7 @@ font-display:auto;font-style:normal;font-weight:700;font-stretch:normal;
   --max-width: min(1700px, 90vw);
   --inner-width: min(1575px, 80vw);
   --primary-light: #F8FAFB;
-  --primary-dark: #3A4014;
+  --primary-dark: #20211E;
   --accent-yellow: #F5C900;
   --accent-blue: #009CF4;
   --accent-blue-secondary: #007AFF;
@@ -75,6 +75,7 @@ font-display:auto;font-style:normal;font-weight:700;font-stretch:normal;
   --accent-navy: #213D4D;
   --accent-lightblue: #D6E8F2;
   --accent-pink: #F2D6D6;
+  --color-navy: #213D4D;
 }
 
 html {
@@ -86,7 +87,7 @@ html {
 }
 
 h1, h2, h3, h4, h5, h6, p {
-  line-height: 125%;
+  line-height: 105%;
 }
 
 h1 {
