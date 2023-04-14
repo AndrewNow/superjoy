@@ -1,15 +1,15 @@
 ---
-const { text, primaryColor, secondaryColor } = Astro.props;
+const { text, primaryColor, secondaryColor, isSecondInstance } = Astro.props;
 ---
 
 <div class="wrapper">
   <div class="loop-container">
-    <div class="loop-item">
+    <div class={isSecondInstance ? "second-loop-item" : "loop-item"}>
       <h5>
         {" "}{text}{" "}
       </h5>
     </div>
-    <div class="loop-item">
+    <div class={isSecondInstance ? "second-loop-item" : "loop-item"}>
       <h5>
         {" "}{text}{" "}
       </h5>
@@ -30,7 +30,8 @@ const { text, primaryColor, secondaryColor } = Astro.props;
   .loop-container {
     white-space: nowrap;
   }
-  .loop-item {
+  .loop-item,
+  .second-loop-item {
     position: absolute;
     top: 50%;
     padding-right: 2.5rem;
@@ -69,15 +70,16 @@ const { text, primaryColor, secondaryColor } = Astro.props;
 
       this.element = element;
       this.currentTranslation = currentTranslation;
-      this.speed = speed;
 
+      this.speed = speed;
       this.direction = true;
       this.scrollTop = 0;
-      this.metric = 95;
+      this.metric = 100;
+
       this.lerp = {
         current: this.currentTranslation,
         target: this.currentTranslation,
-        factor: 0.5,
+        factor: 0.2,
       };
 
       this.events();
@@ -89,8 +91,10 @@ const { text, primaryColor, secondaryColor } = Astro.props;
       let scrollDelta = 0;
 
       const update = () => {
+        // since lenis and this fn don't update at the same rate, track the delta to slow it down
         scrollDelta = this.scrollTop - lastScrollTop;
         lastScrollTop = this.scrollTop;
+
         if (scrollDelta > 0) {
           this.direction = true; // scroll right
           this.lerp.target += this.speed * 3;
@@ -118,16 +122,16 @@ const { text, primaryColor, secondaryColor } = Astro.props;
       this.lerp.target += this.speed;
       // if lerp target goes off the screen
       if (this.lerp.target > this.metric) {
-        this.lerp.current -= this.metric * 3;
-        this.lerp.target -= this.metric * 3;
+        this.lerp.current -= this.metric * 2;
+        this.lerp.target -= this.metric * 2;
       }
     }
 
     goBackward() {
       this.lerp.target -= this.speed;
       if (this.lerp.target < -this.metric) {
-        this.lerp.current -= -this.metric * 3;
-        this.lerp.target -= -this.metric * 3;
+        this.lerp.current -= -this.metric * 2;
+        this.lerp.target -= -this.metric * 2;
       }
     }
 
@@ -148,7 +152,11 @@ const { text, primaryColor, secondaryColor } = Astro.props;
 
   // ideally swap w/ something more specific & specify individually
   let elements = document.querySelectorAll(".loop-item");
+  let secondElements = document.querySelectorAll(".second-loop-item");
 
   new LoopingElement(elements[0], 0, 0.05, lenis);
   new LoopingElement(elements[1], -100, 0.05, lenis);
+
+  new LoopingElement(secondElements[0], 0, 0.05, lenis);
+  new LoopingElement(secondElements[1], -100, 0.05, lenis);
 </script>

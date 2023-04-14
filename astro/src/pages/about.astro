@@ -16,11 +16,33 @@ const seo = [];
 
 <Layout seo={seo}>
   <Landing />
-  <Marquee
+  <!-- <Marquee
     text="our passion is CREATING IMAGINATIVE EXPERIENCES IN FORTNITE"
     primaryColor={"var(--primary-dark)"}
     secondaryColor={"var(--primary-light)"}
-  />
+  /> -->
+  <div class="marquee-container">
+    <div class="marquee-instance green">
+      <div class="marquee-instance-wrapper">
+        <Marquee
+          text="our passion is CREATING IMAGINATIVE EXPERIENCES IN FORTNITE"
+          primaryColor="var(--color-darkgreen)"
+          secondaryColor="var(--accent-green)"
+          isSecondInstance={false}
+        />
+      </div>
+    </div>
+    <div class="marquee-instance orange">
+      <div class="marquee-instance-wrapper orange">
+        <Marquee
+          text="We're not just another Fortnite creative game studio"
+          primaryColor="var(--primary-light)"
+          secondaryColor="var(--accent-orange)"
+          isSecondInstance={true}
+        />
+      </div>
+    </div>
+  </div>
   <OurMission data={aboutData.ourMission} />
   <WhoWeAre data={aboutData.whoWeAre} />
   <Team data={aboutData.team} />
@@ -110,6 +132,30 @@ const seo = [];
         transform: translate(-50%, -50%);
       }
     }
+  }
+
+  .marquee-container {
+    height: 600px;
+    position: relative;
+    overflow: hidden;
+  }
+  .marquee-instance {
+    position: absolute;
+    width: 100%;
+  }
+  .marquee-instance.green {
+    top: 30%;
+  }
+  .marquee-instance.orange {
+    bottom: 5rem;
+  }
+  .marquee-instance-wrapper {
+    margin: 5rem 0;
+    overflow-x: hidden;
+    transform: rotate(11.5deg) scale(1.05);
+  }
+  .marquee-instance-wrapper.orange {
+    transform: rotate(-3.41deg) scale(1.01);
   }
 
   // #debugIndicator {
