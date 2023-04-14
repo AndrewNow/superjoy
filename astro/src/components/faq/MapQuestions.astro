@@ -1,5 +1,5 @@
 ---
-const { item, i } = Astro.props;
+const { item, i, textColor, backgroundColor } = Astro.props;
 import SanityPortableText from "../SanityPortableText.astro";
 ---
 
@@ -13,7 +13,7 @@ import SanityPortableText from "../SanityPortableText.astro";
   </div>
 </li>
 
-<style lang="scss">
+<style lang="scss" define:vars={{ textColor, backgroundColor }}>
   input {
     position: absolute;
     opacity: 0;
@@ -24,7 +24,7 @@ import SanityPortableText from "../SanityPortableText.astro";
   input:checked {
     + .tab-label {
       h6 {
-        margin: 0!important;
+        margin: 0 !important;
       }
       // background: darken($midnight, 10%);
       &::after {
@@ -48,13 +48,13 @@ import SanityPortableText from "../SanityPortableText.astro";
   .tab {
     border-bottom: 1px solid;
     width: 100%;
-    color: var(--khaki);
+    color: var(--textColor);
     overflow: hidden;
     &-label {
       display: flex;
       justify-content: space-between;
       padding: 2rem;
-      background: var(--yellow);
+      background: var(--backgroundColor);
       font-weight: bold;
       cursor: pointer;
       /* Icon */
@@ -76,8 +76,8 @@ import SanityPortableText from "../SanityPortableText.astro";
     &-content {
       max-height: 0;
       margin: 0 2rem;
-      background: var(--yellow);
-      color: var(--khaki);
+      background: var(--backgroundColor);
+      color: var(--textColor);
       transition: 1.35s all ease-in-out;
       overflow: hidden;
       .markdown-wrapper {

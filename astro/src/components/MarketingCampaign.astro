@@ -3,31 +3,23 @@ import Marquee from "./Marquee.astro";
 
 const string = "Why include Fortnite in your next marketing campaign?";
 
-const { isHomepage } = Astro.props;
+const { isHomepage, textColor, marqueeColor, backgroundColor, marqueeTextColor, statTextColor, statCircleColor } = Astro.props;
 
-let textAccentColor;
-let accentColor;
+let isHomepageCheck = isHomepage ? "isHomepage" : "notHomepage"
 
-if (isHomepage) {
-  accentColor = "var(--accent-yellow)";
-  textAccentColor = "var(--primary-dark)";
-} else {
-  accentColor = "var(--accent-green)";
-  textAccentColor = "var(--accent-blue-secondary)";
-}
 ---
 
 <section>
-  <div class="bg">
-    {
-      isHomepage && (
+  <div class="bg">    
+    <div class="marquee-container">
+      <div class="marquee-wrapper" data-homepage={isHomepageCheck}>
         <Marquee
-          text="Fortnite is much more than a game - it's a cultural phenomenon"
-          primaryColor="var(--accent-yellow)"
-          secondaryColor="var(--accent-blue-secondary)"
+          text="Fortnite is much more than a game - It's a cultural phenomenon."
+          primaryColor={marqueeTextColor}
+          secondaryColor={marqueeColor}
         />
-      )
-    }
+      </div>
+    </div>
     <div class="inner" id="inner">
       <h2>
         {isHomepage ?
@@ -77,9 +69,25 @@ if (isHomepage) {
   </div>
 </section>
 
-<style lang="scss" define:vars={{ accentColor, textAccentColor }}>
+<style lang="scss" define:vars={{ textColor, marqueeColor, backgroundColor, textColor, statTextColor, statCircleColor }}>
+
+  .marquee-container {
+    overflow: hidden;
+    width: 100%;
+  }
+  .marquee-wrapper[data-homepage="notHomepage"] {
+    margin: 10rem 0;
+    overflow-x: hidden;
+    transform: rotate(-4.35deg) scale(1.01);
+  }
+  .marquee-wrapper[data-homepage="isHomepage"] {
+    margin: 5rem 0;
+    overflow-x: hidden;
+    transform: rotate(4.35deg) scale(1.01);
+  }
+
   .bg {
-    background: var(--accent-blue-secondary);
+    background: var(--backgroundColor);
     padding: 5rem 0;
     padding-bottom: 15rem;
   }
@@ -87,7 +95,7 @@ if (isHomepage) {
     width: var(--max-width);
     margin: 0 auto;
     position: relative;
-    color: var(--primary-light);
+    color: var(--textColor);
 
     #word {
       display: inline-block;
@@ -147,10 +155,10 @@ if (isHomepage) {
     aspect-ratio: 1/1;
     width: 30%;
     height: auto;
-    background: var(--accentColor);
+    background: var(--statCircleColor);
     border-radius: 100%;
 
-    color: var(--textAccentColor);
+    color: var(--statTextColor);
 
     display: flex;
     justify-content: center;

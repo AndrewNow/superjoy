@@ -7,7 +7,10 @@ import MarketingCampaign from "../components/MarketingCampaign.astro";
 import LetsChat from "../components/LetsChat.astro";
 import JoinTheConversation from "../components/JoinTheConversation.astro";
 import Roadmap from "../components/workWithUs/Roadmap.astro";
+import Faq from "../components/faq/faq.astro";
+import { getFAQContent } from "../lib/api/faqContent";
 
+const faqData = await getFAQContent();
 const seo = {
   // title: "Mimotype",
   // description: "Join us in shaping the future of the optoelectronics industry.",
@@ -20,25 +23,24 @@ const seo = {
   <div class="content-wrapper">
     <section class="section">
       <OurServicePromise />
-      <div class="marquee-container">
-        <div class="marquee-wrapper">
-          <Marquee
-            text="Fortnite is much more than a game - It's a cultural phenomenon."
-            primaryColor="var(--accent-blue-secondary)"
-            secondaryColor="var(--accent-green)"
-          />
-        </div>
-      </div>
     </section>
     <section class="section">
-      <MarketingCampaign />
+      <MarketingCampaign
+        textColor="var(--primary-light)"
+        accentColor="var(--color-green)"
+        backgroundColor="var(--accent-blue-secondary)"
+        marqueeTextColor="var(--accent-blue-secondary)"
+        marqueeColor="var(--color-green)"
+        statTextColor="var(--accent-blue-secondary)"
+        statCircleColor="var(--color-green)"
+      />
     </section>
     <section class="section"></section>
     <section class="section section-white">
       <Roadmap />
     </section>
     <nav class="navbar">
-      <p class="nav-item">Our service promise</p>
+      <p class="nav-item">Our services</p>
       <p class="nav-item">Why Fortnite?</p>
       <p class="nav-item">Projects</p>
       <p class="nav-item">Project Roadmap</p>
@@ -48,7 +50,7 @@ const seo = {
   <div class="join-the-conversation">
     <div class="svg-wrapper">
       <div class="svg-wrapper-text">
-        <JoinTheConversation textColor="var(--color-navy)" />
+        <JoinTheConversation color="var(--color-navy)" />
       </div>
       <svg
         class="separator"
@@ -65,6 +67,12 @@ const seo = {
       textColor="var(--color-navy)"
     />
   </div>
+  <Faq
+    data={faqData}
+    faqTitle="var(--color-navy)"
+    textColor="var(--color-navy)"
+    backgroundColor="var(--accent-lightblue)"
+  />
 </Layout>
 
 <style lang="scss">
@@ -72,15 +80,13 @@ const seo = {
     position: relative;
   }
   .navbar {
-    width: var(--max-width);
+    width: 75%;
     margin: 5rem auto;
     position: sticky;
     bottom: 3rem;
     z-index: 10;
     border-radius: 50px;
     background: #d6e8f2;
-    // backdrop-filter: blur(35px);
-    // filter: saturate(1.05) brightness(1.05);
     display: grid;
     place-items: center;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -89,7 +95,7 @@ const seo = {
       position: relative;
       z-index: 2;
       border-radius: 50px;
-      padding: 2rem 0.5rem;
+      padding: 1.5rem 0.5rem;
       text-align: center;
       width: 100%;
       height: 100%;
@@ -120,16 +126,6 @@ const seo = {
   .section:not(.section-white) {
     background: var(--accent-blue-secondary);
   }
-  .marquee-container {
-    overflow: hidden;
-    width: 100%;
-  }
-  .marquee-wrapper {
-    margin: 5rem 0;
-    overflow-x: hidden;
-    transform: rotate(4.35deg) scale(1.01);
-  }
-
   .join-the-conversation {
     width: 100%;
     position: relative;
@@ -174,7 +170,7 @@ const seo = {
 
   const updateActiveSection = (leftPosition) => {
     activeSection.style.left = `${leftPosition}%`;
-  }
+  };
 
   let activeContextItem = navbarItems[0]; // set the first context item as active
   activeContextItem.classList.add("active"); // add active class to the first context item

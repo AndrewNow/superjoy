@@ -75,8 +75,14 @@ font-display:auto;font-style:normal;font-weight:700;font-stretch:normal;
   --accent-navy: #213D4D;
   --accent-lightblue: #D6E8F2;
   --accent-pink: #F2D6D6;
-  --color-navy: #213D4D;
+  /*  */
+  --color-yellow: #F5C900;
+  --color-green: #C7D92E;
   --color-darkgreen: #3A4014;
+  --color-lightpurple: #A994FF;
+  --color-purple: #6B47FF;
+  --color-darkpurple: #1F154A;
+  --color-navy: #213D4D;
 }
 
 html {

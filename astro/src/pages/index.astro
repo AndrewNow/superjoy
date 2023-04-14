@@ -44,8 +44,19 @@ const landingData = await getLandingContent();
   <section>
     <CompanyStats />
   </section>
-  <MarketingCampaign isHomepage={true} />
-  <LetsChat />
+  <MarketingCampaign
+    isHomepage={true}
+    textColor="var(--primary-light)"
+    backgroundColor="var(--color-purple)"
+    marqueeTextColor="var(--color-darkpurple)"
+    marqueeColor="var(--color-yellow)"
+    statTextColor="var(--primary-light)"
+    statCircleColor="var(--color-darkpurple)"
+  />
+  <LetsChat
+    textColor="var(--color-darkpurple)"
+    backgroundColor="var(--color-lightpurple)"
+  />
 </Layout>
 
 <script>

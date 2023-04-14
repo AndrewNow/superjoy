@@ -1,35 +1,42 @@
 ---
 import MapQuestions from "./MapQuestions.astro";
-const { data } = Astro.props;
+const { data, faqTitle, textColor, backgroundColor } = Astro.props;
 ---
 
 <section class="section-wrapper">
   <div class="header">
     <h1>FAQ</h1>
-
   </div>
   <div class="questions-wrapper">
     <ul>
       {
         data.faqData.map((item, i) => {
-          return <MapQuestions item={item} i={i} />;
+          return (
+            <MapQuestions
+              item={item}
+              i={i}
+              textColor={textColor}
+              backgroundColor={backgroundColor}
+            />
+          );
         })
       }
     </ul>
   </div>
 </section>
 
-<style lang="scss">
+<style lang="scss" define:vars={{faqTitle, backgroundColor}}>
   .section-wrapper {
     padding: 5rem 0;
     padding-bottom: 15rem;
+    background: var(--backgroundColor);
   }
   .header {
     margin: 0 auto;
     text-align: center;
 
     h1 {
-      color: var(--khaki);
+      color: var(--faqTitle);
       margin: 2rem auto;
     }
   }

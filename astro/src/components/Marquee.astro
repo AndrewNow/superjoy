@@ -5,14 +5,14 @@ const { text, primaryColor, secondaryColor, isSecondInstance } = Astro.props;
 <div class="wrapper">
   <div class="loop-container">
     <div class={isSecondInstance ? "second-loop-item" : "loop-item"}>
-      <h5>
+      <h6>
         {" "}{text}{" "}
-      </h5>
+      </h6>
     </div>
     <div class={isSecondInstance ? "second-loop-item" : "loop-item"}>
-      <h5>
+      <h6>
         {" "}{text}{" "}
-      </h5>
+      </h6>
     </div>
   </div>
 </div>
@@ -22,7 +22,7 @@ const { text, primaryColor, secondaryColor, isSecondInstance } = Astro.props;
     overflow: hidden;
     position: relative;
     display: flex;
-    height: 125px;
+    height: 85px;
     background: var(--secondaryColor);
     color: var(--primaryColor);
   }
@@ -36,7 +36,7 @@ const { text, primaryColor, secondaryColor, isSecondInstance } = Astro.props;
     top: 50%;
     padding-right: 2.5rem;
 
-    h5 {
+    h6 {
       text-transform: uppercase;
       font-family: "Hamburg-Regular";
     }

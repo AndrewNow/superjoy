@@ -50,7 +50,7 @@ const seo = [];
   <div class="join-the-conversation">
     <div class="svg-wrapper">
       <div class="svg-wrapper-text">
-        <JoinTheConversation />
+        <JoinTheConversation color="var(--color-darkgreen)" />
       </div>
       <svg
         class="separator"
@@ -62,18 +62,18 @@ const seo = [];
         <path id="separator"></path>
       </svg>
     </div>
-    <LetsChat />
+    <LetsChat textColor="var(--color-darkgreen)" backgroundColor="var(--color-green)"/>
   </div>
 </Layout>
 
 <script>
   const shapeStates = {
     initialShape: {
-      color: "var(--accent-yellow)",
+      color: "var(--accent-green)",
       d: "M960 0C562.503 0 211.323 87.0731 0 220.149V349H1920V220.149C1708.68 87.0731 1357.5 0 960 0Z",
     },
     targetShape: {
-      color: "var(--accent-yellow)",
+      color: "var(--accent-green)",
       d: "M 960 0 C 562.503 0 226 -1 -1 0 V 349 H 1920 V -1 C 1723 -1 1357.5 0 960 0 Z",
     },
   };
