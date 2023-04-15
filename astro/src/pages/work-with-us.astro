@@ -9,6 +9,7 @@ import JoinTheConversation from "../components/JoinTheConversation.astro";
 import Roadmap from "../components/workWithUs/Roadmap.astro";
 import Faq from "../components/faq/faq.astro";
 import { getFAQContent } from "../lib/api/faqContent";
+import RoadmapScroll from "../components/workWithUs/RoadmapScroll.astro";
 
 const faqData = await getFAQContent();
 const seo = {
@@ -38,6 +39,7 @@ const seo = {
     <section class="section"></section>
     <section class="section section-white">
       <Roadmap />
+      <RoadmapScroll/>
     </section>
     <nav class="navbar">
       <p class="nav-item">Our services</p>

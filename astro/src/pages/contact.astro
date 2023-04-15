@@ -3,15 +3,24 @@ import Layout from "../layouts/PageLayout.astro";
 import Faq from "../components/faq/faq.astro";
 import { getFAQContent } from "../lib/api/faqContent";
 import EmailForm from "../components/EmailForm.astro";
-import ContactButtons from "../components/ContactButtons.astro";
 
 const seo = {
   // title: "Mimotype",
   // description: "Join us in shaping the future of the optoelectronics industry.",
   // image: "https://i.imgur.com/hev2VXn.png",
 };
-
 const faqData = await getFAQContent();
+
+const contactData = [
+  {
+    text: "Press inquiries",
+    url: "mailto:test@email.com",
+  },
+  {
+    text: "Career opportunities",
+    url: "mailto:test@email.com",
+  },
+];
 ---
 
 <Layout seo={seo}>
@@ -40,14 +49,32 @@ const faqData = await getFAQContent();
           </h6>
         </div>
       </header>
-      <div class="form-flex-half">
-        <EmailForm />
+      <div class="form-flex">
+        <div class="form-flex-half">
+          <div class="other-inquiries">
+            <h6>Other inquiries?</h6>
+            {contactData.map((contact)=> {
+              return (
+                <div class="contact-item">
+                  <svg class="contact-arrow-svg" width="27" height="18" viewBox="0 0 27 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M13.1796 0C13.1796 0.658457 13.1275 1.83195 13.0828 2.57515C16.0853 4.18544 21.0695 6.66932 24.154 8.22093C21.1515 8.27309 17.9776 8.27309 13.6863 8.27309C9.39487 8.27309 4.09023 8.27309 0 8.1753V9.81818C4.12748 9.75299 7.875 9.75299 13.6416 9.75299C19.4081 9.75299 20.9876 9.75299 23.9454 9.78559C20.7715 11.3894 16.0331 13.7885 13.0753 15.3792C13.1275 16.0768 13.1722 17.3024 13.1722 18C15.668 16.1224 25.3535 11.096 27 9.96161V8.12966C25.4578 6.94314 15.6755 2.0536 13.1796 0Z" fill="#3A4014"/>
+                  </svg>
+                  <a href={`${contact.url}`} target="_blank" rel="noreferrer">
+                    <p>
+                      {contact.text}
+                      </p>
+                    </a>
+                  </div>
+              )
+            })}
+          </div>
+        </div>
+        <div class="form-flex-half">
+          <EmailForm />
+        </div>
       </div>
     </section>
   </div>
-  <section class="section-wrapper">
-    <ContactButtons />
-  </section>
   <section class="form-section">
     <Faq data={faqData} faqTitle="var(--color-yellow)" />
   </section>
@@ -84,7 +111,7 @@ const faqData = await getFAQContent();
     .svg-avatar {
       position: absolute;
       z-index: 0;
-      top: -10%;
+      top: -20%;
       right: 10%;
     }
   }
@@ -119,23 +146,54 @@ const faqData = await getFAQContent();
     align-items: flex-start;
     margin: 5rem 0;
   }
-
-  .form-flex-half {
-    flex-basis: 1;
+  .form-flex-half{
     max-width: 790px;
-    min-width: 50%;
-    padding: 0 2rem;
+  }
+  .form-flex-half:nth-child(odd) {
+    flex-basis: 30%;
+    
+    position: sticky;
+    padding: 5rem 0;
+    top: 10vh;
+  }
+  .form-flex-half:nth-child(even) {
+    flex-basis: 65%;
+    max-width: 850px;
+    // min-width: 50%;
+    padding: 5rem 2rem;
   }
 
-  .form-flex-half:first-child {
-    padding-left: 0;
-    p {
-      color: var(--primary-dark);
-      width: 75%;
-      margin-bottom: 10rem;
+
+  .other-inquiries {
+    color: var(--color-darkgreen);
+    h6 {
+      text-transform: uppercase;
+      margin-bottom: 2rem;
     }
   }
-  .form-flex-half:nth-child(2) {
-    padding-right: 0;
+  .contact-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem 0;
+    cursor: pointer;
+
+    .contact-arrow-svg {
+      transition: 0.25s cubic-bezier(0.5, 0.5, 0, 1);
+      margin-right: 1rem;
+    }
+    a {
+      color: var(--color-darkgreen);
+      text-decoration: none;
+    }
+  }
+  .contact-item:hover {
+    .contact-arrow-svg {
+      transform: translateX(.5rem);
+    }
+    a {
+      text-decoration: underline;
+    }
   }
 </style>

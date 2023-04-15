@@ -1,0 +1,100 @@
+---
+const roadmapData = [
+  {
+    duration: "4+ weeks",
+    title: "Game development",
+    description: "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage."
+  },
+  {
+    duration: "4+ weeks",
+    title: "Game development",
+    description: "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage."
+  },
+  {
+    duration: "4+ weeks",
+    title: "Game development",
+    description: "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage."
+  },
+  {
+    duration: "4+ weeks",
+    title: "Game development",
+    description: "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage."
+  },
+  {
+    duration: "4+ weeks",
+    title: "Game development",
+    description: "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage."
+  },
+]
+---
+
+<div class="scroll-wrapper" id="scroll-wrapper">
+  <div class="wrapper" id="scroll-content">
+    {roadmapData.map((item, index) => {
+      return (
+        <div class="roadmap-item">
+          <div class="roadmap-item-header">
+            <h6>
+              0{index + 1}
+              </h6>
+              <h6>
+                {item.duration}
+              </h6>
+          </div>
+            <h4>
+              {item.title}
+            </h4>
+            <p>{item.description}</p>
+          </div>
+        )
+      })}
+  </div>
+</div>
+
+<script>
+  import {scroll, animate} from "motion"
+  const scrollWrapper = document.getElementById("scroll-wrapper")
+  const content = document.getElementById("scroll-content")
+
+  scroll(
+    animate(content, { x: [0, "-100%"]}),
+    {target: scrollWrapper}
+  )
+
+  // add scroll timeline sequence, each roadmap item scales up when centered
+  // 
+</script>
+
+<style lang="scss">
+  .scroll-wrapper{ 
+    contain: paint;
+    height: 500vh;
+    position: relative;
+  }
+  .wrapper {
+    // overflow-x: hidden;
+    position: sticky;
+    top: 10vh;
+    display: flex;
+    padding-left: calc(50vw - 500px/2);
+  }
+  .roadmap-item {
+    color: var(--primary-light);
+    background: var(--accent-blue-secondary);
+    border-radius: 40px;
+    padding: 5rem 4rem;
+    margin: 0 3rem;
+    min-width: 500px;
+    position: relative;
+  
+    h4 {
+      margin: 3rem 0;
+      font-family: "Hamburg-Regular";
+    }
+  }
+  .roadmap-item-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
