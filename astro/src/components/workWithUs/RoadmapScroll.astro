@@ -3,90 +3,173 @@ const roadmapData = [
   {
     duration: "4+ weeks",
     title: "Game development",
-    description: "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage."
+    description:
+      "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage.",
   },
   {
     duration: "4+ weeks",
     title: "Game development",
-    description: "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage."
+    description:
+      "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage.",
   },
   {
     duration: "4+ weeks",
     title: "Game development",
-    description: "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage."
+    description:
+      "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage.",
   },
   {
     duration: "4+ weeks",
     title: "Game development",
-    description: "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage."
+    description:
+      "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage.",
   },
   {
     duration: "4+ weeks",
     title: "Game development",
-    description: "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage."
+    description:
+      "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage.",
   },
-]
+];
+
+const numSlides = roadmapData.length;
+const scrollContainerHeight = `calc(${numSlides} * 100vh)`;
 ---
 
+<p id="debug"></p>
 <div class="scroll-wrapper" id="scroll-wrapper">
   <div class="wrapper" id="scroll-content">
-    {roadmapData.map((item, index) => {
-      return (
-        <div class="roadmap-item">
-          <div class="roadmap-item-header">
-            <h6>
-              0{index + 1}
-              </h6>
-              <h6>
-                {item.duration}
-              </h6>
-          </div>
-            <h4>
-              {item.title}
-            </h4>
+    {
+      roadmapData.map((item, index) => {
+        return (
+          <div class="roadmap-item">
+            <div class="roadmap-item-header">
+              <h6>0{index + 1}</h6>
+              <h6>{item.duration}</h6>
+            </div>
+            <h4>{item.title}</h4>
             <p>{item.description}</p>
           </div>
-        )
-      })}
+        );
+      })
+    }
   </div>
 </div>
 
 <script>
-  import {scroll, animate} from "motion"
-  const scrollWrapper = document.getElementById("scroll-wrapper")
-  const content = document.getElementById("scroll-content")
+  import { scroll, animate, timeline } from "motion";
+  const scrollWrapper = document.getElementById("scroll-wrapper");
+  const content = document.getElementById("scroll-content");
+  const getAllSlides = document.querySelectorAll(".roadmap-item");
+
+  const numSlides = getAllSlides.length;
+  // to end the translation when the last slide is centered, remove one slide's worth of length
+  // from 100% of the scroll content width.
+  const translationRatio = (-100 * (numSlides - 1)) / numSlides;
+
+  const sequence = [];
+
+  getAllSlides.forEach((item, index) => {
+    if (index === 0) {
+      // First slide (start at full opacity)
+      // sequence.push([
+      //   item,
+      //   {
+      //     opacity: [1, 0.2],
+      //     y: [-50, 0],
+      //     scale: [1, 0.8],
+      //     // rotateY: [0, 0, "-180deg"],
+      //   },
+      //   { at: "0" },
+      // ]);
+    } else if (index === numSlides - 1) {
+      // Last slide (end with full opacity)
+      sequence.push([
+        item,
+        {
+          opacity: [0.2, 1],
+          y: [0, -50],
+          scale: [0.8, 1],
+          // rotateY: ["-180deg", 0],
+        },
+      ]);
+    } else {
+      // All other slides
+      sequence.push([
+        item,
+        {
+          opacity: [0.2, 1],
+          y: [0, -50],
+          scale: [0.8, 1],
+          // rotateY: ["-180deg", 0, "180deg"],
+        },
+      ]);
+    }
+  });
+
+  scroll(timeline(sequence), {
+    target: scrollWrapper,
+  });
 
   scroll(
-    animate(content, { x: [0, "-100%"]}),
-    {target: scrollWrapper}
-  )
+    animate(content, {
+      transform: ["translateX(0)", `translateX(${translationRatio}%)`],
+    }),
+    {
+      target: scrollWrapper,
+      offset: [`start start`, `end end`],
+    }
+  );
 
-  // add scroll timeline sequence, each roadmap item scales up when centered
-  // 
+  const debug = document.getElementById("debug");
+  scroll(({ y }) => (debug.innerHTML = y.progress), {
+    target: scrollWrapper,
+    // offset: [`start ${scrollOffset}px`, `end end`],
+  });
 </script>
 
-<style lang="scss">
-  .scroll-wrapper{ 
+<style lang="scss" define:vars={{ numSlides, scrollContainerHeight }}>
+  #debug {
+    position: fixed;
+    z-index: 2000;
+    top: 10vh;
+    left: 10vw;
+    color: red;
+  }
+  .scroll-wrapper {
     contain: paint;
-    height: 500vh;
+    height: var(--scrollContainerHeight);
     position: relative;
   }
   .wrapper {
-    // overflow-x: hidden;
     position: sticky;
-    top: 10vh;
+    top: 0;
+    height: 100vh;
     display: flex;
-    padding-left: calc(50vw - 500px/2);
+    align-items: center;
+    width: var(--scrollContainerHeight);
+    // margin: 0 calc(50vw - (var(--scrollContainerHeight) / var(--numSlides)) / 2); // center the first slide
+    margin-left: calc(
+      50vw - (var(--scrollContainerHeight) / var(--numSlides)) / 2
+    ); // center the first slide
   }
   .roadmap-item {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    // backface-visibility: hidden; // for back of card
     color: var(--primary-light);
     background: var(--accent-blue-secondary);
     border-radius: 40px;
     padding: 5rem 4rem;
-    margin: 0 3rem;
-    min-width: 500px;
+    margin: 0 calc(var(--scrollContainerHeight) / var(--numSlides) * (0.25 / 2)); // margins are 25%/2 of slide width
+    width: calc(
+      (var(--scrollContainerHeight) / var(--numSlides)) * 0.75
+    ); // width of the blue area = 75% of slide width
+
+    height: 70%;
+    transform: translateY(-50%);
     position: relative;
-  
+
     h4 {
       margin: 3rem 0;
       font-family: "Hamburg-Regular";
