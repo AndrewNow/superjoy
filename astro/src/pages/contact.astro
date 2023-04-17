@@ -53,20 +53,30 @@ const contactData = [
         <div class="form-flex-half">
           <div class="other-inquiries">
             <h6>Other inquiries?</h6>
-            {contactData.map((contact)=> {
-              return (
-                <div class="contact-item">
-                  <svg class="contact-arrow-svg" width="27" height="18" viewBox="0 0 27 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M13.1796 0C13.1796 0.658457 13.1275 1.83195 13.0828 2.57515C16.0853 4.18544 21.0695 6.66932 24.154 8.22093C21.1515 8.27309 17.9776 8.27309 13.6863 8.27309C9.39487 8.27309 4.09023 8.27309 0 8.1753V9.81818C4.12748 9.75299 7.875 9.75299 13.6416 9.75299C19.4081 9.75299 20.9876 9.75299 23.9454 9.78559C20.7715 11.3894 16.0331 13.7885 13.0753 15.3792C13.1275 16.0768 13.1722 17.3024 13.1722 18C15.668 16.1224 25.3535 11.096 27 9.96161V8.12966C25.4578 6.94314 15.6755 2.0536 13.1796 0Z" fill="#3A4014"/>
-                  </svg>
-                  <a href={`${contact.url}`} target="_blank" rel="noreferrer">
-                    <p>
-                      {contact.text}
-                      </p>
+            {
+              contactData.map((contact) => {
+                return (
+                  <div class="contact-item">
+                    <svg
+                      class="contact-arrow-svg"
+                      width="27"
+                      height="18"
+                      viewBox="0 0 27 18"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M13.1796 0C13.1796 0.658457 13.1275 1.83195 13.0828 2.57515C16.0853 4.18544 21.0695 6.66932 24.154 8.22093C21.1515 8.27309 17.9776 8.27309 13.6863 8.27309C9.39487 8.27309 4.09023 8.27309 0 8.1753V9.81818C4.12748 9.75299 7.875 9.75299 13.6416 9.75299C19.4081 9.75299 20.9876 9.75299 23.9454 9.78559C20.7715 11.3894 16.0331 13.7885 13.0753 15.3792C13.1275 16.0768 13.1722 17.3024 13.1722 18C15.668 16.1224 25.3535 11.096 27 9.96161V8.12966C25.4578 6.94314 15.6755 2.0536 13.1796 0Z"
+                        fill="#3A4014"
+                      />
+                    </svg>
+                    <a href={`${contact.url}`} target="_blank" rel="noreferrer">
+                      <p>{contact.text}</p>
                     </a>
                   </div>
-              )
-            })}
+                );
+              })
+            }
           </div>
         </div>
         <div class="form-flex-half">
@@ -79,6 +89,20 @@ const contactData = [
     <Faq data={faqData} faqTitle="var(--color-yellow)" />
   </section>
 </Layout>
+
+<script>
+  // init lenis
+  import Lenis from "@studio-freight/lenis";
+  const lenis = new Lenis({
+    lerp: 0.075,
+  });
+
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+</script>
 
 <style lang="scss">
   .page-wrapper {
@@ -146,12 +170,12 @@ const contactData = [
     align-items: flex-start;
     margin: 5rem 0;
   }
-  .form-flex-half{
+  .form-flex-half {
     max-width: 790px;
   }
   .form-flex-half:nth-child(odd) {
     flex-basis: 30%;
-    
+
     position: sticky;
     padding: 5rem 0;
     top: 10vh;
@@ -162,7 +186,6 @@ const contactData = [
     // min-width: 50%;
     padding: 5rem 2rem;
   }
-
 
   .other-inquiries {
     color: var(--color-darkgreen);
@@ -190,7 +213,7 @@ const contactData = [
   }
   .contact-item:hover {
     .contact-arrow-svg {
-      transform: translateX(.5rem);
+      transform: translateX(0.5rem);
     }
     a {
       text-decoration: underline;
