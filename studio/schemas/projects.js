@@ -1,21 +1,12 @@
 export default {
   name: 'projects',
-  title: 'All projects',
+  title: 'Projects',
   type: 'document',
   fields: [
     {
-      name: "featured",
-      title: "Featured?",
-      description: "Mark this field as checked if you wish this to appear as the featured project. Only one project can be featured at a time, so make sure to disable old 'featured' posts.",
-      type: "boolean",
-      initialValue: false,
-      options: { layout: "checkbox" },
-    }
-    ,
-    {
-      name: "projectName",
-      title: "Project name",
-      type: "string",
+      name: 'projectName',
+      title: 'Project name',
+      type: 'string',
       validation: (Rule) => Rule.required(),
     },
     {
@@ -43,37 +34,37 @@ export default {
         Rule.max(200).warning("The description shouldn't be longer than 200 characters"),
     },
     {
-      name: "gameMode",
-      title: "Game Mode",
-      description: "Ex: 2v2 Arenas, Competitive",
-      type: "string",
+      name: 'gameMode',
+      title: 'Game Mode',
+      description: 'Ex: 2v2 Arenas, Competitive',
+      type: 'string',
       validation: (Rule) => Rule.required(),
     },
     {
-      name: "client",
-      title: "Client",
-      description: "Ex: National Football League & Enthusiast Gaming",
-      type: "string",
+      name: 'client',
+      title: 'Client',
+      description: 'Ex: National Football League & Enthusiast Gaming',
+      type: 'string',
       validation: (Rule) => Rule.required(),
     },
     {
-      name: "date",
-      title: "Date",
-      type: "date",
+      name: 'date',
+      title: 'Date',
+      type: 'date',
       validation: (Rule) => Rule.required(),
     },
     {
-      name: "code",
-      title: "Code",
-      description: "Ex: 0893-8977-9494",
-      type: "string",
+      name: 'code',
+      title: 'Code',
+      description: 'Ex: 0893-8977-9494',
+      type: 'string',
       validation: (Rule) => Rule.required(),
     },
     {
       name: 'imageArray',
       title: 'More images',
       type: 'array',
-      description: "Add more images here.",
+      description: 'Add more images here.',
       of: [
         {
           type: 'image',
@@ -87,7 +78,7 @@ export default {
   preview: {
     select: {
       media: 'mainImage',
-      title: 'Landing image',
+      title: 'projectName',
     },
   },
 }

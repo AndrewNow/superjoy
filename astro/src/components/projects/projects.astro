@@ -1,34 +1,67 @@
 ---
-const { featuredProject, nonFeaturedProjects, allProjects } = Astro.props;
 import { Image } from "@astrojs/image/components";
+import AllOtherProjects from './allOtherProjects.astro'
+
+const { data } = Astro.props;
+
+
+const featuredProjectData = data.allProjects[0];
+const secondTierFeaturedData = data.allProjects.slice(1, 3);
+const allOtherProjectData = data.allProjects.slice(3);
 ---
 
 <header class="header">
   <h3>
-    Our projects <span class="project-count"><h5>{allProjects.length}</h5></span
+    Our projects <span class="project-count"
+      ><h5>{data.allProjects.length}</h5></span
     >
   </h3>
 </header>
 <div class="inner-wrapper">
+  <!-- Featured project -->
   {
-    featuredProject.map((project) => {
-      return (
-        <div class="project">
-          <div class="image-wrapper">
-            <Image
-              class="featured-image"
-              src={project.imageUrl}
-              width={1850}
-              height={1035}
-              alt={`Featured project - ${project.projectName} `}
-              fit="cover"
-            />
-          </div>
-          <h6>{project.projectName}</h6>
+    featuredProjectData && (
+      <div class="project">
+        <div class="image-wrapper">
+          <Image
+            class="featured-image"
+            src={featuredProjectData.imageUrl}
+            width={1850}
+            height={1035}
+            alt={`Featured project - ${featuredProjectData.projectName} `}
+            fit="cover"
+            quality={90}
+          />
         </div>
-      );
-    })
+        <h6>{featuredProjectData.projectName}</h6>
+      </div>
+    )
   }
+  <!-- Second tier featured -->
+  <div class="second-tier-featured-flex">
+    {
+      secondTierFeaturedData.map((project) => {
+        return (
+          <div class="project second-tier-featured">
+            <div class="image-wrapper">
+              <Image
+                class="featured-image"
+                src={project.imageUrl}
+                width={910}
+                height={512}
+                alt={`Featured project - ${project.projectName} `}
+                fit="cover"
+                quality={80}
+              />
+            </div>
+            <h6>{project.projectName}</h6>
+          </div>
+        );
+      })
+    }
+  </div>
+  <!-- All other projects -->
+  <AllOtherProjects data={allOtherProjectData} />
 </div>
 
 <style lang="scss">
@@ -74,6 +107,17 @@ import { Image } from "@astrojs/image/components";
         height: auto;
         object-fit: cover;
       }
+    }
+  }
+  .second-tier-featured-flex {
+    padding: 3rem 0;
+    display: flex;
+    justify-content: space-between;
+    .second-tier-featured:nth-child(odd) {
+      margin-right: 1rem;
+    }
+    .second-tier-featured:nth-child(even) {
+      margin-left: 1rem;
     }
   }
 </style>

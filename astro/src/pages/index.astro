@@ -6,11 +6,7 @@ import { getLandingContent } from "../lib/api/landingContent";
 import CompanyStats from "../components/CompanyStats.astro";
 import MarketingCampaign from "../components/MarketingCampaign.astro";
 import LetsChat from "../components/LetsChat.astro";
-import {
-  getAllProjects,
-  getFeaturedProject,
-  getNonFeaturedProjects,
-} from "../lib/api/projects";
+import { getAllProjects } from "../lib/api/projects";
 import Projects from "../components/projects/projects.astro";
 
 const seo = {
@@ -20,9 +16,9 @@ const seo = {
 };
 
 const landingData = await getLandingContent();
-const allProjects = await getAllProjects();
-const featuredProject = await getFeaturedProject();
-const nonFeaturedProjects = await getNonFeaturedProjects();
+const projectsData = await getAllProjects();
+// const allProjects = await getAllProjects();
+// allProjects will be used to map over the projects into their own pages.
 ---
 
 <Layout seo={seo}>
@@ -47,11 +43,7 @@ const nonFeaturedProjects = await getNonFeaturedProjects();
   </div>
   <Partners partnerImages={landingData.partnerImages} />
   <section id="projectsCarousel">
-    <Projects
-      featuredProject={featuredProject}
-      nonFeaturedProjects={nonFeaturedProjects}
-      allProjects={allProjects}
-    />
+    <Projects data={projectsData} />
   </section>
   <section>
     <CompanyStats />
