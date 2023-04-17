@@ -71,19 +71,8 @@ const scrollContainerHeight = `calc(${numSlides} * 100vh)`;
 
   getAllSlides.forEach((item, index) => {
     if (index === 0) {
-      // First slide (start at full opacity)
-      // sequence.push([
-      //   item,
-      //   {
-      //     opacity: [1, 0.2],
-      //     y: [-50, 0],
-      //     scale: [1, 0.8],
-      //     // rotateY: [0, 0, "-180deg"],
-      //   },
-      //   { at: "0" },
-      // ]);
-    } else 
-    if (index === numSlides - 1) {
+      return;
+    } else if (index === numSlides - 1) {
       // Last slide (end with full opacity)
       sequence.push([
         item,

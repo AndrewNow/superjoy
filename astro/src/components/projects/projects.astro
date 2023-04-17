@@ -1,0 +1,79 @@
+---
+const { featuredProject, nonFeaturedProjects, allProjects } = Astro.props;
+import { Image } from "@astrojs/image/components";
+---
+
+<header class="header">
+  <h3>
+    Our projects <span class="project-count"><h5>{allProjects.length}</h5></span
+    >
+  </h3>
+</header>
+<div class="inner-wrapper">
+  {
+    featuredProject.map((project) => {
+      return (
+        <div class="project">
+          <div class="image-wrapper">
+            <Image
+              class="featured-image"
+              src={project.imageUrl}
+              width={1850}
+              height={1035}
+              alt={`Featured project - ${project.projectName} `}
+              fit="cover"
+            />
+          </div>
+          <h6>{project.projectName}</h6>
+        </div>
+      );
+    })
+  }
+</div>
+
+<style lang="scss">
+  .header {
+    width: var(--inner-width);
+    margin: 5rem auto;
+    h3 {
+      color: var(--color-darkpurple);
+      text-transform: uppercase;
+      font-family: "Hamburg-Regular";
+      position: relative;
+      display: inline;
+    }
+    .project-count {
+      position: absolute;
+      top: 0;
+      right: -3rem;
+    }
+  }
+  .inner-wrapper {
+    position: relative;
+    max-width: 1850px;
+    margin: 0 auto;
+  }
+  .project {
+    position: relative;
+    width: 100%;
+    margin-bottom: 6rem;
+    h6 {
+      text-transform: uppercase;
+      margin: 3rem;
+      margin-top: 2rem;
+      color: var(--color-darkpurple);
+    }
+    .image-wrapper {
+      aspect-ratio: 1850/1035;
+      width: 100%;
+      position: relative;
+
+      .featured-image {
+        aspect-ratio: 1850/1035;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+    }
+  }
+</style>

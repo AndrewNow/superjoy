@@ -1,12 +1,17 @@
 ---
 import Layout from "../layouts/PageLayout.astro";
-import Carousel from "../components/projectsection/carousel.jsx";
 import Loader from "../components/loader/index.astro";
 import Partners from "../components/Partners.astro";
 import { getLandingContent } from "../lib/api/landingContent";
 import CompanyStats from "../components/CompanyStats.astro";
 import MarketingCampaign from "../components/MarketingCampaign.astro";
 import LetsChat from "../components/LetsChat.astro";
+import {
+  getAllProjects,
+  getFeaturedProject,
+  getNonFeaturedProjects,
+} from "../lib/api/projects";
+import Projects from "../components/projects/projects.astro";
 
 const seo = {
   // title: "Mimotype",
@@ -15,6 +20,9 @@ const seo = {
 };
 
 const landingData = await getLandingContent();
+const allProjects = await getAllProjects();
+const featuredProject = await getFeaturedProject();
+const nonFeaturedProjects = await getNonFeaturedProjects();
 ---
 
 <Layout seo={seo}>
@@ -39,7 +47,11 @@ const landingData = await getLandingContent();
   </div>
   <Partners partnerImages={landingData.partnerImages} />
   <section id="projectsCarousel">
-    <!-- <Carousel client:load /> -->
+    <Projects
+      featuredProject={featuredProject}
+      nonFeaturedProjects={nonFeaturedProjects}
+      allProjects={allProjects}
+    />
   </section>
   <section>
     <CompanyStats />
