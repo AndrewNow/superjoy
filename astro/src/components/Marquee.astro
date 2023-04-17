@@ -157,6 +157,8 @@ const { text, primaryColor, secondaryColor, isSecondInstance } = Astro.props;
   new LoopingElement(elements[0], 0, 0.05, lenis);
   new LoopingElement(elements[1], -100, 0.05, lenis);
 
+if (typeof secondElements !== 'undefined' && secondElements !== null) {
   new LoopingElement(secondElements[0], 0, 0.05, lenis);
   new LoopingElement(secondElements[1], -100, 0.05, lenis);
+}
 </script>
