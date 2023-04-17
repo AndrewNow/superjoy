@@ -36,7 +36,7 @@ const numSlides = roadmapData.length;
 const scrollContainerHeight = `calc(${numSlides} * 100vh)`;
 ---
 
-<p id="debug"></p>
+<!-- <p id="debug"></p> -->
 <div class="scroll-wrapper" id="scroll-wrapper">
   <div class="wrapper" id="scroll-content">
     {
@@ -82,13 +82,14 @@ const scrollContainerHeight = `calc(${numSlides} * 100vh)`;
       //   },
       //   { at: "0" },
       // ]);
-    } else if (index === numSlides - 1) {
+    } else 
+    if (index === numSlides - 1) {
       // Last slide (end with full opacity)
       sequence.push([
         item,
         {
           opacity: [0.2, 1],
-          y: [0, -50],
+          y: [50, 0],
           scale: [0.8, 1],
           // rotateY: ["-180deg", 0],
         },
@@ -99,7 +100,7 @@ const scrollContainerHeight = `calc(${numSlides} * 100vh)`;
         item,
         {
           opacity: [0.2, 1],
-          y: [0, -50],
+          y: [50, 0],
           scale: [0.8, 1],
           // rotateY: ["-180deg", 0, "180deg"],
         },
@@ -117,15 +118,13 @@ const scrollContainerHeight = `calc(${numSlides} * 100vh)`;
     }),
     {
       target: scrollWrapper,
-      offset: [`start start`, `end end`],
     }
   );
 
-  const debug = document.getElementById("debug");
-  scroll(({ y }) => (debug.innerHTML = y.progress), {
-    target: scrollWrapper,
-    // offset: [`start ${scrollOffset}px`, `end end`],
-  });
+  // const debug = document.getElementById("debug");
+  // scroll(({ y }) => (debug.innerHTML = y.progress), {
+  //   target: scrollWrapper,
+  // });
 </script>
 
 <style lang="scss" define:vars={{ numSlides, scrollContainerHeight }}>
@@ -167,14 +166,15 @@ const scrollContainerHeight = `calc(${numSlides} * 100vh)`;
     ); // width of the blue area = 75% of slide width
 
     height: 70%;
-    transform: translateY(-50%);
+    // transform: translateY(-50%);
+    transform: translateY(0%);
     position: relative;
-
     h4 {
       margin: 3rem 0;
       font-family: "Hamburg-Regular";
     }
   }
+
   .roadmap-item-header {
     width: 100%;
     display: flex;
