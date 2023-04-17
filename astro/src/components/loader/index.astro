@@ -190,7 +190,7 @@ const { imageSrc, description } = Astro.props;
   const title = document.getElementById("title");
   const description = document.getElementById("description");
 
-  const sequence = [
+  const sequence:any[] = [
     [
       studiosSVG,
       {
@@ -266,7 +266,7 @@ const { imageSrc, description } = Astro.props;
   ];
 
   // sequence for Chrome users only that doesn't animate maskSize on WAAPI
-  const chromeSpecificSequence = [
+  const chromeSpecificSequence: any[] = [
     [
       studiosSVG,
       {
