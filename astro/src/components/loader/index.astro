@@ -335,22 +335,23 @@ const { imageSrc, description } = Astro.props;
   // Test to see if a user is on chrome
   // This is because -webkit-mask-size (webkitMaskSize) is unsupported with WAAPI.
 
-  const isChrome =
-    /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+  // const isChrome =
+  //   /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 
-  if (isChrome) {
-    scroll(timeline(chromeSpecificSequence), { target: parent });
-    // run scroll function for webkitMaskSize separate from WAAPI sequence
-    scroll(
-      ({ y }) => {
-        // map value between 23% and 200%
-        const mappedValue = y.progress * (200 - 23) + 23;
-        heroImage.style.webkitMaskSize = `${mappedValue}%`;
-      },
-      { target: parent }
-    );
-  } else {
-    // if not chrome, serve Motion One WAAPI
-    scroll(timeline(sequence), { target: parent });
-  }
+  // if (isChrome) {
+  //   scroll(timeline(chromeSpecificSequence), { target: parent });
+  //   // run scroll function for webkitMaskSize separate from WAAPI sequence
+  //   scroll(
+  //     ({ y }) => {
+  //       // map value between 23% and 200%
+  //       const mappedValue = y.progress * (200 - 23) + 23;
+  //       heroImage.style.webkitMaskSize = `${mappedValue}%`;
+  //     },
+  //     { target: parent }
+  //   );
+  // } else {
+  //   // if not chrome, serve Motion One WAAPI
+  //   scroll(timeline(sequence), { target: parent });
+  // }
+  scroll(timeline(sequence), { target: parent });
 </script>
