@@ -1,12 +1,219 @@
 ---
-const {data} = Astro.props;
+import { Image } from "@astrojs/image/components";
+const { data } = Astro.props;
 ---
 
-{data.map((project) => {
-  return (
-
-    <div>
-      {project.projectName}
+<>
+  {
+    data.map((project) => {
+      return (
+        <div class="hover-project-item" data-media-src={project.code}>
+          <h5>{project.projectName}</h5>
+          <p>{project.client}</p>
+        </div>
+      );
+    })
+  }
+  <div class="cursor">
+    <div class="cursor-media">
+      {
+        data.map((project) => {
+          return (
+            <Image
+              class="cursor-media-content"
+              id={project.code}
+              data-media-src={project.code}
+              src={project.imageUrl}
+              alt="cursor preview image"
+              width={350}
+              height={350}
+            />
+          );
+        })
+      }
     </div>
-      )
-})}
+  </div>
+</>
+
+<style lang="scss">
+  .hover-project-item {
+    border-top: 3px solid var(--color-darkpurple);
+    position: relative;
+    width: 100%;
+    padding: 3rem;
+    margin: 3rem 0;
+    color: var(--color-darkpurple);
+    display: flex;
+    justify-content: space-between;
+    h5 {
+      text-transform: uppercase;
+    }
+  }
+  .cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    contain: layout style size;
+    // ?
+    pointer-events: none;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: -24px;
+      left: -24px;
+      display: block;
+      width: 48px;
+      height: 48px;
+      transform: scale(0.2);
+      background: black;
+      border-radius: 50%;
+    }
+
+    .cursor-media {
+      display: block;
+      width: 350px;
+      height: 350px;
+      overflow: hidden;
+      border-radius: 100%;
+      transform: scale(0);
+      margin: -175px 0 0 -175px;
+      position: relative;
+
+      .cursor-media-content {
+        position: absolute;
+        height: 350px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  }
+</style>
+
+<script>
+  import { animate } from "motion";
+  import { lerp, getMousePos, getSiblings } from "../utils/helpers.js";
+
+  // get mouse position and set it to mouse state
+  let mouse = { x: 0, y: 0 };
+  window.addEventListener("mousemove", (e) => (mouse = getMousePos(e)));
+
+  export default class Cursor {
+    constructor(el) {
+      // variables
+      this.Cursor = el;
+      this.Cursor.style.opacity = 0;
+
+      // get hoverable items
+      this.Item = document.querySelectorAll(".hover-project-item");
+
+      // values needed for cursor lerp
+      this.cursorConfigs = {
+        x: { previous: 0, current: 0, amount: 0.2 },
+        y: { previous: 0, current: 0, amount: 0.2 },
+      };
+
+      // handler for when mouse moves
+      this.onMouseMoveEvent = () => {
+        this.cursorConfigs.x.previous = this.cursorConfigs.x.current = mouse.x;
+        this.cursorConfigs.y.previous = this.cursorConfigs.y.current = mouse.y;
+
+        // set cursor opacity to 1 when hovered on screen
+        animate(
+          this.Cursor,
+          { opacity: 1 },
+          { duration: 1, easing: "ease-in-out" }
+        );
+
+        // Execute scale
+        this.onScaleMouse();
+
+        // RAF to perform animation update before next frame repaint
+        requestAnimationFrame(() => this.render());
+        // cleanup even listener
+        window.removeEventListener("mousemove", this.onMouseMoveEvent);
+      };
+
+      // assign mouse function
+      window.addEventListener("mousemove", this.onMouseMoveEvent);
+    }
+
+    // scale mouse on certain actions
+    onScaleMouse() {
+      this.Item.forEach((link) => {
+        if (link.matches(":hover")) {
+          this.setVideo(link);
+          this.scaleCursor(this.Cursor.children[0], 0.8);
+        }
+        link.addEventListener("mouseenter", () => {
+          this.setVideo(link);
+          this.scaleCursor(this.Cursor.children[0], 0.8);
+        });
+        link.addEventListener("mouseleave", () => {
+          this.scaleCursor(this.Cursor.children[0], 0);
+        });
+
+        // hover on a tag to expand to 1.2
+        link.children[0].addEventListener("mouseenter", () => {
+          this.scaleCursor(this.Cursor.children[0], 1.2);
+        });
+        // off hover scale to 0.8
+        link.children[0].addEventListener("mouseleave", () => {
+          this.scaleCursor(this.Cursor.children[0], 0.8);
+        });
+      });
+    }
+
+    // Scale animation
+    scaleCursor(el, amount) {
+      animate(
+        el,
+        { transform: `scale(${amount})` },
+        { duration: 0.6, easing: "ease-out" }
+      );
+    }
+
+    // Change media when hovering different items
+    setVideo(el) {
+      let src = el.getAttribute("data-media-src");
+      let media = document.getElementById(src);
+      let siblings = getSiblings(media);
+
+      if (media.id == src) {
+        animate(media, { zIndex: 4, opacity: 1 }, { duration: 0 });
+
+        siblings.forEach((i) => {
+          animate(i, { zIndex: 1, opacity: 0 }, { duration: 0 });
+        });
+      }
+    }
+
+    // things to update on each frame
+    render() {
+      // update cursor.current
+      this.cursorConfigs.x.current = mouse.x;
+      this.cursorConfigs.y.current = mouse.y;
+
+      // lerp
+      for (const key in this.cursorConfigs) {
+        // key = x & y
+        this.cursorConfigs[key].previous = lerp(
+          this.cursorConfigs[key].previous,
+          this.cursorConfigs[key].current,
+          this.cursorConfigs[key].amount
+        );
+      }
+      // Setting the cursor x and y to our cursor html element
+      this.Cursor.style.transform = `translateX(${this.cursorConfigs.x.previous}px) translateY(${this.cursorConfigs.y.previous}px)`;
+
+      // Loop RAF
+      requestAnimationFrame(() => this.render());
+    }
+  }
+
+  window.onload = () => {
+    new Cursor(document.querySelector(".cursor"));
+    // const cursor = new Cursor(document.querySelector(".cursor"));
+  };
+</script>
