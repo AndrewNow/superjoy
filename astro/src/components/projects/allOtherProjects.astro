@@ -95,32 +95,33 @@ const { data } = Astro.props;
       transform: scale(0);
       margin: -175px 0 0 -175px;
       position: relative;
+      mask: url(#mask);
+      -webkit-mask: url(#mask);
 
-      .blob {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-
-        transform: translate(-50%, -50%);
-        width: 100%;
-        height: 100%;
-        fill: white;
-      }
+      
       .cursor-media-content {
-        mask: url(#mask);
-        -webkit-mask: url(#mask);
         position: absolute;
         top: 0;
         left: 0;
       }
     }
   }
+  .blob {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    fill: white;
+  }
 </style>
 
 <script>
   import { lerp, getMousePos, getSiblings } from "../utils/helpers.js";
   import { animate } from "motion";
-    import { interpolate } from "flubber";
+  import { interpolate } from "flubber";
   
   const shapeStates = [
     {
@@ -253,23 +254,23 @@ const { data } = Astro.props;
       this.Item.forEach((link) => {
         if (link.matches(":hover")) {
           this.setVideo(link);
-          this.scaleCursor(this.Cursor.children[0], 0.8);
+          this.scaleCursor(this.Cursor.children[1], 0.8);
         }
         link.addEventListener("mouseenter", () => {
           this.setVideo(link);
-          this.scaleCursor(this.Cursor.children[0], 0.8);
+          this.scaleCursor(this.Cursor.children[1], 0.8);
         });
         link.addEventListener("mouseleave", () => {
-          this.scaleCursor(this.Cursor.children[0], 0);
+          this.scaleCursor(this.Cursor.children[1], 0);
         });
 
         // hover on a tag to expand to 1.2
         link.children[0].addEventListener("mouseenter", () => {
-          this.scaleCursor(this.Cursor.children[0], 1.2);
+          this.scaleCursor(this.Cursor.children[1], 1.2);
         });
         // off hover scale to 0.8
         link.children[0].addEventListener("mouseleave", () => {
-          this.scaleCursor(this.Cursor.children[0], 0.8);
+          this.scaleCursor(this.Cursor.children[1], 0.8);
         });
       });
     }
