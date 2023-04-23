@@ -91,9 +91,7 @@ const { data } = Astro.props;
       width: 350px;
       height: 350px;
       overflow: hidden;
-      border-radius: 100%;
       transform: scale(0);
-      margin: -175px 0 0 -175px;
       position: relative;
       mask: url(#mask);
       -webkit-mask: url(#mask);
@@ -148,17 +146,18 @@ const { data } = Astro.props;
     let increment = 0.001;
     let direction = 1;
     
-    // generate interpolators for each pair of shapes
-    const interpolators = [];
+    // generate shapeInterpolators for each pair of shapes
+    const shapeInterpolators = [];
+
     for (let i = 1; i < shapeStates.length; i++) {
       const shape1 = shapeStates[i - 1];
       const shape2 = shapeStates[i];
-      interpolators.push(interpolate(shape1.d, shape2.d, 1));
+      shapeInterpolators.push(interpolate(shape1.d, shape2.d, 1));
     }
     
     // function that runs the appropriate interpolator instance based on time
     function blendInterpolator(t) {
-      const numShapes = interpolators.length;
+      const numShapes = shapeInterpolators.length;
       const segment = 1 / numShapes;
       let segmentIndex;
       
@@ -175,7 +174,7 @@ const { data } = Astro.props;
       const segmentT = (t - segmentIndex * segment) / segment;
       
       // Use the appropriate interpolator for the current segment time
-      return interpolators[segmentIndex](segmentT);
+      return shapeInterpolators[segmentIndex](segmentT);
     }
 
     // direction changes to mirror loop the blob animation
@@ -215,7 +214,7 @@ const { data } = Astro.props;
       this.Cursor = el;
       this.Cursor.style.opacity = 0;
 
-      // get hoverable items
+      // get hoverable items (ie projects)
       this.Item = document.querySelectorAll(".hover-project-item");
 
       // values needed for cursor lerp
