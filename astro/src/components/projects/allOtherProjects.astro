@@ -22,9 +22,11 @@ const { data } = Astro.props;
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <mask id="mask">
-        <path id="blob"></path>
-      </mask>
+      <defs>
+        <clipPath id="mask">
+          <path id="blob"></path>
+        </clipPath>
+      </defs>
     </svg>
     <div class="cursor-media">
       {
@@ -87,14 +89,18 @@ const { data } = Astro.props;
 
 
     .cursor-media {
+      transform-origin: center center;
       display: block;
       width: 350px;
       height: 350px;
-      overflow: hidden;
+      // overflow: hidden;
       transform: scale(0);
-      position: relative;
-      mask: url(#mask);
-      -webkit-mask: url(#mask);
+      // position: absolute;
+      // top: 50%;
+      // left: 50%;
+      // transform: translate(-50%, -50%);
+      clip-path: url(#mask);
+      -webkit-clip-path: url(#mask);
       
       .cursor-media-content {
         position: absolute;
@@ -107,11 +113,10 @@ const { data } = Astro.props;
     position: absolute;
     top: 50%;
     left: 50%;
-
     transform: translate(-50%, -50%);
+    
     width: 100%;
     height: 100%;
-    fill: white;
   }
 </style>
 
@@ -119,7 +124,10 @@ const { data } = Astro.props;
   import { lerp, getMousePos, getSiblings } from "../utils/helpers.js";
   import { animate } from "motion";
   import { interpolate } from "flubber";
-  
+
+  // ================================================
+  //                Blob effect
+  // ================================================
   const shapeStates = [
     {
       d: "M289.588 28.709C317.208 52.4319 329.194 94.6637 338.314 138.46C347.174 181.995 353.167 227.355 336.23 261.766C319.032 295.917 278.904 319.379 236.431 334.238C193.698 349.098 148.619 355.354 121.78 335.281C94.6811 315.208 85.8217 268.805 63.6732 230.223C41.5248 191.641 5.56608 160.879 0.615247 125.947C-4.33559 91.2748 21.2003 52.4319 55.335 29.7518C89.4697 7.3324 132.203 0.554439 175.197 0.0330578C218.191 -0.488323 261.707 4.98618 289.588 28.709Z",
@@ -202,6 +210,8 @@ const { data } = Astro.props;
 
 
   // ================================================
+  //                Cursor effect
+  // ================================================
 
 
   // get mouse position and set it to mouse state
@@ -252,14 +262,15 @@ const { data } = Astro.props;
     onScaleMouse() {
       this.Item.forEach((link) => {
         if (link.matches(":hover")) {
-          this.setVideo(link);
+          this.setMedia(link);
           this.scaleCursor(this.Cursor.children[1], 0.8);
         }
         link.addEventListener("mouseenter", () => {
-          this.setVideo(link);
+          this.setMedia(link);
           this.scaleCursor(this.Cursor.children[1], 0.8);
         });
         link.addEventListener("mouseleave", () => {
+          // this.scaleCursor(this.Cursor.children[1], 1);
           this.scaleCursor(this.Cursor.children[1], 0);
         });
 
@@ -278,13 +289,13 @@ const { data } = Astro.props;
     scaleCursor(el, amount) {
       animate(
         el,
-        { transform: `scale(${amount})` },
+        { transform: `scale(${amount}) translate(-50%, -50%)` },
         { duration: 0.6, easing: "ease-out" }
       );
     }
 
     // Change media when hovering different items
-    setVideo(el) {
+    setMedia(el) {
       let src = el.getAttribute("data-media-src");
       let media = document.getElementById(src);
       let siblings = getSiblings(media);
@@ -314,7 +325,7 @@ const { data } = Astro.props;
         );
       }
       // Setting the cursor x and y to our cursor html element
-      this.Cursor.style.transform = `translateX(${this.cursorConfigs.x.previous}px) translateY(${this.cursorConfigs.y.previous}px)`;
+      this.Cursor.style.transform = `translateX(${this.cursorConfigs.x.previous}px) translateY( ${this.cursorConfigs.y.previous}px)`;
 
       // Loop RAF
       requestAnimationFrame(() => this.render());

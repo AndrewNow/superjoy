@@ -1,28 +1,34 @@
 --- 
 import { Image } from "@astrojs/image/components";
 import { getAllProjects } from "../lib/api/projects";
+
 const projectsData = await getAllProjects();
 --- 
 
-<div class="container">
-  
+<div class="container">  
   <svg
+    id="svgblob"
     class="separator"
     width="200"
     height="200"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <mask id="mask">
+  <defs>
+    <clipPath id="mask">
       <path id="blob"></path>
-    </mask>
+    </clipPath>
+  </defs>
+  <!-- <mask id="mask">
+    <path id="blob"></path>
+  </mask> -->
   </svg>
   <Image              
-  class="cursor-media-content"
-  src={projectsData.allProjects[0].imageUrl}
-  alt="cursor preview image"
-  width={350}
-  height={350} 
+    class="cursor-media-content"
+    src={projectsData.allProjects[0].imageUrl}
+    alt="cursor preview image"
+    width={350}
+    height={350} 
   />
 </div>
 
@@ -52,8 +58,8 @@ const projectsData = await getAllProjects();
     position: absolute;
     top: 0;
     left: 0;
-    mask: url(#mask);
-    -webkit-mask: url(#mask);
+    clip-path: url(#mask);
+    -webkit-clip-path: url(#mask);
   }
 </style>
 
