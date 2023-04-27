@@ -1,0 +1,38 @@
+---
+import { getProjectPage } from "../../lib/api/projects";
+import Layout from "../../layouts/PageLayout.astro";
+
+export async function getStaticPaths() {
+  const data = await getProjectPage();
+
+  return data.allProjects.map((post) => {
+    return {
+      params: { slug: post.slug },
+      props: { data: post },
+    };
+  });
+}
+
+const seo = {
+  // title: "Mimotype",
+  // description: "Join us in shaping the future of the optoelectronics industry.",
+  // image: "https://i.imgur.com/hev2VXn.png",
+};
+
+const { data } = Astro.props;
+---
+
+<Layout seo={seo}>
+  <header class="header">
+    <h4>{data.projectName}</h4>
+  </header>
+</Layout>
+
+<style lang="scss">
+  .header {
+    color: var(--color-navy);
+    h4 {
+      font-family: "Hamburg-Regular";
+    }
+  }
+</style>
