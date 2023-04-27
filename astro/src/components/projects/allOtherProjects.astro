@@ -70,11 +70,12 @@ const { data } = Astro.props;
     left: 0;
     z-index: 10;
     contain: layout style size;
-    // ?
+    // ? may need to disable for link clicking
     pointer-events: none;
 
 
     &:before {
+      // the cursor when not hovering an item
       content: "";
       position: absolute;
       top: -24px;
@@ -89,7 +90,7 @@ const { data } = Astro.props;
 
 
     .cursor-media {
-      transform-origin: center center;
+      // transform-origin: center center;
       display: block;
       width: 350px;
       height: 350px;
@@ -114,7 +115,7 @@ const { data } = Astro.props;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    
+    // w/h might not be required given it's being centered via transform
     width: 100%;
     height: 100%;
   }
@@ -154,7 +155,7 @@ const { data } = Astro.props;
     let increment = 0.001;
     let direction = 1;
     
-    // generate shapeInterpolators for each pair of shapes
+    // generate shape interpolators for each pair of shapes (eg: first to second shape, second to third, etc)
     const shapeInterpolators = [];
 
     for (let i = 1; i < shapeStates.length; i++) {
@@ -163,7 +164,7 @@ const { data } = Astro.props;
       shapeInterpolators.push(interpolate(shape1.d, shape2.d, 1));
     }
     
-    // function that runs the appropriate interpolator instance based on time
+    // function that runs the appropriate shape interpolator instance based on time on the 0-1 scale 
     function blendInterpolator(t) {
       const numShapes = shapeInterpolators.length;
       const segment = 1 / numShapes;
@@ -213,7 +214,6 @@ const { data } = Astro.props;
   //                Cursor effect
   // ================================================
 
-
   // get mouse position and set it to mouse state
   let mouse = { x: 0, y: 0 };
   window.addEventListener("mousemove", (e) => (mouse = getMousePos(e)));
@@ -228,15 +228,15 @@ const { data } = Astro.props;
       this.Item = document.querySelectorAll(".hover-project-item");
 
       // values needed for cursor lerp
-      this.cursorConfigs = {
+      this.cursorConfig = {
         x: { previous: 0, current: 0, amount: 0.2 },
         y: { previous: 0, current: 0, amount: 0.2 },
       };
 
       // handler for when mouse moves
       this.onMouseMoveEvent = () => {
-        this.cursorConfigs.x.previous = this.cursorConfigs.x.current = mouse.x;
-        this.cursorConfigs.y.previous = this.cursorConfigs.y.current = mouse.y;
+        this.cursorConfig.x.previous = this.cursorConfig.x.current = mouse.x;
+        this.cursorConfig.y.previous = this.cursorConfig.y.current = mouse.y;
 
         // set cursor opacity to 1 when hovered on screen
         animate(
@@ -250,7 +250,7 @@ const { data } = Astro.props;
 
         // RAF to perform animation update before next frame repaint
         requestAnimationFrame(() => this.render());
-        // cleanup even listener
+        // clean up event listener
         window.removeEventListener("mousemove", this.onMouseMoveEvent);
       };
 
@@ -259,6 +259,7 @@ const { data } = Astro.props;
     }
 
     // scale mouse on certain actions
+    // this.Cursor.children[1] === the images
     onScaleMouse() {
       this.Item.forEach((link) => {
         if (link.matches(":hover")) {
@@ -312,20 +313,20 @@ const { data } = Astro.props;
     // things to update on each frame
     render() {
       // update cursor.current
-      this.cursorConfigs.x.current = mouse.x;
-      this.cursorConfigs.y.current = mouse.y;
+      this.cursorConfig.x.current = mouse.x;
+      this.cursorConfig.y.current = mouse.y;
 
       // lerp
-      for (const key in this.cursorConfigs) {
+      for (const key in this.cursorConfig) {
         // key = x & y
-        this.cursorConfigs[key].previous = lerp(
-          this.cursorConfigs[key].previous,
-          this.cursorConfigs[key].current,
-          this.cursorConfigs[key].amount
+        this.cursorConfig[key].previous = lerp(
+          this.cursorConfig[key].previous,
+          this.cursorConfig[key].current,
+          this.cursorConfig[key].amount
         );
       }
       // Setting the cursor x and y to our cursor html element
-      this.Cursor.style.transform = `translateX(${this.cursorConfigs.x.previous}px) translateY( ${this.cursorConfigs.y.previous}px)`;
+      this.Cursor.style.transform = `translateX(${this.cursorConfig.x.previous}px) translateY( ${this.cursorConfig.y.previous}px)`;
 
       // Loop RAF
       requestAnimationFrame(() => this.render());
