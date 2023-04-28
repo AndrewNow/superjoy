@@ -3,7 +3,7 @@ import { Image } from "@astrojs/image/components";
 const { data, setTextColor } = Astro.props;
 ---
 
-<>
+<div id="container">
   {
     data.map((project) => {
       return (
@@ -52,7 +52,7 @@ const { data, setTextColor } = Astro.props;
       }
     </div>
   </div>
-</>
+</div>
 
 <style lang="scss" define:vars={{ setTextColor }}>
   .hover-project-item {
@@ -121,7 +121,7 @@ const { data, setTextColor } = Astro.props;
 
 <script>
   import { lerp, getMousePos, getSiblings } from "../utils/helpers.js";
-  import { animate } from "motion";
+  import { animate, inView } from "motion";
   import { interpolate } from "flubber";
 
   // ================================================
@@ -143,10 +143,18 @@ const { data, setTextColor } = Astro.props;
   ];
 
   const path = document.getElementById("blob");
+  const container = document.getElementById("container");
 
   // set svg attributes to that of stateShapes
   path.setAttribute("d", shapeStates[0].d);
+  // only run animateBlob when its parent is in view
+  inView(container, () => {
+    // do something when in view
+    animateBlob();
+    return () => stopBlobAnimation();
+  });
 
+  let animationFrameId;
   // animate from 0-1 and 1-0
   function animateBlob() {
     let num = 0;
@@ -197,14 +205,20 @@ const { data, setTextColor } = Astro.props;
       }
       path.setAttribute("d", blendInterpolator(num));
       // console.log(num);
+      console.log(num, "animateBlob running");
       // RAF to animate on every frame
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     }
+
     animate();
   }
 
+  function stopBlobAnimation() {
+    cancelAnimationFrame(animationFrameId);
+  }
+
   // animate blob
-  animateBlob();
+  // animateBlob();
 
   // ================================================
   //                Cursor effect
