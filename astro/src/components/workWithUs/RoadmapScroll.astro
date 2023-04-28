@@ -1,36 +1,6 @@
 ---
-const roadmapData = [
-  {
-    duration: "4+ weeks",
-    title: "Game development",
-    description:
-      "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage.",
-  },
-  {
-    duration: "4+ weeks",
-    title: "Game development",
-    description:
-      "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage.",
-  },
-  {
-    duration: "4+ weeks",
-    title: "Game development",
-    description:
-      "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage.",
-  },
-  {
-    duration: "4+ weeks",
-    title: "Game development",
-    description:
-      "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage.",
-  },
-  {
-    duration: "4+ weeks",
-    title: "Game development",
-    description:
-      "Your Metaverse experience is starting to come together! During this phase, you'll meet with our team on a scheduled basis to review the design and mechanics. Almost all changes to your game will be made during this stage.",
-  },
-];
+const { data } = Astro.props;
+const roadmapData = data.roadmapData;
 
 const numSlides = roadmapData.length;
 const scrollContainerHeight = `calc(${numSlides} * 100vh)`;
@@ -41,10 +11,19 @@ const scrollContainerHeight = `calc(${numSlides} * 100vh)`;
   <div class="wrapper" id="scroll-content">
     {
       roadmapData.map((item, index) => {
+        function formatNumber(num) {
+          if (num < 10) {
+            return "0" + (num + 1);
+          } else {
+            return num.toString() + 1;
+          }
+        }
+        const projectIndex = formatNumber(index);
+
         return (
           <div class="roadmap-item">
             <div class="roadmap-item-header">
-              <h6>0{index + 1}</h6>
+              <h6>{projectIndex}</h6>
               <h6>{item.duration}</h6>
             </div>
             <h4>{item.title}</h4>

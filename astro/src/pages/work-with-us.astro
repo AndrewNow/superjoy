@@ -9,9 +9,16 @@ import JoinTheConversation from "../components/JoinTheConversation.astro";
 import Roadmap from "../components/workWithUs/Roadmap.astro";
 import Faq from "../components/faq/faq.astro";
 import { getFAQContent } from "../lib/api/faqContent";
+import { getAllProjects } from "../lib/api/projects";
 import RoadmapScroll from "../components/workWithUs/RoadmapScroll.astro";
+import Projects from "../components/projects/projects.astro";
 
+import {getRoadmapContent} from '../lib/api/roadmapContent'
+
+const projectsData = await getAllProjects();
 const faqData = await getFAQContent();
+const roadmapData = await getRoadmapContent();
+
 const seo = {
   // title: "Mimotype",
   // description: "Join us in shaping the future of the optoelectronics industry.",
@@ -36,10 +43,12 @@ const seo = {
         statCircleColor="var(--color-green)"
       />
     </section>
-    <section class="section"></section>
+    <section class="section">
+      <Projects data={projectsData} textColor="var(--primary-light)" />
+    </section>
     <section class="section section-white">
       <Roadmap />
-      <RoadmapScroll/>
+      <RoadmapScroll data={roadmapData}/>
     </section>
     <nav class="navbar">
       <p class="nav-item">Our services</p>

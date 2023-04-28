@@ -1,29 +1,31 @@
 ---
 import { Image } from "@astrojs/image/components";
-import AllOtherProjects from './allOtherProjects.astro'
+import AllOtherProjects from "./allOtherProjects.astro";
 
-const { data } = Astro.props;
-
+const { data, textColor } = Astro.props;
 
 const featuredProjectData = data.allProjects[0];
 const secondTierFeaturedData = data.allProjects.slice(1, 3);
 const allOtherProjectData = data.allProjects.slice(3);
+
+let setTextColor = textColor ? textColor : "var(--color-darkpurple)";
 ---
 
 <header class="header">
   <h3>
-    Our projects <span class="project-count"
-      ><h5>{data.allProjects.length}</h5></span
-    >
+    Our projects <span class="project-count">
+      <h5>{data.allProjects.length}</h5>
+    </span>
   </h3>
 </header>
 <div class="inner-wrapper">
   <!-- Featured project -->
   {
     featuredProjectData && (
-      <div class="project">
-        <div class="image-wrapper">
+      <div class="project" id="featured-project">
+        <div class="image-wrapper" id="hide-featured">
           <Image
+            id="featured-project-image"
             class="featured-image"
             src={featuredProjectData.imageUrl}
             width={1850}
@@ -38,13 +40,14 @@ const allOtherProjectData = data.allProjects.slice(3);
     )
   }
   <!-- Second tier featured -->
-  <div class="second-tier-featured-flex">
+  <div class="second-tier-featured-flex" id="secondary-project">
     {
       secondTierFeaturedData.map((project) => {
         return (
           <div class="project second-tier-featured">
-            <div class="image-wrapper">
+            <div class="image-wrapper" id="hide-secondary">
               <Image
+                id="secondary-project-image"
                 class="featured-image"
                 src={project.imageUrl}
                 width={910}
@@ -61,15 +64,59 @@ const allOtherProjectData = data.allProjects.slice(3);
     }
   </div>
   <!-- All other projects -->
-  <AllOtherProjects data={allOtherProjectData} />
+  <AllOtherProjects data={allOtherProjectData} setTextColor={setTextColor}/>
 </div>
 
-<style lang="scss">
+<script>
+  import { animate, inView } from "motion";
+
+  const featuredProjectInView = document.getElementById("featured-project");
+  const featuredProjectHideImage = document.getElementById("hide-featured");
+  const featuredProjectImage = document.getElementById(
+    "featured-project-image"
+  );
+
+  inView(featuredProjectInView, ({ target }) => {
+    animate(featuredProjectImage, { transform: "scale(1)" }, { duration: 1.3 }),
+      animate(
+        featuredProjectHideImage,
+        {
+          clipPath: "inset(0% 0% 0% 0%)",
+        },
+        { duration: 1.7 }
+      );
+  });
+
+  const secondaryProjectInView = document.getElementById("secondary-project");
+  const secondaryProjectHideImage =
+    document.querySelectorAll("#hide-secondary");
+  const secondaryProjectImage = document.querySelectorAll(
+    "#secondary-project-image"
+  );
+
+  inView(secondaryProjectInView, ({ target }) => {
+    animate(
+      secondaryProjectImage,
+      { transform: "scale(1)" },
+      { duration: 1.3 }
+    ),
+      animate(
+        secondaryProjectHideImage,
+        {
+          clipPath: "inset(0% 0% 0% 0%)",
+        },
+        { duration: 1.7 }
+      );
+  });
+</script>
+
+<style lang="scss" define:vars={{ setTextColor }}>
   .header {
     width: var(--inner-width);
-    margin: 5rem auto;
+    margin: 0 auto;
+    padding: 5rem 0;
     h3 {
-      color: var(--color-darkpurple);
+      color: var(--setTextColor);
       text-transform: uppercase;
       font-family: "Hamburg-Regular";
       position: relative;
@@ -95,9 +142,11 @@ const allOtherProjectData = data.allProjects.slice(3);
       text-transform: uppercase;
       margin: 3rem;
       margin-top: 2rem;
-      color: var(--color-darkpurple);
+      color: var(--setTextColor);
     }
+
     .image-wrapper {
+      overflow: hidden;
       aspect-ratio: 1850/1035;
       width: 100%;
       position: relative;
@@ -110,8 +159,21 @@ const allOtherProjectData = data.allProjects.slice(3);
       }
     }
   }
+
+  #hide-featured,
+  #hide-secondary {
+    clip-path: inset(0% 0% 100% 0%);
+  }
+  #featured-project-image {
+    transform: scale(2);
+  }
+  #secondary-project-image {
+    transform: scale(1.5);
+  }
+
   .second-tier-featured-flex {
     padding: 3rem 0;
+    padding-bottom: 0;
     display: flex;
     justify-content: space-between;
     .second-tier-featured:nth-child(odd) {

@@ -39,3 +39,13 @@ export async function getProjectPage() {
   return organizedProjects;
 }
 
+
+export async function getProjectSlugsOnly() {
+  const query = groq`*[_type == "organizedProjects"][0] {
+    allProjects[]-> {
+      "slug": slug.current,
+    }
+  }`;
+  const organizedProjects = await useSanityClient().fetch(query);
+  return organizedProjects;
+}

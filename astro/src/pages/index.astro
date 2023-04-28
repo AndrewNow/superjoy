@@ -37,7 +37,7 @@ const projectsData = await getAllProjects();
       >
         <path
           d="M68 50.766C65.5125 50.766 61.0793 50.5651 58.2716 50.3929C52.1883 61.9581 42.8048 81.1567 36.9431 93.0375C36.7461 81.4724 36.7461 69.2472 36.7461 52.7174C36.7461 36.1876 36.7461 15.755 37.1155 -1.35e-06L30.9091 -1.62129e-06C31.1554 15.8985 31.1554 30.3333 31.1554 52.5453C31.1554 74.7572 31.1554 80.8411 31.0322 92.234C24.9736 80.0088 15.9102 61.7572 9.90077 50.3642C7.26549 50.5651 2.63528 50.7373 5.4116e-06 50.7373C7.09309 60.351 26.0819 97.6578 30.3673 104L37.2879 104C41.7704 98.0596 60.2419 60.3797 68 50.766Z"
-          fill="var(--primary-light)"></path>
+          fill="var(--color-darkpurple)"></path>
       </svg>
     </span>
   </div>
@@ -87,14 +87,14 @@ const projectsData = await getAllProjects();
 
 <style lang="scss">
   .blend-mode {
-    color: var(--primary-light);
-    mix-blend-mode: difference;
+    color: var(--color-darkpurple);
+    // mix-blend-mode: difference;
   }
   .scroll-to {
     display: inline-block;
     position: relative;
     margin: 0 auto;
-    border: 2px solid var(--primary-dark);
+    border: 2px solid var(--color-darkpurple);
     border-radius: 100%;
     aspect-ratio: 1/1;
     display: grid;
@@ -107,7 +107,7 @@ const projectsData = await getAllProjects();
       transition: 0.45s all cubic-bezier(0.25, 1, 0.5, 1);
       // transition-delay: 0.5s;
       path {
-        fill: var(--primary-light);
+        // fill: var(--primary-light);
       }
     }
     &:before {
@@ -116,8 +116,8 @@ const projectsData = await getAllProjects();
       transition: 0.55s all ease;
       content: "MORE SUPERJOY";
       text-align: center;
-      color: var(--primary-dark);
-      background: var(--primary-dark);
+      color: var(--color-darkpurple);
+      background: var(--color-darkpurple);
       width: 110%;
       height: 200%;
       position: absolute;

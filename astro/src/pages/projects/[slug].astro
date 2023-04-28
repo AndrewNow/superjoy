@@ -1,38 +1,254 @@
 ---
-import { getProjectPage } from "../../lib/api/projects";
+import { getProjectPage, getProjectSlugsOnly } from "../../lib/api/projects";
 import Layout from "../../layouts/PageLayout.astro";
+import { Image } from "@astrojs/image/components";
 
 export async function getStaticPaths() {
   const data = await getProjectPage();
 
-  return data.allProjects.map((post) => {
+  return data.allProjects.map((post, index) => {
+    const previousSlug = index === 0 ? null : data.allProjects[index - 1].slug;
+    const previousTitle =
+      index === 0 ? null : data.allProjects[index - 1].projectName;
+    const nextSlug =
+      index === data.allProjects.length - 1
+        ? null
+        : data.allProjects[index + 1].slug;
+    const nextTitle =
+      index === data.allProjects.length - 1
+        ? null
+        : data.allProjects[index + 1].projectName;
+
     return {
       params: { slug: post.slug },
-      props: { data: post },
+      props: { data: post, previousSlug, nextSlug, previousTitle, nextTitle },
     };
   });
 }
+
+const { data, previousSlug, previousTitle, nextSlug, nextTitle } = Astro.props;
+
+// get project number
+const currentSlug = Astro.url.pathname.substring("/projects/".length);
+const allProjectSlugs = await getProjectSlugsOnly();
+const currentIndex = allProjectSlugs.allProjects.findIndex(
+  (project) => project.slug === currentSlug
+);
+
+function formatNumber(num) {
+  if (num < 10) {
+    return "0" + (num + 1);
+  } else {
+    return num.toString() + 1;
+  }
+}
+const projectIndex = formatNumber(currentIndex);
 
 const seo = {
   // title: "Mimotype",
   // description: "Join us in shaping the future of the optoelectronics industry.",
   // image: "https://i.imgur.com/hev2VXn.png",
 };
-
-const { data } = Astro.props;
 ---
 
 <Layout seo={seo}>
   <header class="header">
-    <h4>{data.projectName}</h4>
+    <h3>{data.projectName}</h3>
   </header>
+  <div class="main-content">
+    <Image
+      class="main-image"
+      src={data.imageUrl}
+      fit="cover"
+      alt={`Thumbnail screenshot of ${data.projectName}`}
+      height={658}
+      width={1170}
+    />
+    <div class="main-text">
+      <div class="main-text-inner">
+        <h6>{projectIndex}</h6>
+        <p>{data.description}</p>
+      </div>
+      <div class="main-text-inner">
+        <div class="detail-grid">
+          <div class="small-column">
+            <small>Game Mode</small>
+            <small>Client</small>
+            <small>Date</small>
+            <small>Code</small>
+          </div>
+          <div class="small-column regular-weight">
+            <small>{data.gameMode}</small>
+            <small>{data.client}</small>
+            <small>{data.date}</small>
+            <small>{data.code}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {
+    data.additionalImages && (
+      <div class="image-grid">
+        {data.additionalImages.map((image) => {
+          return (
+            <Image
+              class="grid-item"
+              src={image}
+              width={711}
+              height={400}
+              alt={`Additional images of ${data.projectName}`}
+            />
+          );
+        })}
+      </div>
+    )
+  }
+  <div class="pagination">
+    <div class="pagination-button">
+      {
+        previousSlug && (
+          <a href={`/projects/${previousSlug}`}>
+            <h6>Previous: {previousTitle}</h6>
+          </a>
+        )
+      }
+    </div>
+    <div class="pagination-button">
+      {
+        nextSlug && (
+          <a href={`/projects/${nextSlug}`}>
+            <h6>Next: {nextTitle}</h6>
+          </a>
+        )
+      }
+    </div>
+  </div>
 </Layout>
+
+<script>
+  // init lenis
+  import Lenis from "@studio-freight/lenis";
+  const lenis = new Lenis({
+    lerp: 0.075,
+  });
+
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+</script>
 
 <style lang="scss">
   .header {
     color: var(--color-navy);
-    h4 {
-      font-family: "Hamburg-Regular";
+    width: var(--max-width);
+    margin: 0 auto;
+    padding-top: 23vh;
+    padding-bottom: 10vh;
+
+    h3 {
+      max-width: 80%;
+      font-family: "Hamburg-Bold";
+    }
+  }
+  .main-content {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 2000px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+
+    .main-image {
+      aspect-ratio: 1170/658;
+      width: 70%;
+      height: auto;
+      object-fit: cover;
+    }
+    .main-text {
+      width: 30%;
+      position: relative;
+      color: var(--color-navy);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      h6 {
+        margin-bottom: 2.5rem;
+      }
+
+      .main-text-inner {
+        border: 1px solid red;
+        width: 80%;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* set the column widths */
+    gap: 10px; /* set the gap between the columns */
+  }
+  .small-column.regular-weight {
+    small {
+      font-family: "Aktiv-Regular";
+    }
+  }
+  .small-column {
+    display: flex;
+    flex-direction: column;
+    small {
+      display: block;
+      margin-top: 1rem;
+      // font-size: 16px;
+    }
+  }
+
+  .image-grid {
+    width: 70%;
+    margin: 10rem auto;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    gap: 2rem;
+    grid-template-columns: 1fr 1fr;
+
+    .grid-item {
+      object-fit: cover;
+      aspect-ratio: 1170/658;
+      width: 711px;
+      height: auto;
+    }
+  }
+
+  .pagination {
+    margin: 10rem auto;
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    h6,
+    a {
+      color: var(--color-navy);
+      text-decoration: none;
+    }
+
+    .pagination-button {
+      width: 50%;
+      align-self: flex-start;
+      justify-self: flex-start;
+      opacity: .25;
+      transition: var(--hover-transition);
+    }
+    .pagination-button:hover {
+      opacity: 1;
+    }
+
+    .pagination-button:nth-child(even) {
+      justify-self: flex-end;
+      text-align: right;
     }
   }
 </style>

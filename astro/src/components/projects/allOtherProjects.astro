@@ -1,15 +1,21 @@
 ---
 import { Image } from "@astrojs/image/components";
-const { data } = Astro.props;
+const { data, setTextColor } = Astro.props;
 ---
 
 <>
   {
     data.map((project) => {
       return (
-        <div class="hover-project-item" data-media-src={project.code}>
-          <h5>{project.projectName}</h5>
-          <p>{project.client}</p>
+        <div>
+          <a
+            href={`/projects/${project.slug}`}
+            class="hover-project-item"
+            data-media-src={project.code}
+          >
+            <h5>{project.projectName}</h5>
+            <p>{project.client}</p>
+          </a>
         </div>
       );
     })
@@ -48,14 +54,15 @@ const { data } = Astro.props;
   </div>
 </>
 
-<style lang="scss">
+<style lang="scss" define:vars={{ setTextColor }}>
   .hover-project-item {
-    border-top: 3px solid var(--color-darkpurple);
+    text-decoration: none;
+    border-top: 3px solid var(--setTextColor);
     position: relative;
     width: 100%;
     padding: 3rem;
     margin: 3rem 0;
-    color: var(--color-darkpurple);
+    color: var(--setTextColor);
     display: flex;
     justify-content: space-between;
 
@@ -68,7 +75,7 @@ const { data } = Astro.props;
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 10;
+    z-index: 2000;
     contain: layout style size;
     // ? may need to disable for link clicking
     pointer-events: none;
