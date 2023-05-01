@@ -69,7 +69,7 @@ switch (currentPage) {
 </header>
 <nav class="menu-modal">
   <div class="menu-modal-inner">
-    <ul>
+    <ul class="menu-option-list">
       <li class="menu-option about">
         <h3>
           <a href="/about">About</a>
@@ -289,7 +289,7 @@ switch (currentPage) {
   .menu-modal.open {
     visibility: visible;
     transform: translate(0, 0);
-    // opacity: 1;
+    opacity: 1;
   }
   .menu-modal-inner {
     position: relative;
@@ -307,9 +307,14 @@ switch (currentPage) {
     margin-top: 35vh;
   }
 
-  .menu-modal li {
+  .menu-option-list {
+    transform: translateX(-100px);
+  }
+  .menu-option {
     text-align: left;
     cursor: pointer;
+    opacity: 0;
+    transform: translateY(-50px);
 
     h3 > a {
       transition: var(--hover-transition);
@@ -337,7 +342,7 @@ switch (currentPage) {
   }
   p {
     font-family: "Aktiv-Regular";
-    color: var(--primary-light);
+    color: var(--textColor);
   }
   .icons {
     display: flex;
@@ -376,6 +381,10 @@ switch (currentPage) {
   const hamburger = document.querySelector(".hamburger-menu");
   const menuModal = document.querySelector(".menu-modal");
   const background = document.querySelector(".modal-background-tint");
+  const menuItem = document.querySelectorAll(".menu-option");
+  const menuItemParent = document.querySelectorAll(".menu-option-list");
+
+  import { animate, stagger } from "motion";
 
   // actions on open
   const openModal = () => {
@@ -384,9 +393,19 @@ switch (currentPage) {
     menuModal.classList.toggle("open");
     logoSVG.classList.toggle("open");
     menuModal.setAttribute("arial-modal", "true");
-    // when menu opens, change color of
-    // 2. logo
     logoSVG.style.transform = "scale(2.5)";
+
+    animate(
+      menuItemParent,
+      { opacity: 1, transform: "translateX(0)" },
+      { duration: 0.5 }
+    );
+
+    animate(
+      menuItem,
+      { opacity: 1, transform: "translateY(0)" },
+      { duration: 0.5, delay: stagger(0.125) }
+    );
   };
 
   // actions on close
@@ -399,6 +418,18 @@ switch (currentPage) {
     // when menu closes, change color of
     // 2. logo
     logoSVG.style.transform = "scale(1)";
+
+    animate(
+      menuItemParent,
+      { opacity: 1, transform: "translateX(-100px)" },
+      { duration: 0.5 }
+    );
+
+    animate(
+      menuItem,
+      { opacity: 0, transform: "translateY(-50px)" },
+      { duration: 0.15 }
+    );
   };
 
   // toggle modal when hamburger is clicked

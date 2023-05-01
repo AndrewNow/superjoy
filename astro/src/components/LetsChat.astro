@@ -18,7 +18,7 @@ const { textColor, backgroundColor } = Astro.props;
       </div>
     </div>
     <div class="flex-item">
-      <EmailForm />
+      <EmailForm textColor={textColor} backgroundColor={backgroundColor} />
     </div>
   </div>
 </section>
@@ -32,7 +32,6 @@ const { textColor, backgroundColor } = Astro.props;
     width: var(--inner-width);
     margin: 0 auto;
     padding: 5rem 0;
-    // padding-top: 10rem;
     display: flex;
     position: relative;
   }

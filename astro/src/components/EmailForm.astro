@@ -1,3 +1,7 @@
+---
+const { textColor, backgroundColor } = Astro.props;
+---
+
 <div class="flex-container">
   <div class="container">
     <form
@@ -123,7 +127,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="scss" define:vars={{ textColor, backgroundColor }}>
   .invalid-feedback,
   .empty-feedback {
     display: none;
@@ -183,8 +187,8 @@
 
   .submit-button {
     border: none;
-    background: var(--color-darkgreen);
-    color: var(--color-yellow);
+    background: var(--textColor);
+    color: var(--backgroundColor);
     text-transform: uppercase;
     padding: 1rem 2rem;
     border-radius: 4px;
@@ -195,8 +199,8 @@
     }
   }
   .submit-button:hover {
-    background: var(--color-yellow);
-    color: var(--color-darkgreen);
+    background: var(--backgroundColor);
+    color: var(--textColor);
   }
   .submit-flex {
     display: flex;
@@ -260,7 +264,8 @@
               })
               .catch((error) => {
                 console.log(error);
-                result.innerHTML = "Something went wrong! Please make sure all the fields are filled properly.";
+                result.innerHTML =
+                  "Something went wrong! Please make sure all the fields are filled properly.";
               })
               .then(function () {
                 form.reset();

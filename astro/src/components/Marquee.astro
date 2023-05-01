@@ -8,11 +8,13 @@ const { text, primaryColor, secondaryColor, isSecondInstance } = Astro.props;
     <div class="loop-item" id={isSecondInstance && "second-loop-item"}>
       <h6>
         {" "}{text}{" "}
+        {" "}{text}{" "}
       </h6>
     </div>
     <!-- <div class={isSecondInstance ? "second-loop-item" : "loop-item"}> -->
     <div class="loop-item" id={isSecondInstance && "second-loop-item"}>
       <h6>
+        {" "}{text}{" "}
         {" "}{text}{" "}
       </h6>
     </div>
@@ -37,7 +39,7 @@ const { text, primaryColor, secondaryColor, isSecondInstance } = Astro.props;
     position: absolute;
     top: 50%;
     padding-right: 2.5rem;
-
+    // width: 100%;
     h6 {
       text-transform: uppercase;
       font-family: "Hamburg-Regular";
@@ -76,7 +78,7 @@ const { text, primaryColor, secondaryColor, isSecondInstance } = Astro.props;
       this.speed = speed;
       this.direction = true;
       this.scrollTop = 0;
-      this.metric = 100;
+      this.metric = 100; // translate 100% of div
 
       this.lerp = {
         current: this.currentTranslation,
@@ -153,6 +155,7 @@ const { text, primaryColor, secondaryColor, isSecondInstance } = Astro.props;
   }
 
   // ideally swap w/ something more specific & specify individually
+  let container = document.querySelectorAll(".loop-container");
   let elements = document.querySelectorAll(".loop-item");
   let secondElements = document.querySelectorAll("#second-loop-item");
 
@@ -160,7 +163,6 @@ const { text, primaryColor, secondaryColor, isSecondInstance } = Astro.props;
   new LoopingElement(elements[1], -100, 0.05, lenis);
 
   if (secondElements.length) {
-    console.log(secondElements, "looping elements exist");
     new LoopingElement(secondElements[0], 0, 0.05, lenis);
     new LoopingElement(secondElements[1], -100, 0.05, lenis);
   }
