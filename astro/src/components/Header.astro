@@ -1,3 +1,49 @@
+---
+const currentPage = Astro.url.pathname;
+
+let backgroundColor = "var(--color-purple)";
+let textColor = "var(--primary-light)";
+let accentColor = "var(--color-yellow)";
+let navColor = "var(--color-darkpurple)";
+
+switch (currentPage) {
+  case "/":
+    // home page
+    backgroundColor = "var(--color-purple)";
+    textColor = "var(--primary-light)";
+    accentColor = "var(--color-yellow)";
+    navColor = "var(--color-darkpurple)";
+    break;
+  case "/about":
+    // about page
+    backgroundColor = "var(--color-green)";
+    textColor = "var(--color-darkgreen)";
+    accentColor = "var(--accent-orange)";
+    navColor = "var(--primary-dark)";
+    break;
+  case "/work-with-us":
+    // work with us page
+    backgroundColor = "var(--accent-blue)";
+    textColor = "var(--primary-light)";
+    accentColor = "var(--color-green)";
+    navColor = "var(--color-navy)";
+    break;
+  case "/contact":
+    // contact page
+    backgroundColor = "var(--color-yellow)";
+    textColor = "var(--color-darkgreen)";
+    accentColor = "var(--accent-blue)";
+    navColor = "var(--color-darkgreen)";
+    break;
+  default:
+    // handle cases where the current page is not any of the above
+    backgroundColor = "var(--color-purple)";
+    textColor = "var(--primary-light)";
+    accentColor = "var(--color-yellow)";
+    navColor = "var(--color-darkpurple)";
+}
+---
+
 <header>
   <div class="logo-container">
     <a href="/">
@@ -53,7 +99,7 @@
             <path
               class="icon-path"
               d="M56.0514 0.892806C55.7581 0.627737 55.3857 0.466497 54.9917 0.433933C54.5977 0.40137 54.2039 0.499292 53.871 0.712607C51.9197 1.85478 49.9041 2.88361 47.8344 3.794C46.2744 2.3393 44.3711 1.30393 42.3023 0.784687C40.436 0.323236 38.489 0.294472 36.6099 0.700592C34.7308 1.10671 32.9694 1.93697 31.4603 3.12793C29.9512 4.3189 28.7342 5.83905 27.9024 7.57226C27.0707 9.30548 26.646 11.2059 26.6611 13.1283V13.6328C23.3833 13.4527 20.1766 12.6066 17.2367 11.1461C13.7728 9.38595 10.7912 6.80646 8.5511 3.63182C8.37533 3.33879 8.11987 3.10178 7.81451 2.94842C7.50915 2.79506 7.16649 2.73169 6.82648 2.76569C6.48647 2.79969 6.16314 2.92966 5.89419 3.14045C5.62525 3.35124 5.42178 3.63415 5.30752 3.95618C3.66762 8.01569 2.90017 12.3748 3.05504 16.7503C3.1888 20.7246 4.37316 24.5926 6.48757 27.9605C8.60199 31.3283 11.571 34.0759 15.0923 35.9234C11.1317 37.9194 6.73029 38.8803 2.29821 38.7165C1.83224 38.5898 1.33504 38.6535 0.916 38.8934C0.496957 39.1334 0.190391 39.5299 0.0637429 39.9959C-0.0629049 40.4619 0.000739442 40.9591 0.240675 41.3781C0.480611 41.7972 0.877184 42.1037 1.34315 42.2304C6.92548 45.3461 13.2044 47.001 19.5973 47.0417C25.4482 47.0572 31.1968 45.508 36.2476 42.5547C46.2126 36.6983 51.9249 25.9224 51.9249 13.0022C51.9517 12.54 51.9517 12.0767 51.9249 11.6146C53.8736 8.93657 55.4667 6.01701 56.6641 2.92905C56.7912 2.56854 56.8003 2.17696 56.6901 1.81092C56.58 1.44489 56.3563 1.12336 56.0514 0.892806Z"
-              fill="var(--primary-light)"></path>
+              fill={textColor}></path>
           </svg>
         </a>
         <a href="https://instagram.com/superjoyfn" class="icon"
@@ -67,7 +113,7 @@
             <path
               class="icon-path"
               d="M54.4138 15.696C54.4288 14.8374 54.3641 13.9792 54.2206 13.1326C53.6696 9.59081 51.8652 6.36466 49.1358 4.04129C46.4064 1.71792 42.9335 0.451803 39.3492 0.47338H15.1194C13.124 0.447318 11.1436 0.821709 9.29541 1.5744C7.44721 2.3271 5.76875 3.44281 4.35929 4.85554C2.94984 6.26826 1.83803 7.94931 1.08962 9.79925C0.341217 11.6492 -0.0285771 13.6304 0.00211383 15.6258C0.00211383 19.629 0.00211383 23.6321 0.00211383 27.6353C0.00211383 31.6385 0.00211383 35.6417 0.00211383 39.6449C-0.0128638 40.5268 0.0517764 41.4082 0.195249 42.2785C0.761624 45.8425 2.5958 49.0822 5.3604 51.4016C8.125 53.721 11.6341 54.9642 15.2423 54.9026H39.1912C40.049 54.9147 40.9064 54.856 41.7546 54.727C45.3189 54.1691 48.5621 52.3433 50.8878 49.5853C53.2136 46.8273 54.4656 43.3225 54.4138 39.7151C54.4372 31.7087 54.4372 23.7024 54.4138 15.696ZM27.3572 37.1868C25.4788 37.2143 23.6344 36.6843 22.0572 35.6637C20.4801 34.6431 19.2409 33.1777 18.4966 31.4529C17.7522 29.7281 17.5359 27.8213 17.8752 25.9736C18.2144 24.1259 19.094 22.4203 20.4026 21.0724C21.7111 19.7245 23.39 18.795 25.2269 18.4012C27.0637 18.0075 28.9761 18.1672 30.7222 18.8603C32.4682 19.5534 33.9696 20.7486 35.0364 22.2949C36.1032 23.8412 36.6875 25.6691 36.7155 27.5475C36.7437 30.0641 35.7757 32.4898 34.0226 34.2955C32.2695 36.1013 29.8735 37.1406 27.3572 37.1868ZM41.6844 16.1174C41.1365 16.1242 40.5989 15.9687 40.1393 15.6704C39.6798 15.3721 39.3188 14.9444 39.102 14.4412C38.8852 13.938 38.8223 13.3819 38.9211 12.843C39.02 12.3041 39.2762 11.8065 39.6574 11.413C40.0387 11.0196 40.528 10.7478 41.0635 10.632C41.599 10.5162 42.1568 10.5616 42.6666 10.7624C43.1763 10.9632 43.6152 11.3105 43.9279 11.7604C44.2405 12.2104 44.4129 12.7428 44.4234 13.2906C44.4143 14.0142 44.1228 14.7056 43.6111 15.2173C43.0994 15.729 42.408 16.0205 41.6844 16.0296V16.1174Z"
-              fill="var(--primary-light)"></path>
+              fill={textColor}></path>
           </svg>
         </a>
         <a href="https://www.tiktok.com/@superjoyfn" class="icon"
@@ -81,7 +127,7 @@
             <path
               class="icon-path"
               d="M50.6729 13.5018L49.1763 13.3503C46.5401 12.9173 44.1255 11.6123 42.3188 9.64424C40.5122 7.6762 39.4182 5.15893 39.2118 2.4954V2.24913C39.1171 0.0326834 37.5068 0.0137396 36.5596 0.0137396H28.4327C28.1154 -0.0225437 27.794 0.01326 27.4925 0.118482C27.191 0.223703 26.9171 0.395628 26.6913 0.621438C26.4655 0.847249 26.2936 1.12112 26.1884 1.42263C26.0831 1.72414 26.0473 2.04551 26.0836 2.36279C26.0836 2.83639 26.0836 3.29104 26.0836 3.76464V40.0044C26.1253 41.355 25.7424 42.6847 24.9889 43.8063C24.2353 44.9279 23.149 45.785 21.8829 46.2569C20.6167 46.7288 19.2345 46.7918 17.9307 46.437C16.6268 46.0822 15.4671 45.3275 14.6146 44.2791C13.7622 43.2307 13.26 41.9413 13.1786 40.5926C13.0973 39.2438 13.441 37.9034 14.1613 36.7602C14.8816 35.617 15.9423 34.7284 17.194 34.2195C18.4458 33.7106 19.8256 33.6071 21.1392 33.9234C21.4461 34.0451 21.7794 34.0844 22.1061 34.0376C22.4328 33.9908 22.7416 33.8594 23.002 33.6565C23.2623 33.4536 23.4651 33.1862 23.5903 32.8808C23.7155 32.5754 23.7587 32.2426 23.7156 31.9154V23.1064C23.7335 22.8212 23.6947 22.5352 23.6013 22.2651C23.5078 21.9951 23.3617 21.7462 23.1714 21.533C22.9811 21.3198 22.7504 21.1464 22.4926 21.0231C22.2348 20.8997 21.9551 20.8287 21.6697 20.8142C17.807 20.3749 13.902 21.1216 10.4738 22.9549C8.18362 24.1467 6.15356 25.7825 4.50193 27.7669C2.85031 29.7512 1.61016 32.0445 0.853745 34.513C0.0973343 36.9814 -0.160204 39.5758 0.0961394 42.1448C0.352483 44.7138 1.11758 47.2061 2.34684 49.4764C4.78471 54.0159 8.90699 57.4171 13.8269 58.9484C15.5347 59.5596 17.3363 59.8673 19.1501 59.8577C20.6282 59.8458 22.1011 59.6808 23.5451 59.3652C26.397 58.822 29.0881 57.6376 31.415 55.9014C33.7418 54.1653 35.6436 51.9229 36.9764 49.3438C38.5565 46.2664 39.3259 42.8368 39.2118 39.3793V23.5232C42.6124 25.3467 46.3818 26.3765 50.2372 26.5353C50.5738 26.5828 50.9167 26.5583 51.2433 26.4637C51.5698 26.369 51.8725 26.2061 52.1316 25.9859C52.3434 25.7728 52.5084 25.5178 52.616 25.2373C52.7237 24.9567 52.7716 24.6568 52.7567 24.3567V15.6804C52.7695 15.3989 52.7251 15.1177 52.6261 14.8538C52.5272 14.59 52.3757 14.3489 52.1809 14.1453C51.9861 13.9416 51.752 13.7796 51.4928 13.669C51.2336 13.5584 50.9547 13.5015 50.6729 13.5018Z"
-              fill="var(--primary-light)"></path>
+              fill={textColor}></path>
           </svg>
         </a>
         <a href="https://www.facebook.com/SuperJoyFN" class="icon"
@@ -95,20 +141,23 @@
             <path
               class="icon-path"
               d="M50.2597 0H9.87202C4.62348 0 0 3.81329 0 9.06183V49.4494C0 54.6979 4.62348 59.3935 9.87202 59.3935H34.8787C34.8319 51.6089 34.8898 42.94 34.8521 35.4073C33.2571 35.3912 31.6607 35.3087 30.0657 35.2842C30.0716 32.622 30.0682 29.9046 30.0692 27.2429C31.6631 27.2231 33.2581 27.2194 34.8521 27.2042C34.9008 24.6156 34.8034 22.0109 34.9031 19.4245C35.0621 17.3768 35.8429 15.3069 37.374 13.8922C39.2277 12.1278 41.8634 11.5284 44.3494 11.4541C46.9779 11.4306 49.6066 11.4432 52.2364 11.4443C52.2468 14.218 52.2468 16.9919 52.2352 19.7655C50.5357 19.7626 48.8352 19.7688 47.1357 19.7619C46.0592 19.6946 44.9524 20.5112 44.7565 21.5796C44.731 23.4356 44.7473 25.2927 44.7483 27.1481C47.2401 27.1587 49.7329 27.1453 52.2247 27.1545C52.0425 29.84 51.7085 32.5126 51.3187 35.1751C49.1171 35.1948 46.914 35.3933 44.7136 35.406C44.695 42.9363 44.7193 51.6087 44.7002 59.3933H50.2595C55.5081 59.3933 59.3935 54.6978 59.3935 49.4492V9.06183C59.3936 3.81329 55.5082 0 50.2597 0Z"
-              fill="var(--primary-light)"></path>
+              fill={textColor}></path>
           </svg>
         </a>
       </div>
-      <h6>
-        <!-- {new Date().getFullYear()}  -->
+      <p>
+        &#169;{new Date().getFullYear()}
         Superjoy Studios
-      </h6>
+      </p>
     </div>
   </div>
 </nav>
 <div class="modal-background-tint"></div>
 
-<style lang="scss">
+<style
+  lang="scss"
+  define:vars={{ textColor, backgroundColor, accentColor, navColor }}
+>
   .logo-svg {
     will-change: transform;
     transform: scale(1);
@@ -120,6 +169,19 @@
   .logo-color {
     transform-origin: top left;
     transition: var(--hover-transition);
+    fill: var(--navColor);
+  }
+
+  .logo-svg.open {
+    path {
+      fill: var(--textColor);
+    }
+  }
+  .logo-svg:hover {
+    path {
+      fill: var(--accentColor);
+    }
+    cursor: pointer;
   }
 
   header {
@@ -148,19 +210,9 @@
   }
 
   .hamburger-menu {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    width: 30px;
-    height: 20px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
+    border: unset;
     padding: 0;
-  }
-
-  .hamburger-menu {
+    background-color: transparent;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -185,6 +237,9 @@
   .hamburger-menu .line:last-child {
     transform-origin: bottom left;
     margin-top: 6px; /* add margin to center line vertically */
+  }
+  .hamburger-menu.open .line {
+    background-color: var(--textColor);
   }
 
   .hamburger-menu.open .line:first-child {
@@ -225,7 +280,7 @@
     width: 100%;
     // height: 80%;
     transition: var(--transition-smooth);
-    background-color: var(--color-purple);
+    background-color: var(--backgroundColor);
     text-align: center;
     // opacity: 0;
     transform: translate(0, -100%);
@@ -258,7 +313,7 @@
 
     h3 > a {
       transition: var(--hover-transition);
-      color: unset;
+      color: var(--textColor);
       text-decoration: none;
     }
   }
@@ -266,16 +321,10 @@
     transition: var(--hover-transition);
     transform: translateX(0);
   }
-  li.about > h3:hover {
-    color: var(--accent-orange) !important;
-    transform: translateX(2rem);
-  }
-  li.work > h3:hover {
-    color: var(--color-green) !important;
-    transform: translateX(2rem);
-  }
-  li.contact > h3:hover {
-    color: var(--accent-blue-secondary) !important;
+  li > h3:hover {
+    a {
+      color: var(--accentColor) !important;
+    }
     transform: translateX(2rem);
   }
 
@@ -286,7 +335,8 @@
     margin: 2rem 0;
     justify-content: space-between;
   }
-  h6 {
+  p {
+    font-family: "Aktiv-Regular";
     color: var(--primary-light);
   }
   .icons {
@@ -313,7 +363,7 @@
       scale: 1;
       svg {
         path {
-          fill: var(--color-yellow);
+          fill: var(--accentColor);
         }
       }
     }
@@ -322,48 +372,32 @@
 
 <script>
   // selectors
-  const logo = document.querySelector(".logo-color");
   const logoSVG = document.querySelector(".logo-svg");
   const hamburger = document.querySelector(".hamburger-menu");
   const menuModal = document.querySelector(".menu-modal");
   const background = document.querySelector(".modal-background-tint");
-  const menuOptions = document.querySelectorAll(".menu-option");
-  const icons = document.querySelectorAll(".icon-path");
-  const hamburgerLines = document.querySelectorAll(".line");
 
   // actions on open
   const openModal = () => {
+    background.classList.toggle("open");
     hamburger.classList.toggle("open");
     menuModal.classList.toggle("open");
+    logoSVG.classList.toggle("open");
     menuModal.setAttribute("arial-modal", "true");
-    background.classList.toggle("open");
     // when menu opens, change color of
-    // 1. hamburger icon
-    hamburgerLines.forEach((line) => {
-      line.style.backgroundColor = "var(--color-yellow)";
-    });
     // 2. logo
-    logo.style.fill = "var(--color-yellow)";
     logoSVG.style.transform = "scale(2.5)";
-    // 3. menu options
-    menuOptions.forEach((menuOption) => {
-      menuOption.style.color = "var(--primary-light)";
-    });
   };
 
   // actions on close
   const closeModal = () => {
+    background.classList.remove("open");
     hamburger.classList.remove("open");
     menuModal.classList.remove("open");
+    logoSVG.classList.remove("open");
     menuModal.setAttribute("arial-modal", "false");
-    background.classList.remove("open");
     // when menu closes, change color of
-    // 1. hamburger icon
-    hamburgerLines.forEach((line) => {
-      line.style.backgroundColor = "var(--primary-dark)";
-    });
     // 2. logo
-    logo.style.fill = "var(--primary-dark)";
     logoSVG.style.transform = "scale(1)";
   };
 
@@ -377,77 +411,10 @@
   });
   // close when background is clicked
   background.addEventListener("click", () => closeModal());
-
-  menuOptions.forEach((menuOption) => {
-    const className = menuOption.classList[1]; // select second classname, aka the "case"
-
-    // When a menu item is hovered
-    menuOption.addEventListener("mouseover", function () {
-      menuModal.style.backgroundColor = getBgHoverColor(className);
-      // change color of currently hovered element
-      this.style.color = getHoverColor(className);
-      // change logo color
-      logo.style.fill = getHoverColor(className);
-      // change hamburger lines color
-      hamburgerLines.forEach((line) => {
-        line.style.backgroundColor = getHoverColor(className);
-      });
-      // links
-      menuOptions.forEach((otherMenuOption) => {
-        if (otherMenuOption !== this) {
-          // skip currently hovered element
-          otherMenuOption.style.color = getHoverColor(className);
-        }
-      });
-      // social icons
-      icons.forEach((icon) => {
-        icon.style.fill = getHoverColor(className);
-      });
-    });
-
-    // When a menu item is no longer hovered
-    menuOption.addEventListener("mouseout", function () {
-      // revert logo color
-      logo.style.fill = "var(--color-yellow)";
-      // revert hamburger lines color
-      hamburgerLines.forEach((line) => {
-        line.style.backgroundColor = "var(--color-yellow)";
-      });
-      // change bg modal color
-      menuModal.style.backgroundColor = "var(--color-purple)";
-      // revert menu options colors
-      menuOptions.forEach((otherMenuOption) => {
-        otherMenuOption.style.color = "var(--primary-light)";
-      });
-      // revert social icons
-      icons.forEach((icon) => {
-        icon.style.fill = "var(--primary-light)";
-      });
-    });
+  // close modal when user presses escape
+  window.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      closeModal();
+    }
   });
-
-  function getBgHoverColor(className) {
-    switch (className) {
-      case "about":
-        return "var(--color-green)";
-      case "work":
-        return "var(--accent-blue-secondary)";
-      case "contact":
-        return "var(--color-yellow)";
-      default:
-        return "var(--color-purple)";
-    }
-  }
-  function getHoverColor(className) {
-    switch (className) {
-      case "about":
-        return "var(--color-darkgreen)";
-      case "work":
-        return "var(--primary-light)";
-      case "contact":
-        return "var(--color-darkgreen)";
-      default:
-        return "var(--accent-green)";
-    }
-  }
 </script>

@@ -28,7 +28,8 @@
           required
         />
         <div class="empty-feedback invalid-feedback">
-          Please provide your first name.
+          *
+          <!-- Please provide your first name. -->
         </div>
       </div>
       <div class="form-group">
@@ -40,9 +41,8 @@
           placeholder="you@company.com"
           required
         />
-        <div class="empty-feedback">Please provide your email address.</div>
-        <div class="invalid-feedback">
-          Please provide a valid email address.
+        <div class="empty-feedback invalid-feedback">
+          * <!-- Please provide a valid email caddress. -->
         </div>
       </div>
       <div class="form-group">
@@ -55,7 +55,7 @@
           required
         />
         <div class="empty-feedback invalid-feedback">
-          Please provide your last name.
+          * <!-- Please provide your company name. -->
         </div>
       </div>
       <div class="form-group">
@@ -68,7 +68,8 @@
           required
         />
         <div class="empty-feedback invalid-feedback">
-          Please provide your last name.
+          *
+          <!-- Please provide your last name. -->
         </div>
       </div>
       <div class="form-group">
@@ -81,7 +82,8 @@
           required
         />
         <div class="empty-feedback invalid-feedback">
-          Please provide your last name.
+          *
+          <!-- Please provide your budget. -->
         </div>
       </div>
       <div class="form-group">
@@ -94,7 +96,8 @@
           required
         />
         <div class="empty-feedback invalid-feedback">
-          Please provide your last name.
+          *
+          <!-- Please provide a subject line. -->
         </div>
       </div>
       <div class="form-group">
@@ -106,12 +109,15 @@
           placeholder="Your Message"
           required></textarea>
         <div class="empty-feedback invalid-feedback">
-          Please enter your message.
+          *
+          <!-- Please enter your message. -->
         </div>
       </div>
       <div class="form-group">
-        <button type="submit">Submit</button>
-        <p id="result"></p>
+        <div class="submit-flex">
+          <p id="result"></p>
+          <button class="submit-button" type="submit"><p>Submit</p></button>
+        </div>
       </div>
     </form>
   </div>
@@ -125,6 +131,9 @@
 
   .was-validated :placeholder-shown:invalid ~ .empty-feedback {
     display: block;
+    position: absolute;
+    right: 3rem;
+    color: red;
   }
 
   .was-validated :not(:placeholder-shown):invalid ~ .invalid-feedback {
@@ -170,6 +179,29 @@
       border-bottom: 1px solid var(--primary-dark);
       background: none;
     }
+  }
+
+  .submit-button {
+    border: none;
+    background: var(--color-darkgreen);
+    color: var(--color-yellow);
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    transition: var(--hover-transition);
+    cursor: pointer;
+    p {
+      font-family: "Hamburg-Bold";
+    }
+  }
+  .submit-button:hover {
+    background: var(--color-yellow);
+    color: var(--color-darkgreen);
+  }
+  .submit-flex {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
   }
 </style>
 
@@ -228,7 +260,7 @@
               })
               .catch((error) => {
                 console.log(error);
-                result.innerHTML = "Something went wrong!";
+                result.innerHTML = "Something went wrong! Please make sure all the fields are filled properly.";
               })
               .then(function () {
                 form.reset();

@@ -62,11 +62,19 @@ const seo = [];
         <path id="separator"></path>
       </svg>
     </div>
-    <LetsChat textColor="var(--color-darkgreen)" backgroundColor="var(--color-green)"/>
+    <LetsChat
+      textColor="var(--color-darkgreen)"
+      backgroundColor="var(--color-green)"
+    />
   </div>
 </Layout>
 
 <script>
+  import { interpolate } from "flubber";
+  import { animate, scroll } from "motion";
+  const path = document.getElementById("separator");
+  const parent = document.querySelector(".join-the-conversation");
+
   const shapeStates = {
     initialShape: {
       color: "var(--accent-green)",
@@ -77,11 +85,6 @@ const seo = [];
       d: "M 960 0 C 562.503 0 226 -1 -1 0 V 349 H 1920 V -1 C 1723 -1 1357.5 0 960 0 Z",
     },
   };
-
-  import { interpolate } from "flubber";
-  import { animate, scroll } from "motion";
-  const path = document.getElementById("separator");
-  const parent = document.querySelector(".join-the-conversation");
 
   let currentPath = shapeStates.initialShape;
 

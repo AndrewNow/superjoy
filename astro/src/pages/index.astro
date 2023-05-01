@@ -9,16 +9,14 @@ import LetsChat from "../components/LetsChat.astro";
 import { getAllProjects } from "../lib/api/projects";
 import Projects from "../components/projects/projects.astro";
 
+const landingData = await getLandingContent();
+const projectsData = await getAllProjects();
+
 const seo = {
   // title: "Mimotype",
   // description: "Join us in shaping the future of the optoelectronics industry.",
   // image: "https://i.imgur.com/hev2VXn.png",
 };
-
-const landingData = await getLandingContent();
-const projectsData = await getAllProjects();
-// const allProjects = await getAllProjects();
-// allProjects will be used to map over the projects into their own pages.
 ---
 
 <Layout seo={seo}>
@@ -57,10 +55,24 @@ const projectsData = await getAllProjects();
     statTextColor="var(--primary-light)"
     statCircleColor="var(--color-darkpurple)"
   />
-  <LetsChat
-    textColor="var(--color-darkpurple)"
-    backgroundColor="var(--color-lightpurple)"
-  />
+  <section id="letschat">
+    <svg
+      class="letschat-blob"
+      width="1920"
+      height="467"
+      viewBox="0 0 1920 467"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        id="letschat-blob"
+        fill="var(--color-purple)"></path>
+    </svg>
+    <LetsChat
+      textColor="var(--color-darkpurple)"
+      backgroundColor="var(--color-lightpurple)"
+    />
+  </section>
 </Layout>
 
 <script>
@@ -83,9 +95,46 @@ const projectsData = await getAllProjects();
   scrollToDiv.addEventListener("click", function () {
     lenis.scrollTo(partnersDiv, { duration: 1 });
   });
+
+  // letschat blob animation
+  import { interpolate } from "flubber";
+  import { animate, scroll } from "motion";
+  const path = document.getElementById("letschat-blob");
+  const parent = document.getElementById("letschat");
+
+  const shapeStates = {
+    initialShape: {
+      d: "M1919.62 0.254799C1733.62 121.404 1390.31 198.731 1167.73 223.191C943.746 248.032 753.034 288.415 560.409 262.809C369.442 236.822 170.825 141.023 0 0H1920",
+    },
+    targetShape: {
+      d: "M1920 0C1746.83 133.959 1616.3 168.109 1411.85 193.02C1205.76 217.601 996.214 179.657 752.099 156.561C509.465 133.794 211.029 114.492 0 0H1920Z",
+    },
+  };
+
+  let currentPath = shapeStates.initialShape;
+
+  // set svg attributes to that of stateShapes
+  path.setAttribute("d", currentPath.d);
+
+  // toggle between shape states
+  currentPath =
+    currentPath === shapeStates.initialShape
+      ? shapeStates.targetShape
+      : shapeStates.initialShape;
+  const mixshapeStates = interpolate(path.getAttribute("d"), currentPath.d);
+
+  // animate on scroll
+  scroll(
+    animate((progress) => path.setAttribute("d", mixshapeStates(progress))),
+    { target: parent, offset: ["0 0.5", "0.45 0.5"] }
+  );
 </script>
 
 <style lang="scss">
+  #letschat {
+    background: var(--color-lightpurple);
+    overflow-x: hidden;
+  }
   .blend-mode {
     color: var(--color-darkpurple);
     // mix-blend-mode: difference;
