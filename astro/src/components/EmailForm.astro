@@ -191,16 +191,52 @@ const { textColor, backgroundColor } = Astro.props;
     color: var(--backgroundColor);
     text-transform: uppercase;
     padding: 1rem 2rem;
+    width: 150px;
+    height: 60px;
     border-radius: 4px;
     transition: var(--hover-transition);
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
     p {
+      transition: var(--hover-transition);
       font-family: "Hamburg-Bold";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &:after {
+      background: var(--backgroundColor);
+      content: "submit";
+      font-size: 20px;
+      font-family: "Hamburg-Bold";
+      color: var(--textColor);
+      transition: var(--hover-transition);
+      position: absolute;
+      width: 120%;
+      height: 350%;
+      border-top-left-radius: 100%;
+      border-top-right-radius: 100%;
+      top: 50%;
+      left: 50%;
+      display: grid;
+      place-items: center;
+      transform: translate(-50%, 25%);
     }
   }
   .submit-button:hover {
-    background: var(--backgroundColor);
+    // background: var(--backgroundColor);
     color: var(--textColor);
+
+    p {
+      transform: translate(-50%, -200%);
+    }
+
+    &:after {
+      transform: translate(-50%, -50%);
+    }
   }
   .submit-flex {
     display: flex;

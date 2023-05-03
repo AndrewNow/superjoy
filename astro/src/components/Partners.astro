@@ -1,4 +1,5 @@
 ---
+import { Image } from "@astrojs/image/components";
 const { partnerImages } = Astro.props;
 ---
 
@@ -13,7 +14,16 @@ const { partnerImages } = Astro.props;
       partnerImages.map((imageSrc) => {
         return (
           <div class="grid-item">
-            <img src={imageSrc} class="grid-item-image" />
+            <Image
+              src={imageSrc}
+              alt="partner image"
+              class="grid-item-image"
+              format="webp"
+              aspectRatio={280 / 130}
+              height={130}
+              fit="contain"
+              background="#F8FAFB"
+            />
           </div>
         );
       })
