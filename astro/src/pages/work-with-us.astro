@@ -13,7 +13,7 @@ import { getAllProjects } from "../lib/api/projects";
 import RoadmapScroll from "../components/workWithUs/RoadmapScroll.astro";
 import Projects from "../components/projects/projects.astro";
 
-import {getRoadmapContent} from '../lib/api/roadmapContent'
+import { getRoadmapContent } from "../lib/api/roadmapContent";
 
 const projectsData = await getAllProjects();
 const faqData = await getFAQContent();
@@ -48,7 +48,7 @@ const seo = {
     </section>
     <section class="section section-white">
       <Roadmap />
-      <RoadmapScroll data={roadmapData}/>
+      <RoadmapScroll data={roadmapData} />
     </section>
     <nav class="navbar">
       <p class="nav-item">Our services</p>
@@ -190,16 +190,20 @@ const seo = {
     const contextItem = navbarItems[i];
     const leftPosition = i * (100 / sections.length);
 
-    inView(section, () => {
-      // don't run inView if scrollTo scrolling is active
-      if (!isScrolling) {
-        updateActiveSection(leftPosition); // Update active section position in context bar
-        activeContextItem.classList.remove("active"); // Remove active class from previous active item and add it to the current item
-        contextItem.classList.add("active");
-        activeContextItem = contextItem; // Update active context item
-      }
-      return (leaveInfo) => console.log(leaveInfo); // Return a function to be called when the section is no longer in view
-    });
+    inView(
+      section,
+      () => {
+        // don't run inView if scrollTo scrolling is active
+        if (!isScrolling) {
+          updateActiveSection(leftPosition); // Update active section position in context bar
+          activeContextItem.classList.remove("active"); // Remove active class from previous active item and add it to the current item
+          contextItem.classList.add("active");
+          activeContextItem = contextItem; // Update active context item
+        }
+        return (leaveInfo) => console.log(leaveInfo); // Return a function to be called when the section is no longer in view
+      },
+      { margin: "100px 0px 0px 0px" }
+    );
 
     contextItem.addEventListener("click", function () {
       isScrolling = true;

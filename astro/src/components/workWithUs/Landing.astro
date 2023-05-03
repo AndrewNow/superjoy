@@ -3,8 +3,33 @@ import Button from "../Button.astro";
 ---
 
 <div class="wrapper">
-  <h2>Experience the future of digital marketing</h2>
-  <h4>Activate your brand in the Fortnite Metaverse</h4>
+  <h2>
+    <span class="top">
+      <span class="word">Experience</span>
+      <span class="word">the</span>
+    </span>
+    <span class="middle">
+      <span class="word">future</span>
+      <span class="word">of</span>
+      <span class="word">digital</span>
+    </span>
+    <span class="bottom">
+      <span class="word">marketing</span>
+    </span>
+  </h2>
+  <h4>
+    <span class="top">
+      <span class="subtitle-word">Activate</span>
+      <span class="subtitle-word">your</span>
+      <span class="subtitle-word">brand</span>
+    </span>
+    <span class="middle">
+      <span class="subtitle-word">in</span>
+      <span class="subtitle-word">the</span>
+      <span class="subtitle-word">Fortnite</span>
+      <span class="subtitle-word">Metaverse</span>
+    </span>
+  </h4>
   <Button
     input="Learn more"
     url=""
@@ -21,12 +46,50 @@ import Button from "../Button.astro";
     margin: 10rem auto;
 
     h2 {
-      line-height: 100%;
+      line-height: 90%;
       width: 80%;
     }
     h4 {
       margin: 3rem 0;
       width: 50%;
+      letter-spacing: -0.125rem;
+      overflow: hidden;
+    }
+
+    .top,
+    .middle,
+    .bottom {
+      overflow: hidden;
+      display: inline-block;
+    }
+
+    .word,
+    .subtitle-word {
+      display: inline-block;
+      transform: translateY(150px) rotate(5deg);
+      opacity: 0.3;
     }
   }
 </style>
+
+<script>
+  import { animate, stagger } from "motion";
+
+  const words = document.querySelectorAll(".word");
+  const subtitleWords = document.querySelectorAll(".subtitle-word");
+
+  animate(
+    words,
+    { opacity: 1, transform: `translateY(0) rotate(0deg)` },
+    {
+      duration: 0.95,
+      delay: stagger(0.05, { easing: [0.5, 0.5, 0, 1] }),
+    }
+  ).finished.then(() => {
+    animate(
+      subtitleWords,
+      { opacity: 1, transform: `translateY(0)` },
+      { duration: 0.95, delay: stagger(0.05, { easing: [0.5, 0.5, 0, 1] }) }
+    );
+  });
+</script>

@@ -1,9 +1,19 @@
+---
+const string = "Goal-focused and results driven marketing campaigns";
+---
+
 <div class="wrapper">
   <div class="flex">
     <div class="header">
       <h6>01</h6>
-      <h4>Goal-focused and results driven marketing campaigns</h4>
-      <p>
+      <h4>
+        {
+          string.split(" ").map((word) => {
+            return <span class="servicepromise-word">{word}</span>;
+          })
+        }
+      </h4>
+      <p id="servicepromise-paragraph">
         Our parent companies - SypherPK and Oni Studios - have been leading
         content production within the global Fortnite category through SypherPK.
       </p>
@@ -50,7 +60,56 @@
   </div>
 </div>
 
+<script>
+  import { animate, stagger, inView } from "motion";
+
+  const textInView = document.querySelector(".header");
+  const words = document.querySelectorAll(".servicepromise-word");
+  const paragraph = document.getElementById("servicepromise-paragraph");
+  const services = document.querySelectorAll(".service");
+
+  inView(
+    textInView,
+    () => {
+      animate(
+        words,
+        { opacity: 1, transform: "translateY(0px)" },
+        { duration: 0.75, delay: stagger(0.05, { easing: "ease-in" }) }
+      ),
+        animate(
+          paragraph,
+          { opacity: 1, transform: "translateY(0px)" },
+          {
+            delay: 0.35,
+            duration: 0.75,
+            easing: [0.5, 0.5, 0, 1],
+          }
+        );
+      animate(
+        services,
+        { opacity: 1, transform: "translateY(0px)" },
+        { duration: 1.2, delay: stagger(0.05, { easing: [0.5, 0.5, 0, 1] }) }
+      );
+    },
+    { margin: "100px 0px 0px 0px", amount: "all" }
+  );
+</script>
+
 <style lang="scss">
+  .servicepromise-word,
+  .service {
+    margin-right: 1rem;
+    transform: translateY(80px);
+    display: inline-block;
+    opacity: 0.4;
+  }
+  #servicepromise-paragraph {
+    margin-right: 1rem;
+    transform: translateY(80px);
+    display: inline-block;
+    opacity: 0;
+  }
+
   .wrapper {
     width: var(--max-width);
     margin: 0 auto;
@@ -92,5 +151,4 @@
       right: 0;
     }
   }
-
 </style>

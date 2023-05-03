@@ -71,7 +71,6 @@ let isHomepageCheck = isHomepage ? "isHomepage" : "notHomepage"
 </section>
 
 <style lang="scss" define:vars={{ textColor, marqueeColor, backgroundColor, textColor, statTextColor, statCircleColor }}>
-
   .marquee-container {
     overflow: hidden;
     width: 100%;
@@ -86,10 +85,11 @@ let isHomepageCheck = isHomepage ? "isHomepage" : "notHomepage"
     overflow-x: hidden;
     transform: rotate(4.35deg) scale(1.01);
   }
-
+  
   .bg {
     background: var(--backgroundColor);
     padding: 5rem 0;
+    margin-top: 0;
     // padding-bottom: 15rem;
   }
   .inner {
@@ -222,7 +222,6 @@ let isHomepageCheck = isHomepage ? "isHomepage" : "notHomepage"
       {
         amount: "all",
         duration: 0.75,
-        delay: stagger(0.05, { easing: "ease-in" }),
       }
     );
   });
