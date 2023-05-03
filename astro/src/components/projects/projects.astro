@@ -24,18 +24,24 @@ let setTextColor = textColor ? textColor : "var(--color-darkpurple)";
     featuredProjectData && (
       <div class="project" id="featured-project">
         <div class="image-wrapper" id="hide-featured">
-          <Image
-            id="featured-project-image"
-            class="featured-image"
-            src={featuredProjectData.imageUrl}
-            width={1850}
-            height={1035}
-            alt={`Featured project - ${featuredProjectData.projectName} `}
-            fit="cover"
-            quality={90}
-          />
+          <a href={`projects/${featuredProjectData.slug}`}>
+            <Image
+              id="featured-project-image"
+              class="featured-image"
+              src={featuredProjectData.imageUrl}
+              width={1850}
+              height={1035}
+              alt={`Featured project - ${featuredProjectData.projectName} `}
+              fit="cover"
+              quality={90}
+            />
+          </a>
         </div>
-        <h6>{featuredProjectData.projectName}</h6>
+        <h6>
+          <a href={`projects/${featuredProjectData.slug}`}>
+            {featuredProjectData.projectName}
+          </a>
+        </h6>
       </div>
     )
   }
@@ -46,25 +52,29 @@ let setTextColor = textColor ? textColor : "var(--color-darkpurple)";
         return (
           <div class="project second-tier-featured">
             <div class="image-wrapper" id="hide-secondary">
-              <Image
-                id="secondary-project-image"
-                class="featured-image"
-                src={project.imageUrl}
-                width={910}
-                height={512}
-                alt={`Featured project - ${project.projectName} `}
-                fit="cover"
-                quality={80}
-              />
+              <a href={`/projects/${project.slug}`}>
+                <Image
+                  id="secondary-project-image"
+                  class="featured-image"
+                  src={project.imageUrl}
+                  width={910}
+                  height={512}
+                  alt={`Featured project - ${project.projectName} `}
+                  fit="cover"
+                  quality={80}
+                />
+              </a>
             </div>
-            <h6>{project.projectName}</h6>
+            <h6>
+              <a href={`/projects/${project.slug}`}>{project.projectName}</a>
+            </h6>
           </div>
         );
       })
     }
   </div>
   <!-- All other projects -->
-  <AllOtherProjects data={allOtherProjectData} setTextColor={setTextColor}/>
+  <AllOtherProjects data={allOtherProjectData} setTextColor={setTextColor} />
 </div>
 
 <script>
@@ -139,10 +149,13 @@ let setTextColor = textColor ? textColor : "var(--color-darkpurple)";
     width: 100%;
     margin-bottom: 6rem;
     h6 {
+      a {
+        text-decoration: none;
+        color: var(--setTextColor);
+      }
       text-transform: uppercase;
       margin: 3rem;
       margin-top: 2rem;
-      color: var(--setTextColor);
     }
 
     .image-wrapper {

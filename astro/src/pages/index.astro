@@ -64,9 +64,7 @@ const seo = {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path
-        id="letschat-blob"
-        fill="var(--color-purple)"></path>
+      <path id="letschat-blob" fill="var(--color-purple)"></path>
     </svg>
     <LetsChat
       textColor="var(--color-darkpurple)"
@@ -98,7 +96,7 @@ const seo = {
 
   // letschat blob animation
   import { interpolate } from "flubber";
-  import { animate, scroll } from "motion";
+  import { scroll } from "motion";
   const path = document.getElementById("letschat-blob");
   const parent = document.getElementById("letschat");
 
@@ -124,10 +122,10 @@ const seo = {
   const mixshapeStates = interpolate(path.getAttribute("d"), currentPath.d);
 
   // animate on scroll
-  scroll(
-    animate((progress) => path.setAttribute("d", mixshapeStates(progress))),
-    { target: parent, offset: ["0 0.5", "0.45 0.5"] }
-  );
+  scroll(({ y }) => path.setAttribute("d", mixshapeStates(y.progress)), {
+    target: parent,
+    offset: ["0 0.5", "0.45 0.5"],
+  });
 </script>
 
 <style lang="scss">
