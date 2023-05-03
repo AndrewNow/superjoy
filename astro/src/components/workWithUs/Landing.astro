@@ -85,11 +85,13 @@ import Button from "../Button.astro";
       duration: 0.95,
       delay: stagger(0.05, { easing: [0.5, 0.5, 0, 1] }),
     }
-  ).finished.then(() => {
-    animate(
-      subtitleWords,
-      { opacity: 1, transform: `translateY(0)` },
-      { duration: 0.95, delay: stagger(0.05, { easing: [0.5, 0.5, 0, 1] }) }
-    );
-  });
+  );
+  animate(
+    subtitleWords,
+    { opacity: 1, transform: `translateY(0)` },
+    {
+      duration: 0.95,
+      delay: stagger(0.05, { start: 0.65 }, { easing: [0.5, 0.5, 0, 1] }),
+    }
+  );
 </script>

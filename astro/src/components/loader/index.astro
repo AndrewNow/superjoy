@@ -1,4 +1,5 @@
 ---
+import { Image } from "@astrojs/image/components";
 const { imageSrc, description } = Astro.props;
 ---
 
@@ -71,7 +72,14 @@ const { imageSrc, description } = Astro.props;
           fill="var(--primary-dark)"></path>
       </svg>
       <div class="hero-container" id="hero-container">
-        <img src={imageSrc} class="hero-image" id="hero-image" />
+        <Image
+          width={1703}
+          height={960}
+          src={imageSrc}
+          class="hero-image"
+          id="hero-image"
+          format="webp"
+        />
       </div>
       <h1 class="title" id="title">Superjoy Studios</h1>
       <h5 class="description" id="description">{description}</h5>
@@ -190,7 +198,7 @@ const { imageSrc, description } = Astro.props;
   const title = document.getElementById("title");
   const description = document.getElementById("description");
 
-  const sequence:any[] = [
+  const sequence: any[] = [
     [
       studiosSVG,
       {
