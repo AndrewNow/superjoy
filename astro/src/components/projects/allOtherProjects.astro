@@ -20,333 +20,369 @@ const { data, setTextColor } = Astro.props;
       );
     })
   }
-  <div class="cursor">
-    <svg
-      class="blob"
-      width="200"
-      height="200"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <defs>
-        <clipPath id="mask">
-          <path id="blob"></path>
-        </clipPath>
-      </defs>
-    </svg>
-    <div class="cursor-media">
-      {
-        data.map((project) => {
-          return (
-            <Image
-              class="cursor-media-content"
-              id={project.code}
-              data-media-src={project.code}
-              src={project.imageUrl}
-              alt="cursor preview image"
-              width={350}
-              height={350}
-              quality={90}
-              format="webp"
-            />
-          );
-        })
-      }
-    </div>
-  </div>
 </div>
-
-<style lang="scss" define:vars={{ setTextColor }}>
-  .hover-project-item {
-    text-decoration: none;
-    border-top: 3px solid var(--setTextColor);
-    position: relative;
-    width: 100%;
-    padding: 3rem;
-    margin: 3rem 0;
-    color: var(--setTextColor);
-    display: flex;
-    justify-content: space-between;
-
-    h5 {
-      text-transform: uppercase;
+<div class="cursor">
+  <svg
+    class="blob"
+    width="200"
+    height="200"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <clipPath id="mask">
+        <path id="blob"></path>
+      </clipPath>
+    </defs>
+  </svg>
+  <!-- <div class="image-hovered">
+    <p class="image-hovered-content">View project</p>
+  </div> -->
+  <div class="cursor-media">
+    {
+      data.map((project) => {
+        return (
+          <Image
+            class="cursor-media-content"
+            id={project.code}
+            data-media-src={project.code}
+            src={project.imageUrl}
+            alt="cursor preview image"
+            width={350}
+            height={350}
+            quality={90}
+            format="webp"
+          />
+        );
+      })
     }
-  }
+  </div>
 
-  .cursor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 2000;
-    contain: layout style size;
-    // ? may need to disable for link clicking
-    pointer-events: none;
+  <style lang="scss" define:vars={{ setTextColor }}>
+    .hover-project-item {
+      text-decoration: none;
+      border-top: 3px solid var(--setTextColor);
+      position: relative;
+      width: 100%;
+      padding: 3rem;
+      margin: 3rem 0;
+      color: var(--setTextColor);
+      display: flex;
+      justify-content: space-between;
 
-    &:before {
-      // the cursor when not hovering an item
-      content: "";
-      position: absolute;
-      top: -24px;
-      left: -24px;
-      display: block;
-      width: 48px;
-      height: 48px;
-      transform: scale(0.2);
-      background: black;
-      border-radius: 50%;
+      h5 {
+        text-transform: uppercase;
+      }
     }
 
-    .cursor-media {
-      display: block;
-      width: 350px;
-      height: 350px;
-      overflow: hidden;
-      transform: scale(0);
-      position: absolute;
-      top: calc(-350px / 2);
-      left: calc(-350px / 2);
-      clip-path: url(#mask);
-      -webkit-clip-path: url(#mask);
+    .cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 2000;
+      contain: layout style size;
+      // ? may need to disable for link clicking
+      pointer-events: none;
 
-      .cursor-media-content {
+      &:before {
+        // the cursor when not hovering an item
+        content: "";
         position: absolute;
-      }
-    }
-  }
-  .blob {
-    position: absolute;
-    // w/h might not be required given it's being centered via transform
-    width: 100%;
-    height: 100%;
-  }
-</style>
-
-<script>
-  import { lerp, getMousePos, getSiblings } from "../utils/helpers.js";
-  import { animate, inView } from "motion";
-  import { interpolate } from "flubber";
-
-  // ================================================
-  //                Blob effect
-  // ================================================
-  const shapeStates = [
-    {
-      d: "M289.588 28.709C317.208 52.4319 329.194 94.6637 338.314 138.46C347.174 181.995 353.167 227.355 336.23 261.766C319.032 295.917 278.904 319.379 236.431 334.238C193.698 349.098 148.619 355.354 121.78 335.281C94.6811 315.208 85.8217 268.805 63.6732 230.223C41.5248 191.641 5.56608 160.879 0.615247 125.947C-4.33559 91.2748 21.2003 52.4319 55.335 29.7518C89.4697 7.3324 132.203 0.554439 175.197 0.0330578C218.191 -0.488323 261.707 4.98618 289.588 28.709Z",
-    },
-    {
-      d: "M253.156 7.09629C273.492 24.8299 260.551 81.7364 269.002 133.879C277.189 186.021 306.769 233.663 298.582 270.719C290.395 307.774 244.44 333.977 197.957 345.094C151.739 356.211 104.464 351.976 73.8276 329.478C43.1913 306.715 28.6654 265.69 18.1012 230.487C7.80104 195.02 1.19839 165.905 0.141963 131.761C-0.914462 97.3525 3.57534 58.1797 25.4961 40.7108C47.1529 22.9772 86.5047 26.9474 132.987 18.4776C179.206 10.0078 232.819 -10.902 253.156 7.09629Z",
-    },
-    {
-      d: "M275.807 6.53713C307.833 23.2705 317.688 77.0369 315.771 124.22C313.855 171.402 300.442 212.276 281.008 252.875C261.573 293.748 236.39 334.896 201.352 346.966C166.041 359.036 121.149 342.302 87.2063 319.534C53.2637 296.491 30.2703 267.414 16.31 236.416C2.62348 205.418 -2.30367 172.774 0.981095 138.758C3.99213 105.017 15.2151 70.1789 38.7559 51.7996C62.2968 33.4203 98.4292 31.7744 143.869 20.8017C189.034 9.82895 243.506 -10.4706 275.807 6.53713Z",
-    },
-    {
-      d: "M243.86 44.6681C264.132 66.2532 263.599 107.824 274.535 150.195C285.739 192.832 308.145 236.002 300.41 274.376C292.941 312.483 255.33 345.527 217.452 344.994C179.574 344.461 141.696 310.351 99.2834 292.763C56.8708 275.175 10.1903 274.376 1.65448 254.123C-7.14812 233.871 21.9272 194.431 24.3279 144.599C26.4618 94.5003 1.65447 34.5418 16.859 11.8908C32.0635 -10.7602 87.0131 4.42931 135.027 12.6903C182.775 21.2177 223.854 22.8166 243.86 44.6681Z",
-    },
-  ];
-
-  const path = document.getElementById("blob");
-  const container = document.getElementById("container");
-
-  // set svg attributes to that of stateShapes
-  path.setAttribute("d", shapeStates[0].d);
-  // only run animateBlob when its parent is in view
-  inView(container, () => {
-    // do something when in view
-    animateBlob();
-    return () => stopBlobAnimation();
-  });
-
-  let animationFrameId;
-  // animate from 0-1 and 1-0
-  function animateBlob() {
-    let num = 0;
-    let increment = 0.001;
-    let direction = 1;
-
-    // generate shape interpolators for each pair of shapes (eg: first to second shape, second to third, etc)
-    const shapeInterpolators = [];
-
-    for (let i = 1; i < shapeStates.length; i++) {
-      const shape1 = shapeStates[i - 1];
-      const shape2 = shapeStates[i];
-      shapeInterpolators.push(interpolate(shape1.d, shape2.d, 1));
-    }
-
-    // function that runs the appropriate shape interpolator instance based on time on the 0-1 scale
-    function blendInterpolator(t) {
-      const numShapes = shapeInterpolators.length;
-      const segment = 1 / numShapes;
-      let segmentIndex;
-
-      // Check if t is exactly 1
-      if (t === 1) {
-        // If t is exactly 1, set the segment index to the last segment
-        segmentIndex = numShapes - 1;
-      } else {
-        // Otherwise, calculate the segment index by rounding down t / segment
-        segmentIndex = Math.floor(t / segment);
+        top: -24px;
+        left: -24px;
+        display: block;
+        width: 48px;
+        height: 48px;
+        transform: scale(0.2);
+        background: black;
+        border-radius: 50%;
       }
 
-      // Calculate the segment time within the current segment
-      const segmentT = (t - segmentIndex * segment) / segment;
+      .cursor-media {
+        display: block;
+        width: 350px;
+        height: 350px;
+        overflow: hidden;
+        transform: scale(0);
+        position: absolute;
+        top: calc(-350px / 2);
+        left: calc(-350px / 2);
+        clip-path: url(#mask);
+        -webkit-clip-path: url(#mask);
 
-      // Use the appropriate interpolator for the current segment time
-      return shapeInterpolators[segmentIndex](segmentT);
-    }
-
-    // direction changes to mirror loop the blob animation
-    function animate() {
-      // create clock (num)
-      num += increment * direction;
-      if (num >= 1) {
-        num = 1; // reset to exactly 1
-        direction *= -1;
-      } else if (num <= 0) {
-        num = 0; // reset to exactly 0
-        direction *= -1;
-      }
-      path.setAttribute("d", blendInterpolator(num));
-      // console.log(num);
-      console.log(num, "animateBlob running");
-      // RAF to animate on every frame
-      animationFrameId = requestAnimationFrame(animate);
-    }
-
-    animate();
-  }
-
-  function stopBlobAnimation() {
-    cancelAnimationFrame(animationFrameId);
-  }
-
-  // animate blob
-  // animateBlob();
-
-  // ================================================
-  //                Cursor effect
-  // ================================================
-
-  // get mouse position and set it to mouse state
-  let mouse = { x: 0, y: 0 };
-  window.addEventListener("mousemove", (e) => (mouse = getMousePos(e)));
-
-  export default class Cursor {
-    constructor(el) {
-      // variables
-      this.Cursor = el;
-      this.Cursor.style.opacity = 0;
-
-      // get hoverable items (ie projects)
-      this.Item = document.querySelectorAll(".hover-project-item");
-
-      // values needed for cursor lerp
-      this.cursorConfig = {
-        x: { previous: 0, current: 0, amount: 0.2 },
-        y: { previous: 0, current: 0, amount: 0.2 },
-      };
-
-      // handler for when mouse moves
-      this.onMouseMoveEvent = () => {
-        this.cursorConfig.x.previous = this.cursorConfig.x.current = mouse.x;
-        this.cursorConfig.y.previous = this.cursorConfig.y.current = mouse.y;
-
-        // set cursor opacity to 1 when hovered on screen
-        animate(
-          this.Cursor,
-          { opacity: 1 },
-          { duration: 1, easing: "ease-in-out" }
-        );
-
-        // Execute scale
-        this.onScaleMouse();
-
-        // RAF to perform animation update before next frame repaint
-        requestAnimationFrame(() => this.render());
-        // clean up event listener
-        window.removeEventListener("mousemove", this.onMouseMoveEvent);
-      };
-
-      // assign mouse function
-      window.addEventListener("mousemove", this.onMouseMoveEvent);
-    }
-
-    // scale mouse on certain actions
-    // this.Cursor.children[1] === the images
-    onScaleMouse() {
-      this.Item.forEach((link) => {
-        if (link.matches(":hover")) {
-          this.setMedia(link);
-          this.scaleCursor(this.Cursor.children[1], 0.8);
+        .cursor-media-content {
+          position: absolute;
         }
-        link.addEventListener("mouseenter", () => {
-          this.setMedia(link);
-          this.scaleCursor(this.Cursor.children[1], 0.8);
-        });
-        link.addEventListener("mouseleave", () => {
-          // this.scaleCursor(this.Cursor.children[1], 1);
-          this.scaleCursor(this.Cursor.children[1], 0);
-        });
+      }
+      // .image-hovered {
+      //   display: grid;
+      //   place-items: center;
+      //   width: 200px;
+      //   height: 200px;
+      //   overflow: hidden;
+      //   transform: scale(0);
+      //   position: absolute;
+      //   top: calc(-200px / 2);
+      //   left: calc(-200px / 2);
+      //   background: white;
+      //   border-radius: 100%;
 
-        // hover on a tag to expand to 1.2
-        link.children[0].addEventListener("mouseenter", () => {
-          this.scaleCursor(this.Cursor.children[1], 1.2);
-        });
-        // off hover scale to 0.8
-        link.children[0].addEventListener("mouseleave", () => {
-          this.scaleCursor(this.Cursor.children[1], 0.8);
-        });
-      });
+      //   .image-hovered-content {
+      //     position: absolute;
+      //   }
+      // }
+    }
+    .blob {
+      position: absolute;
+      // w/h might not be required given it's being centered via transform
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+
+  <script>
+    import { lerp, getMousePos, getSiblings } from "../utils/helpers.js";
+    import { animate, inView } from "motion";
+    import { interpolate } from "flubber";
+
+    // ================================================
+    //                Blob effect
+    // ================================================
+    const shapeStates = [
+      {
+        d: "M289.588 28.709C317.208 52.4319 329.194 94.6637 338.314 138.46C347.174 181.995 353.167 227.355 336.23 261.766C319.032 295.917 278.904 319.379 236.431 334.238C193.698 349.098 148.619 355.354 121.78 335.281C94.6811 315.208 85.8217 268.805 63.6732 230.223C41.5248 191.641 5.56608 160.879 0.615247 125.947C-4.33559 91.2748 21.2003 52.4319 55.335 29.7518C89.4697 7.3324 132.203 0.554439 175.197 0.0330578C218.191 -0.488323 261.707 4.98618 289.588 28.709Z",
+      },
+      {
+        d: "M253.156 7.09629C273.492 24.8299 260.551 81.7364 269.002 133.879C277.189 186.021 306.769 233.663 298.582 270.719C290.395 307.774 244.44 333.977 197.957 345.094C151.739 356.211 104.464 351.976 73.8276 329.478C43.1913 306.715 28.6654 265.69 18.1012 230.487C7.80104 195.02 1.19839 165.905 0.141963 131.761C-0.914462 97.3525 3.57534 58.1797 25.4961 40.7108C47.1529 22.9772 86.5047 26.9474 132.987 18.4776C179.206 10.0078 232.819 -10.902 253.156 7.09629Z",
+      },
+      {
+        d: "M275.807 6.53713C307.833 23.2705 317.688 77.0369 315.771 124.22C313.855 171.402 300.442 212.276 281.008 252.875C261.573 293.748 236.39 334.896 201.352 346.966C166.041 359.036 121.149 342.302 87.2063 319.534C53.2637 296.491 30.2703 267.414 16.31 236.416C2.62348 205.418 -2.30367 172.774 0.981095 138.758C3.99213 105.017 15.2151 70.1789 38.7559 51.7996C62.2968 33.4203 98.4292 31.7744 143.869 20.8017C189.034 9.82895 243.506 -10.4706 275.807 6.53713Z",
+      },
+      {
+        d: "M243.86 44.6681C264.132 66.2532 263.599 107.824 274.535 150.195C285.739 192.832 308.145 236.002 300.41 274.376C292.941 312.483 255.33 345.527 217.452 344.994C179.574 344.461 141.696 310.351 99.2834 292.763C56.8708 275.175 10.1903 274.376 1.65448 254.123C-7.14812 233.871 21.9272 194.431 24.3279 144.599C26.4618 94.5003 1.65447 34.5418 16.859 11.8908C32.0635 -10.7602 87.0131 4.42931 135.027 12.6903C182.775 21.2177 223.854 22.8166 243.86 44.6681Z",
+      },
+    ];
+
+    const path = document.getElementById("blob");
+    const container = document.getElementById("container");
+
+    // set svg attributes to that of stateShapes
+    path.setAttribute("d", shapeStates[0].d);
+    // only run animateBlob when its parent is in view
+    inView(container, () => {
+      // do something when in view
+      animateBlob();
+      return () => stopBlobAnimation();
+    });
+
+    let animationFrameId;
+    // animate from 0-1 and 1-0
+    function animateBlob() {
+      let num = 0;
+      let increment = 0.001;
+      let direction = 1;
+
+      // generate shape interpolators for each pair of shapes (eg: first to second shape, second to third, etc)
+      const shapeInterpolators = [];
+
+      for (let i = 1; i < shapeStates.length; i++) {
+        const shape1 = shapeStates[i - 1];
+        const shape2 = shapeStates[i];
+        shapeInterpolators.push(interpolate(shape1.d, shape2.d, 1));
+      }
+
+      // function that runs the appropriate shape interpolator instance based on time on the 0-1 scale
+      function blendInterpolator(t) {
+        const numShapes = shapeInterpolators.length;
+        const segment = 1 / numShapes;
+        let segmentIndex;
+
+        // Check if t is exactly 1
+        if (t === 1) {
+          // If t is exactly 1, set the segment index to the last segment
+          segmentIndex = numShapes - 1;
+        } else {
+          // Otherwise, calculate the segment index by rounding down t / segment
+          segmentIndex = Math.floor(t / segment);
+        }
+
+        // Calculate the segment time within the current segment
+        const segmentT = (t - segmentIndex * segment) / segment;
+
+        // Use the appropriate interpolator for the current segment time
+        return shapeInterpolators[segmentIndex](segmentT);
+      }
+
+      // direction changes to mirror loop the blob animation
+      function animate() {
+        // create clock (num)
+        num += increment * direction;
+        if (num >= 1) {
+          num = 1; // reset to exactly 1
+          direction *= -1;
+        } else if (num <= 0) {
+          num = 0; // reset to exactly 0
+          direction *= -1;
+        }
+        path.setAttribute("d", blendInterpolator(num));
+        // console.log(num);
+        // RAF to animate on every frame
+        animationFrameId = requestAnimationFrame(animate);
+      }
+
+      animate();
     }
 
-    // Scale animation
-    scaleCursor(el, amount) {
-      animate(
-        el,
-        { transform: `scale(${amount})` },
-        { duration: 0.6, easing: "ease-out" }
-      );
+    function stopBlobAnimation() {
+      cancelAnimationFrame(animationFrameId);
     }
 
-    // Change media when hovering different items
-    setMedia(el) {
-      let src = el.getAttribute("data-media-src");
-      let media = document.getElementById(src);
-      let siblings = getSiblings(media);
+    // animate blob
+    // animateBlob();
 
-      if (media.id == src) {
-        animate(media, { zIndex: 4, opacity: 1 }, { duration: 0 });
+    // ================================================
+    //                Cursor effect
+    // ================================================
 
-        siblings.forEach((i) => {
-          animate(i, { zIndex: 1, opacity: 0 }, { duration: 0 });
+    // get mouse position and set it to mouse state
+    let mouse = { x: 0, y: 0 };
+    window.addEventListener("mousemove", (e) => (mouse = getMousePos(e)));
+
+    export default class Cursor {
+      constructor(el) {
+        // variables
+        this.Cursor = el;
+
+        this.Cursor.style.opacity = 0;
+
+        // get hoverable items (ie projects)
+        this.Item = document.querySelectorAll(".hover-project-item");
+        // this.projectThumbnail = document.querySelectorAll(".featured-image");
+
+        // values needed for cursor lerp
+        this.cursorConfig = {
+          x: { previous: 0, current: 0, amount: 0.2 },
+          y: { previous: 0, current: 0, amount: 0.2 },
+        };
+
+        // handler for when mouse moves
+        this.onMouseMoveEvent = () => {
+          this.cursorConfig.x.previous = this.cursorConfig.x.current = mouse.x;
+          this.cursorConfig.y.previous = this.cursorConfig.y.current = mouse.y;
+
+          // set cursor opacity to 1 when hovered on screen
+          animate(
+            this.Cursor,
+            { opacity: 1 },
+            { duration: 1, easing: "ease-in-out" }
+          );
+
+          // Execute scale
+          this.onScaleMouse();
+
+          // RAF to perform animation update before next frame repaint
+          requestAnimationFrame(() => this.render());
+          // clean up event listener
+          window.removeEventListener("mousemove", this.onMouseMoveEvent);
+        };
+
+        // assign mouse function
+        window.addEventListener("mousemove", this.onMouseMoveEvent);
+      }
+
+      // scale mouse on certain actions
+      // this.Cursor.children[1] === the images
+      onScaleMouse() {
+        // when project images are hovered
+        // this.projectThumbnail.forEach((image) => {
+        //   if (image.matches(":hover")) {
+        //     console.log("hovered image");
+        //   }
+        //   image.addEventListener("mouseenter", () => {
+        //     console.log("mouse entered");
+        //     this.scaleCursor(this.Cursor.children[1], 1);
+        //   });
+        //   image.addEventListener("mouseleave", () => {
+        //     console.log("mouse left");
+        //     this.scaleCursor(this.Cursor.children[1], 0);
+        //   });
+        // });
+
+        // when project text rows are hovered
+        this.Item.forEach((link) => {
+          if (link.matches(":hover")) {
+            this.setMedia(link);
+            this.scaleCursor(this.Cursor.children[1], 0.8);
+          }
+          link.addEventListener("mouseenter", () => {
+            this.setMedia(link);
+            this.scaleCursor(this.Cursor.children[1], 0.8);
+          });
+          link.addEventListener("mouseleave", () => {
+            // this.scaleCursor(this.Cursor.children[1], 1);
+            this.scaleCursor(this.Cursor.children[1], 0);
+          });
+
+          // hover on a tag to expand to 1.2
+          link.children[0].addEventListener("mouseenter", () => {
+            this.scaleCursor(this.Cursor.children[1], 1.2);
+          });
+          // off hover scale to 0.8
+          link.children[0].addEventListener("mouseleave", () => {
+            this.scaleCursor(this.Cursor.children[1], 0.8);
+          });
         });
       }
-    }
 
-    // things to update on each frame
-    render() {
-      // update cursor.current
-      this.cursorConfig.x.current = mouse.x;
-      this.cursorConfig.y.current = mouse.y;
-
-      // lerp
-      for (const key in this.cursorConfig) {
-        // key = x & y
-        this.cursorConfig[key].previous = lerp(
-          this.cursorConfig[key].previous,
-          this.cursorConfig[key].current,
-          this.cursorConfig[key].amount
+      // Scale animation
+      scaleCursor(el, amount) {
+        animate(
+          el,
+          { transform: `scale(${amount})` },
+          { duration: 0.6, easing: "ease-out" }
         );
       }
-      // Setting the cursor x and y to our cursor html element
-      this.Cursor.style.transform = `translateX(${this.cursorConfig.x.previous}px) translateY( ${this.cursorConfig.y.previous}px)`;
 
-      // Loop RAF
-      requestAnimationFrame(() => this.render());
+      // Change media when hovering different items
+      setMedia(el) {
+        let src = el.getAttribute("data-media-src");
+        let media = document.getElementById(src);
+        let siblings = getSiblings(media);
+
+        if (media.id == src) {
+          animate(media, { zIndex: 4, opacity: 1 }, { duration: 0 });
+
+          siblings.forEach((i) => {
+            animate(i, { zIndex: 1, opacity: 0 }, { duration: 0 });
+          });
+        }
+      }
+
+      // things to update on each frame
+      render() {
+        // update cursor.current
+        this.cursorConfig.x.current = mouse.x;
+        this.cursorConfig.y.current = mouse.y;
+
+        // lerp
+        for (const key in this.cursorConfig) {
+          // key = x & y
+          this.cursorConfig[key].previous = lerp(
+            this.cursorConfig[key].previous,
+            this.cursorConfig[key].current,
+            this.cursorConfig[key].amount
+          );
+        }
+        // Setting the cursor x and y to our cursor html element
+        this.Cursor.style.transform = `translateX(${this.cursorConfig.x.previous}px) translateY( ${this.cursorConfig.y.previous}px)`;
+
+        // Loop RAF
+        requestAnimationFrame(() => this.render());
+      }
     }
-  }
 
-  window.onload = () => {
-    new Cursor(document.querySelector(".cursor"));
-    // const cursor = new Cursor(document.querySelector(".cursor"));
-  };
-</script>
+    window.addEventListener("DOMContentLoaded", () => {
+      new Cursor(document.querySelector(".cursor"));
+    });
+  </script>
+</div>

@@ -1,6 +1,7 @@
 ---
 import { Image } from "@astrojs/image/components";
 import AllOtherProjects from "./allOtherProjects.astro";
+import ImageHoverCursor from "./imageHoverCursor.astro";
 
 const { data, textColor } = Astro.props;
 
@@ -53,6 +54,7 @@ let setTextColor = textColor ? textColor : "var(--color-darkpurple)";
         return (
           <div class="project second-tier-featured">
             <div class="image-wrapper" id="hide-secondary">
+              <ImageHoverCursor />
               <a href={`/projects/${project.slug}`}>
                 <Image
                   id="secondary-project-image"
@@ -142,7 +144,7 @@ let setTextColor = textColor ? textColor : "var(--color-darkpurple)";
   }
   .inner-wrapper {
     position: relative;
-    max-width: max(98vw, var(--max-width));
+    max-width: max(95vw, var(--max-width));
     margin: 0 auto;
     padding-bottom: 15rem;
   }
@@ -171,6 +173,7 @@ let setTextColor = textColor ? textColor : "var(--color-darkpurple)";
         width: 100%;
         height: auto;
         object-fit: cover;
+        overflow: hidden;
       }
     }
   }
