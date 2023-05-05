@@ -35,9 +35,9 @@ const { data, setTextColor } = Astro.props;
       </clipPath>
     </defs>
   </svg>
-  <!-- <div class="image-hovered">
+  <div class="image-hovered">
     <p class="image-hovered-content">View project</p>
-  </div> -->
+  </div>
   <div class="cursor-media">
     {
       data.map((project) => {
@@ -114,23 +114,23 @@ const { data, setTextColor } = Astro.props;
           position: absolute;
         }
       }
-      // .image-hovered {
-      //   display: grid;
-      //   place-items: center;
-      //   width: 200px;
-      //   height: 200px;
-      //   overflow: hidden;
-      //   transform: scale(0);
-      //   position: absolute;
-      //   top: calc(-200px / 2);
-      //   left: calc(-200px / 2);
-      //   background: white;
-      //   border-radius: 100%;
+      .image-hovered {
+        display: grid;
+        place-items: center;
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+        transform: scale(0);
+        position: absolute;
+        top: calc(-200px / 2);
+        left: calc(-200px / 2);
+        background: white;
+        border-radius: 100%;
 
-      //   .image-hovered-content {
-      //     position: absolute;
-      //   }
-      // }
+        .image-hovered-content {
+          position: absolute;
+        }
+      }
     }
     .blob {
       position: absolute;
@@ -257,7 +257,7 @@ const { data, setTextColor } = Astro.props;
 
         // get hoverable items (ie projects)
         this.Item = document.querySelectorAll(".hover-project-item");
-        // this.projectThumbnail = document.querySelectorAll(".featured-image");
+        this.projectThumbnail = document.querySelectorAll(".featured-image");
 
         // values needed for cursor lerp
         this.cursorConfig = {
@@ -294,42 +294,42 @@ const { data, setTextColor } = Astro.props;
       // this.Cursor.children[1] === the images
       onScaleMouse() {
         // when project images are hovered
-        // this.projectThumbnail.forEach((image) => {
-        //   if (image.matches(":hover")) {
-        //     console.log("hovered image");
-        //   }
-        //   image.addEventListener("mouseenter", () => {
-        //     console.log("mouse entered");
-        //     this.scaleCursor(this.Cursor.children[1], 1);
-        //   });
-        //   image.addEventListener("mouseleave", () => {
-        //     console.log("mouse left");
-        //     this.scaleCursor(this.Cursor.children[1], 0);
-        //   });
-        // });
+        this.projectThumbnail.forEach((image) => {
+          if (image.matches(":hover")) {
+            console.log("hovered image");
+          }
+          image.addEventListener("mouseenter", () => {
+            console.log("mouse entered");
+            this.scaleCursor(this.Cursor.children[1], 1);
+          });
+          image.addEventListener("mouseleave", () => {
+            console.log("mouse left");
+            this.scaleCursor(this.Cursor.children[1], 0);
+          });
+        });
 
         // when project text rows are hovered
         this.Item.forEach((link) => {
           if (link.matches(":hover")) {
             this.setMedia(link);
-            this.scaleCursor(this.Cursor.children[1], 0.8);
+            this.scaleCursor(this.Cursor.children[2], 0.8);
           }
           link.addEventListener("mouseenter", () => {
             this.setMedia(link);
-            this.scaleCursor(this.Cursor.children[1], 0.8);
+            this.scaleCursor(this.Cursor.children[2], 0.8);
           });
           link.addEventListener("mouseleave", () => {
-            // this.scaleCursor(this.Cursor.children[1], 1);
-            this.scaleCursor(this.Cursor.children[1], 0);
+            // this.scaleCursor(this.Cursor.children[2], 1);
+            this.scaleCursor(this.Cursor.children[2], 0);
           });
 
           // hover on a tag to expand to 1.2
           link.children[0].addEventListener("mouseenter", () => {
-            this.scaleCursor(this.Cursor.children[1], 1.2);
+            this.scaleCursor(this.Cursor.children[2], 1.2);
           });
           // off hover scale to 0.8
           link.children[0].addEventListener("mouseleave", () => {
-            this.scaleCursor(this.Cursor.children[1], 0.8);
+            this.scaleCursor(this.Cursor.children[2], 0.8);
           });
         });
       }

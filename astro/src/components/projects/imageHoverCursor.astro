@@ -65,43 +65,5 @@
 </style>
 
 <script>
-  import { lerp, getMousePos, getSiblings } from "../utils/helpers.js";
-  import { animate, inView } from "motion";
 
-  let mouse = { x: 0, y: 0 };
-  window.addEventListener("mousemove", (e) => (mouse = getMousePos(e)));
-  class ImageCursor {
-    constructor(wrapper) {
-      // this.cursor = document.createElement("div");
-      this.cursor = wrapper.children[0];
-
-      this.moveCursor = (e) => {
-        const rect = wrapper.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        // console.log("cursor pos is", x, y);
-        this.cursor.style.transform = `translate(${x}px, ${y}px)`;
-      };
-
-      wrapper.addEventListener("mouseenter", () => {
-        document.body.style.cursor = "none";
-        document.addEventListener("mousemove", this.moveCursor);
-      });
-
-      wrapper.addEventListener("mouseleave", () => {
-        document.body.style.cursor = "default";
-        document.removeEventListener("mousemove", this.moveCursor);
-        // wrapper.removeChild(this.cursor);
-      });
-    }
-  }
-
-  window.addEventListener("DOMContentLoaded", () => {
-    const imageWrappers = document.querySelectorAll(".image-wrapper");
-    imageWrappers.forEach((imageWrapper) => {
-      imageWrapper.addEventListener("mouseenter", () => {
-        new ImageCursor(imageWrapper);
-      });
-    });
-  });
 </script>
