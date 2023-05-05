@@ -295,15 +295,13 @@ const { data, setTextColor } = Astro.props;
       onScaleMouse() {
         // when project images are hovered
         this.projectThumbnail.forEach((image) => {
-          if (image.matches(":hover")) {
-            console.log("hovered image");
-          }
+          // if (image.matches(":hover")) {
+          //   console.log("hovered image");
+          // }
           image.addEventListener("mouseenter", () => {
-            console.log("mouse entered");
             this.scaleCursor(this.Cursor.children[1], 1);
           });
           image.addEventListener("mouseleave", () => {
-            console.log("mouse left");
             this.scaleCursor(this.Cursor.children[1], 0);
           });
         });
@@ -319,7 +317,6 @@ const { data, setTextColor } = Astro.props;
             this.scaleCursor(this.Cursor.children[2], 0.8);
           });
           link.addEventListener("mouseleave", () => {
-            // this.scaleCursor(this.Cursor.children[2], 1);
             this.scaleCursor(this.Cursor.children[2], 0);
           });
 
@@ -348,6 +345,8 @@ const { data, setTextColor } = Astro.props;
         let src = el.getAttribute("data-media-src");
         let media = document.getElementById(src);
         let siblings = getSiblings(media);
+
+        console.log(siblings)
 
         if (media.id == src) {
           animate(media, { zIndex: 4, opacity: 1 }, { duration: 0 });
