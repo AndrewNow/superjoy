@@ -29,9 +29,22 @@ const seo = {
 <Layout seo={seo}>
   <Landing />
   <div class="content-wrapper">
-    <section class="section">
-      <OurServicePromise />
-    </section>
+    <div id="ourservicepromise-section">
+      <svg
+        class="ourservicepromise-blob"
+        width="1920"
+        height="379"
+        viewBox="0 0 1920 379"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path id="ourservicepromise-blob" fill="var(--accent-blue-secondary)"
+        ></path>
+      </svg>
+      <section class="section">
+        <OurServicePromise />
+      </section>
+    </div>
     <section class="section">
       <MarketingCampaign
         textColor="var(--primary-light)"
@@ -87,6 +100,12 @@ const seo = {
 </Layout>
 
 <style lang="scss">
+  #ourservicepromise-section {
+    overflow: hidden;
+    .ourservicepromise-blob {
+      transform: translateY(50px);
+    }
+  }
   .content-wrapper {
     position: relative;
   }
@@ -134,7 +153,7 @@ const seo = {
       transition: all 0.3s ease-in-out;
     }
   }
-  .section:not(.section-white) {
+  .section:not(.section-white, #ourservicepromise-section) {
     background: var(--accent-blue-secondary);
   }
   .join-the-conversation {
@@ -160,6 +179,8 @@ const seo = {
 </style>
 
 <script>
+  import { animate, stagger, inView, scroll } from "motion";
+  import { interpolate } from "flubber";
   import Lenis from "@studio-freight/lenis";
   import { inView } from "motion";
 
@@ -223,6 +244,10 @@ const seo = {
   });
 
   // LET'S CHAT svg animation
+
+  const path = document.getElementById("separator");
+  const parent = document.querySelector(".join-the-conversation");
+
   const shapeStates = {
     initialShape: {
       color: "var(--accent-lightblue)",
@@ -233,11 +258,6 @@ const seo = {
       d: "M 960 0 C 562.503 0 226 -1 -1 0 V 349 H 1920 V -1 C 1723 -1 1357.5 0 960 0 Z",
     },
   };
-
-  import { interpolate } from "flubber";
-  import { animate, scroll } from "motion";
-  const path = document.getElementById("separator");
-  const parent = document.querySelector(".join-the-conversation");
 
   let currentPath = shapeStates.initialShape;
 
@@ -252,9 +272,38 @@ const seo = {
       : shapeStates.initialShape;
   const mixshapeStates = interpolate(path.getAttribute("d"), currentPath.d);
 
-  // animate on scroll
   scroll(
     animate((progress) => path.setAttribute("d", mixshapeStates(progress))),
     { target: parent, offset: ["0 0.5", "0.45 0.5"] }
   );
+
+  // blob animation
+  const path2 = document.getElementById("ourservicepromise-blob");
+  const parent2 = document.getElementById("ourservicepromise-section");
+
+  const shapeStates2 = {
+    initialShape: {
+      d: "M1920 267.019C1889.2 185.133 1836.2 106.146 1768.09 58.2543C1611.88 -43.0287 1339.87 14.8616 1106.96 32.2586C874.046 49.6557 678.735 26.4595 473.324 61.1537C267.014 95.7478 155.009 152.538 1.10064 267.719H0V268.519V379H1920V267.619",
+    },
+    targetShape: {
+      d: "M1761.69 141.048C1563.88 30.9626 1306.87 44.2486 1081.66 54.9374C856.645 64.1279 662.235 70.6213 432.423 113.577C287.115 141.547 121.806 196.09 0 267.816V379H1920V267.816C1873.1 217.468 1819.99 173.015 1761.79 141.048H1761.69Z",
+    },
+  };
+
+  let currentPath2 = shapeStates2.initialShape;
+
+  // set svg attributes to that of stateShapes
+  path2.setAttribute("d", currentPath2.d);
+
+  // toggle between shape states
+  currentPath2 =
+    currentPath === shapeStates2.initialShape
+      ? shapeStates2.targetShape
+      : shapeStates2.initialShape;
+  const mixshapeStates2 = interpolate(path.getAttribute("d"), currentPath2.d);
+
+  scroll(({ y }) => path2.setAttribute("d", mixshapeStates2(y.progress)), {
+    target: parent2,
+    offset: ["0 0.5", "0.45 0.5"],
+  });
 </script>

@@ -96,8 +96,8 @@ const contactData = [
     <svg
       class="contact-blob"
       width="1920"
-      height="416"
-      viewBox="0 0 1920 416"
+      height="543"
+      viewBox="0 0 1920 543"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -105,7 +105,11 @@ const contactData = [
     </svg>
   </div>
   <section class="form-section">
-    <Faq data={faqData} faqTitle="var(--color-yellow)" textColor="var(--color-darkgreen)" />
+    <Faq
+      data={faqData}
+      faqTitle="var(--color-yellow)"
+      textColor="var(--color-darkgreen)"
+    />
   </section>
 </Layout>
 
@@ -129,10 +133,10 @@ const contactData = [
 
   const shapeStates = {
     initialShape: {
-      d: "M1920 45.9C1719.9 216.6 1462.6 287.5 1197.9 252C825.9 218.3 623.3 262.6 623.3 262.6C522.4 271.7 436.6 306 300.1 275.7C125.5 208 95.5 151.2 0 0H1920",
+      d: "M1920 111.58V0H0V111.58C95.505 263.024 125.506 319.916 299.916 387.725C436.423 418.074 522.227 383.718 623.133 374.604C623.133 374.604 825.743 330.332 1197.76 363.987C1462.48 399.544 1719.79 328.529 1919.9 157.554V111.58H1920Z",
     },
     targetShape: {
-      d: "M1919 0C1883.49 116.508 1790.07 227.234 1646.54 302.394C1504.41 378.212 1319.48 417.145 1133.44 415.974C947.397 414.803 760.759 375.138 534.911 321.568C309.164 268.071 159.033 223.795 0 86.3564V0H1919Z",
+      d: "M0 88.9647V183.2C159.116 333.178 309.326 381.494 535.19 439.952C761.155 498.41 947.891 541.694 1134.03 542.972C1320.16 544.25 1505.1 501.764 1647.4 419.028C1791.01 337.012 1884.47 216.183 1920 89.0445V0H0V88.9647Z",
     },
   };
 
@@ -166,7 +170,7 @@ const contactData = [
     overflow-x: hidden;
 
     .contact-blob {
-      transform: translateY(-50px);
+      transform: translateY(-100px);
     }
   }
   .page-wrapper {

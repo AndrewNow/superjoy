@@ -83,6 +83,7 @@ const { data, setTextColor } = Astro.props;
       contain: layout style size;
       // ? may need to disable for link clicking
       pointer-events: none;
+      cursor: none;
 
       &:before {
         // the cursor when not hovering an item
@@ -117,18 +118,20 @@ const { data, setTextColor } = Astro.props;
       .image-hovered {
         display: grid;
         place-items: center;
-        width: 200px;
-        height: 200px;
+        width: 150px;
+        height: 150px;
         overflow: hidden;
         transform: scale(0);
         position: absolute;
-        top: calc(-200px / 2);
-        left: calc(-200px / 2);
-        background: white;
+        top: calc(-150px / 2);
+        left: calc(-150px / 2);
+        background: #ffffff99;
+        backdrop-filter: blur(7px);
         border-radius: 100%;
-
         .image-hovered-content {
           position: absolute;
+          color: var(--primary-dark);
+          text-transform: center;
         }
       }
     }
@@ -346,7 +349,7 @@ const { data, setTextColor } = Astro.props;
         let media = document.getElementById(src);
         let siblings = getSiblings(media);
 
-        console.log(siblings)
+        console.log(siblings);
 
         if (media.id == src) {
           animate(media, { zIndex: 4, opacity: 1 }, { duration: 0 });
