@@ -1,6 +1,6 @@
 ---
 import { Image } from "@astrojs/image/components";
-const { imageSrc, description } = Astro.props;
+const { imageSrc, description, lqip } = Astro.props;
 ---
 
 <>
@@ -75,10 +75,10 @@ const { imageSrc, description } = Astro.props;
         <Image
           width={1703}
           height={960}
-          src={imageSrc}
+          src={lqip}
           data-src={imageSrc}
-          alt="landing image"
-          class="hero-image blur-up"
+          alt="landing image blur-up"
+          class="hero-image"
           id="hero-image"
           format="webp"
         />
