@@ -182,12 +182,16 @@ const { data, setTextColor } = Astro.props;
 
     // set svg attributes to that of stateShapes
     path.setAttribute("d", shapeStates[0].d);
-    // only run animateBlob when its parent is in view
-    inView(container, () => {
-      // animate blob when in view
-      animateBlob();
-      return () => stopBlobAnimation();
-    });
+    // only run animateBlob when its parent is being hovered over
+    // container.addEventListener("mouseenter", () => {
+    //   // start blob animation when container is hovered
+    //   animateBlob();
+    // });
+
+    // container.addEventListener("mouseleave", () => {
+    //   // stop blob animation when container is no longer hovered
+    //   stopBlobAnimation();
+    // });
 
     let animationFrameId;
     // animate from 0-1 and 1-0
@@ -252,7 +256,7 @@ const { data, setTextColor } = Astro.props;
     }
 
     // animate blob
-    // animateBlob();
+    animateBlob();
 
     // ================================================
     //                Cursor effect
