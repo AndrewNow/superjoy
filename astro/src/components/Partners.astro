@@ -45,7 +45,10 @@ const { lqip, images } = Astro.props;
       { opacity: 1, transform: "translateY(0px)" },
       {
         duration: 0.5,
-        delay: stagger(0.1, { easing: "linear", amount: "all" }),
+        delay: stagger(0.1, {
+          easing: "linear",
+          //  amount: "all"
+        }),
       }
     );
   });
@@ -58,7 +61,7 @@ const { lqip, images } = Astro.props;
       { opacity: 1, transform: "translateY(0px)" },
       {
         duration: 0.5,
-        amount: "all",
+        // amount: "all",
         delay: stagger(0.1, {
           easing: "linear",
           from: "center",
