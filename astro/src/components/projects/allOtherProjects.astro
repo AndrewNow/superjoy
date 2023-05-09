@@ -80,7 +80,7 @@ const { data, setTextColor } = Astro.props;
         text-transform: uppercase;
       }
     }
-    
+
     .hover-project-item:last-child {
       border-bottom: 3px solid var(--setTextColor);
     }
@@ -184,7 +184,7 @@ const { data, setTextColor } = Astro.props;
     path.setAttribute("d", shapeStates[0].d);
     // only run animateBlob when its parent is in view
     inView(container, () => {
-      // do something when in view
+      // animate blob when in view
       animateBlob();
       return () => stopBlobAnimation();
     });
