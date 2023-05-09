@@ -5,19 +5,18 @@ const { data, setTextColor } = Astro.props;
 ---
 
 <div id="container">
+  <h3>More projects</h3>
   {
     data.map((project) => {
       return (
-        <div>
-          <a
-            href={`/projects/${project.slug}`}
-            class="hover-project-item"
-            data-media-src={project.code}
-          >
-            <h5>{project.projectName}</h5>
-            <p>{project.client}</p>
-          </a>
-        </div>
+        <a
+          href={`/projects/${project.slug}`}
+          class="hover-project-item"
+          data-media-src={project.code}
+        >
+          <h5>{project.projectName}</h5>
+          <p>{project.client}</p>
+        </a>
       );
     })
   }
@@ -59,13 +58,20 @@ const { data, setTextColor } = Astro.props;
   </div>
 
   <style lang="scss" define:vars={{ setTextColor }}>
+    #container {
+      h3 {
+        text-align: center;
+        margin: 5rem 0;
+        font-family: "Hamburg-Regular";
+        color: var(--setTextColor);
+      }
+    }
     .hover-project-item {
-      text-decoration: none;
       border-top: 3px solid var(--setTextColor);
       position: relative;
       width: 100%;
-      padding: 3rem;
-      margin: 3rem 0;
+      padding: 4rem;
+      text-decoration: none;
       color: var(--setTextColor);
       display: flex;
       justify-content: space-between;
@@ -73,6 +79,10 @@ const { data, setTextColor } = Astro.props;
       h5 {
         text-transform: uppercase;
       }
+    }
+    
+    .hover-project-item:last-child {
+      border-bottom: 3px solid var(--setTextColor);
     }
 
     .cursor {
