@@ -1,13 +1,5 @@
 ---
-import { getAllProjects } from "../lib/api/projects";
-import { Image } from "@astrojs/image/components";
 import Layout from "../layouts/PageLayout.astro";
-const imageData = await getAllProjects();
-
-const lqip = imageData.allProjects[0].lqip;
-const src = imageData.allProjects[0].imageUrl;
-
-console.log(lqip);
 ---
 
 <Layout>

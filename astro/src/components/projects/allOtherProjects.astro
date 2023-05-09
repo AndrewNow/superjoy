@@ -350,8 +350,6 @@ const { data, setTextColor } = Astro.props;
         let media = document.getElementById(src);
         let siblings = getSiblings(media);
 
-        console.log(siblings);
-
         if (media.id == src) {
           animate(media, { zIndex: 4, opacity: 1 }, { duration: 0 });
 
