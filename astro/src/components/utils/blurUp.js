@@ -6,28 +6,15 @@ const loadImage = (image) => {
     return;
   }
 
-  image.setAttribute("src", src);
-
-  image.onload = () => {
+  const img = new Image();
+  img.onload = () => {
+    image.setAttribute("src", src);
     image.removeAttribute("data-src");
     image.style.filter = "unset";
   };
+  img.src = src;
 };
-
-const options = {
-  threshold: 0,
-  rootMargin: "0px 0px 0px 0px",
-};
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      loadImage(entry.target);
-      observer.unobserve(entry.target);
-    }
-  });
-}, options);
 
 images.forEach((image) => {
-  observer.observe(image);
+  loadImage(image);
 });
