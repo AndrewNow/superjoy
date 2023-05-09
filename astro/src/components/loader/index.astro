@@ -1,6 +1,7 @@
 ---
 import { Image } from "@astrojs/image/components";
-const { imageSrc, description, lqip } = Astro.props;
+const { imageSrc, description, lqip, mainImage } = Astro.props;
+import { getSanityImageURL } from "../../components/utils/helpers.js";
 ---
 
 <>
@@ -76,7 +77,7 @@ const { imageSrc, description, lqip } = Astro.props;
           width={1703}
           height={960}
           src={lqip}
-          data-src={imageSrc}
+          data-src={getSanityImageURL(mainImage).format("webp").url()}
           alt="landing image blur-up"
           class="hero-image"
           id="hero-image"

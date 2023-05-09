@@ -67,7 +67,9 @@ let setBackgroundColor = backgroundColor
                   <a href={`/projects/${project.slug}`}>
                     <Image
                       src={project.lqip}
-                      data-src={project.imageUrl}
+                      data-src={getSanityImageURL(project.mainImage)
+                        .format("webp")
+                        .url()}
                       id="secondary-project-image"
                       class="featured-image blur-up"
                       width={1000}
