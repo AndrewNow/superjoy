@@ -5,6 +5,7 @@ export async function getAllProjects() {
     allProjects[]-> {
       projectName,
       "imageUrl": mainImage.asset->url,
+      "lqip": mainImage.asset->metadata.lqip,
       video,
       description,
       gameMode, 

@@ -1,14 +1,104 @@
---- 
+---
 import { getAllProjects } from "../lib/api/projects";
+import { Image } from "@astrojs/image/components";
 
-const projectsData = await getAllProjects();
-console.log(projectsData.allProjects.slug)
---- 
+const imageData = await getAllProjects();
 
-<div>  
+const lqip = imageData.allProjects[0].lqip;
+const src = imageData.allProjects[0].imageUrl;
 
-</div>
+console.log(lqip);
+---
+
+<div class="block"></div>
+<div class="block"></div>
+<Image
+  class="blur-up"
+  src={lqip}
+  data-src={src}
+  width={1700}
+  height={1000}
+  alt="image"
+/>
+<Image
+  class="blur-up"
+  src={lqip}
+  data-src={src}
+  width={1700}
+  height={1000}
+  alt="image"
+/>
+<Image
+  class="blur-up"
+  src={lqip}
+  data-src={src}
+  width={1700}
+  height={1000}
+  alt="image"
+/>
+<Image
+  class="blur-up"
+  src={lqip}
+  data-src={src}
+  width={1700}
+  height={1000}
+  alt="image"
+/>
+<Image
+  class="blur-up"
+  src={lqip}
+  data-src={src}
+  width={1700}
+  height={1000}
+  alt="image"
+/>
 
 <style lang="scss">
-
+  .block {
+    height: 100vh;
+    background: red;
+  }
+  .blur-up {
+    filter: blur(20px);
+    transition: filter 0.3s ease-out;
+  }
 </style>
+
+<script>
+  const images = document.querySelectorAll("img[data-src]");
+
+  const loadImage = (image) => {
+    const src = image.getAttribute("data-src");
+    if (!src) {
+      console.log("no src");
+      return;
+    }
+
+    image.setAttribute("src", src);
+
+    image.onload = () => {
+      console.log("loading image in");
+      image.removeAttribute("data-src");
+      image.style.filter = "unset";
+    };
+  };
+
+  const options = {
+    threshold: 0,
+    rootMargin: "0px 0px 0px 0px",
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        console.log("is intersecting");
+        loadImage(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, options);
+
+  images.forEach((image) => {
+    observer.observe(image);
+  });
+</script>

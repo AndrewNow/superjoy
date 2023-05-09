@@ -56,8 +56,22 @@ const seo = {
         statCircleColor="var(--color-green)"
       />
     </section>
-    <section class="section">
-      <Projects data={projectsData} textColor="var(--primary-light)" />
+    <section class="section" id="projects-section">
+      <Projects
+        data={projectsData}
+        textColor="var(--primary-light)"
+        backgroundColor="var(--accent-blue-secondary)"
+      />
+      <svg
+        class="projects-blob"
+        width="1920"
+        height="271"
+        viewBox="0 0 1920 271"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path id="projects-blob" fill="var(--accent-blue-secondary)"></path>
+      </svg>
     </section>
     <section class="section section-white">
       <Roadmap />
@@ -100,15 +114,22 @@ const seo = {
 </Layout>
 
 <style lang="scss">
-  #ourservicepromise-section {
+  #ourservicepromise-section,
+  #projects-section {
     overflow: hidden;
+    .projects-blob {
+      transform: translateY(-0px);
+    }
+
     .ourservicepromise-blob {
       transform: translateY(50px);
     }
   }
+
   .content-wrapper {
     position: relative;
   }
+
   .navbar {
     width: 75%;
     margin: 5rem auto;
@@ -153,7 +174,7 @@ const seo = {
       transition: all 0.3s ease-in-out;
     }
   }
-  .section:not(.section-white, #ourservicepromise-section) {
+  .section:not(.section-white, #ourservicepromise-section, #projects-section) {
     background: var(--accent-blue-secondary);
   }
   .join-the-conversation {
@@ -179,7 +200,7 @@ const seo = {
 </style>
 
 <script>
-  import { animate, stagger, inView, scroll } from "motion";
+  import { animate, inView, scroll } from "motion";
   import { interpolate } from "flubber";
   import Lenis from "@studio-freight/lenis";
   import { inView } from "motion";
@@ -244,7 +265,8 @@ const seo = {
   });
 
   // LET'S CHAT svg animation
-
+  // LET'S CHAT svg animation
+  // LET'S CHAT svg animation
   const path = document.getElementById("separator");
   const parent = document.querySelector(".join-the-conversation");
 
@@ -277,7 +299,9 @@ const seo = {
     { target: parent, offset: ["0 0.5", "0.45 0.5"] }
   );
 
-  // blob animation
+  // OURSERVICEPROMISE svg animation
+  // OURSERVICEPROMISE svg animation
+  // OURSERVICEPROMISE svg animation
   const path2 = document.getElementById("ourservicepromise-blob");
   const parent2 = document.getElementById("ourservicepromise-section");
 
@@ -305,5 +329,37 @@ const seo = {
   scroll(({ y }) => path2.setAttribute("d", mixshapeStates2(y.progress)), {
     target: parent2,
     offset: ["0 0.5", "0.45 0.5"],
+  });
+
+  // PROJECTS svg animation
+  // PROJECTS svg animation
+  // PROJECTS svg animation
+  const path3 = document.getElementById("projects-blob");
+  const parent3 = document.getElementById("projects-section");
+
+  const shapeStates3 = {
+    initialShape: {
+      d: "M1919.62 0.254799C1733.62 121.404 1390.31 198.731 1167.73 223.191C943.746 248.032 753.034 288.415 560.409 262.809C369.442 236.822 170.825 141.023 0 0H1920",
+    },
+    targetShape: {
+      d: "M1920 0C1746.83 133.959 1616.3 168.109 1411.85 193.02C1205.76 217.601 996.214 179.657 752.099 156.561C509.465 133.794 211.029 114.492 0 0H1920Z",
+    },
+  };
+
+  let currentPath3 = shapeStates3.initialShape;
+
+  // set svg attributes to that of stateShapes
+  path3.setAttribute("d", currentPath3.d);
+
+  // toggle between shape states
+  currentPath3 =
+    currentPath3 === shapeStates3.initialShape
+      ? shapeStates3.targetShape
+      : shapeStates3.initialShape;
+  const mixshapeStates3 = interpolate(path3.getAttribute("d"), currentPath3.d);
+
+  scroll(({ y }) => path3.setAttribute("d", mixshapeStates3(y.progress)), {
+    target: parent3,
+    offset: ["0.5 0", "1 0.5"],
   });
 </script>

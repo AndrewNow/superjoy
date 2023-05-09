@@ -3,13 +3,16 @@ import { Image } from "@astrojs/image/components";
 import AllOtherProjects from "./allOtherProjects.astro";
 import ImageHoverCursor from "./imageHoverCursor.astro";
 
-const { data, textColor } = Astro.props;
+const { data, textColor, backgroundColor } = Astro.props;
 
 const featuredProjectData = data.allProjects[0];
 const secondTierFeaturedData = data.allProjects.slice(1, 3);
 const allOtherProjectData = data.allProjects.slice(3);
 
 let setTextColor = textColor ? textColor : "var(--color-darkpurple)";
+let setBackgroundColor = backgroundColor
+  ? backgroundColor
+  : "var(--primary-light)";
 ---
 
 <div id="project-parent">
@@ -117,14 +120,14 @@ let setTextColor = textColor ? textColor : "var(--color-darkpurple)";
     animate(
       secondaryProjectImage,
       { transform: "scale(1)" },
-      { duration: 1.3 }
+      { duration: 1.13 }
     ),
       animate(
         secondaryProjectHideImage,
         {
           clipPath: "inset(0% 0% 0% 0%)",
         },
-        { duration: 1.7 }
+        { duration: 1.37 }
       );
   });
 
@@ -147,7 +150,10 @@ let setTextColor = textColor ? textColor : "var(--color-darkpurple)";
   });
 </script>
 
-<style lang="scss" define:vars={{ setTextColor }}>
+<style lang="scss" define:vars={{ setTextColor, setBackgroundColor }}>
+  #project-parent {
+    background: var(--setBackgroundColor);
+  }
   .parallax-item,
   .parallax-item2 {
     position: relative;
@@ -180,7 +186,7 @@ let setTextColor = textColor ? textColor : "var(--color-darkpurple)";
     position: relative;
     max-width: max(95vw, var(--max-width));
     margin: 0 auto;
-    padding-bottom: 15rem;
+    padding-bottom: 10rem;
   }
   .project {
     position: relative;
