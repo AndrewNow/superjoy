@@ -11,13 +11,13 @@ const { lqip, images } = Astro.props;
     <span class="word">Partners</span>
   </h3>
   <div class="partner-grid">
-    <!-- {
+    {
       images.map((imageSrc, i) => {
         return (
           <div class="grid-item">
             <Image
               src={lqip[i]}
-              data-src={getSanityImageURL(imageSrc).format("webp").url()}
+              data-src={getSanityImageURL(images[i]).format("webp").url()}
               class="grid-item-image blur-up"
               alt="partner image"
               format="webp"
@@ -29,7 +29,7 @@ const { lqip, images } = Astro.props;
           </div>
         );
       })
-    } -->
+    }
   </div>
 </div>
 
