@@ -1,6 +1,7 @@
 ---
 import { Image } from "@astrojs/image/components";
 import AllOtherProjects from "./allOtherProjects.astro";
+import { getSanityImageURL } from "../../components/utils/helpers.js";
 
 const { data, textColor, backgroundColor } = Astro.props;
 
@@ -32,8 +33,11 @@ let setBackgroundColor = backgroundColor
               <a href={`projects/${featuredProjectData.slug}`}>
                 <Image
                   id="featured-project-image"
-                  class="featured-image"
-                  src={featuredProjectData.imageUrl}
+                  class="featured-image blur-up"
+                  src={featuredProjectData.lqip}
+                  data-src={getSanityImageURL(featuredProjectData.mainImage)
+                    .format("webp")
+                    .url()}
                   width={1920}
                   height={1080}
                   alt={`Featured project - ${featuredProjectData.projectName} `}

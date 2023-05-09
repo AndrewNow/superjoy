@@ -4,6 +4,7 @@ export async function getAllProjects() {
   const query = groq`*[_type == "organizedProjects"][0] {
     allProjects[]-> {
       projectName,
+      mainImage,
       "imageUrl": mainImage.asset->url,
       "lqip": mainImage.asset->metadata.lqip,
       video,
