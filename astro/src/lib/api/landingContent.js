@@ -6,6 +6,7 @@ export async function getLandingContent() {
     mainImage,
     "lqip": mainImage.asset->metadata.lqip,
     description,
+    'partnerImg': partners[],
     "partnerImages": partners[].asset->url,
     "partnerImagesLQIP": partners[].asset->metadata.lqip,
   }`;

@@ -1,6 +1,7 @@
 ---
+import { getSanityImageURL } from "../components/utils/helpers.js";
 import { Image } from "@astrojs/image/components";
-const { partnerImages, lqip } = Astro.props;
+const { lqip, images } = Astro.props;
 ---
 
 <div class="wrapper">
@@ -11,12 +12,12 @@ const { partnerImages, lqip } = Astro.props;
   </h3>
   <div class="partner-grid">
     {
-      partnerImages.map((imageSrc, i) => {
+      images.map((imageSrc, i) => {
         return (
           <div class="grid-item">
             <Image
               src={lqip[i]}
-              data-src={imageSrc}
+              data-src={getSanityImageURL(imageSrc).format("webp").url()}
               class="grid-item-image blur-up"
               alt="partner image"
               format="webp"

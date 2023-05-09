@@ -1,4 +1,5 @@
 ---
+import { getSanityImageURL } from "../../components/utils/helpers.js";
 import { Image } from "@astrojs/image/components";
 const { data, setTextColor } = Astro.props;
 ---
@@ -43,8 +44,7 @@ const { data, setTextColor } = Astro.props;
       data.map((project) => {
         return (
           <Image
-            data-src={project.imageUrl}
-            src={project.lqip}
+            src={getSanityImageURL(project.mainImage).format("webp").url()}
             class="cursor-media-content"
             id={project.code}
             alt="cursor preview image"
