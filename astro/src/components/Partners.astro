@@ -2,6 +2,7 @@
 import { getSanityImageURL } from "../components/utils/helpers.js";
 import { Image } from "@astrojs/image/components";
 const { lqip, images } = Astro.props;
+console.log(getSanityImageURL(images[0]).format("webp").url());
 ---
 
 <div class="wrapper">
@@ -16,9 +17,8 @@ const { lqip, images } = Astro.props;
         return (
           <div class="grid-item">
             <Image
-              src={lqip[i]}
-              data-src={getSanityImageURL(images[i]).format("webp").url()}
-              class="grid-item-image blur-up"
+              src={getSanityImageURL(imageSrc).format("webp").url()}
+              class="grid-item-image"
               alt="partner image"
               format="webp"
               aspectRatio={280 / 130}
