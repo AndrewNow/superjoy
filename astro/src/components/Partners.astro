@@ -2,7 +2,6 @@
 import { getSanityImageURL } from "../components/utils/helpers.js";
 import { Image } from "@astrojs/image/components";
 const { lqip, images } = Astro.props;
-console.log(getSanityImageURL(images[0]).format("webp").url());
 ---
 
 <div class="wrapper">

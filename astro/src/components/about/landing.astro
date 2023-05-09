@@ -85,12 +85,16 @@ import { Image } from "@astrojs/image/components";
   let currentIndex = 0;
   let intervalId = null;
 
+  const container = document.querySelector(".image-container");
+
   function flickImage() {
     currentIndex++;
     if (currentIndex >= images.length) {
+      container.classList.remove("active");
       clearInterval(intervalId);
       image.setAttribute("src", images[images.length - 1]);
     } else {
+      container.classList.add("active");
       const imageUrl = images[currentIndex];
       image.setAttribute("src", imageUrl);
     }
@@ -99,6 +103,7 @@ import { Image } from "@astrojs/image/components";
   setTimeout(() => {
     intervalId = setInterval(flickImage, 100);
   }, 1050);
+
   // animate text etc.
   animate(
     weCreate,
@@ -140,8 +145,43 @@ import { Image } from "@astrojs/image/components";
       );
   });
 </script>
-
 <style lang="scss">
+  @keyframes shake {
+    0% {
+      transform: rotateZ(0) translateX(0) translateY(0);
+    }
+    10% {
+      transform: rotateZ(-10deg) translate(-3px, 14px);
+    }
+    20% {
+      transform: rotateZ(8deg) translate(105px, -52px);
+    }
+    30% {
+      transform: rotateZ(-15deg) translate(-8px, 36px);
+    }
+    40% {
+      transform: rotateZ(12deg) translate(7px, -82px);
+    }
+    50% {
+      transform: rotateZ(-8deg) translate(-5px, 38px);
+    }
+    60% {
+      transform: rotateZ(-5deg) translate(3px, -134px);
+    }
+    70% {
+      transform: rotateZ(-5deg) translate(-2px, 20px);
+    }
+    80% {
+      transform: rotateZ(8deg) translate(4px, -6px);
+    }
+    90% {
+      transform: rotateZ(-12deg) translate(-6px, 4px);
+    }
+    100% {
+      transform: rotateZ(0) translate(0, 0);
+    }
+  }
+
   // initial animation states
   .imaginative-word,
   .worlds-word,
@@ -236,6 +276,10 @@ import { Image } from "@astrojs/image/components";
         width: 100%;
         align-self: flex-end;
         overflow: hidden;
+      }
+      .image-container.active {
+        animation: shake 0.2s linear infinite;
+        animation-delay: 0.2s;
       }
       .image {
         // scale: 1.3;
