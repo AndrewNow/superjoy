@@ -77,11 +77,12 @@ import { getSanityImageURL } from "../../components/utils/helpers.js";
           width={1703}
           height={960}
           src={lqip}
-          data-src={getSanityImageURL(mainImage).format('webp').url()}
+          data-src={getSanityImageURL(mainImage).format("webp").url()}
           alt="landing image blur-up"
           class="hero-image"
           id="hero-image"
           format="webp"
+          quality={95}
         />
       </div>
       <h1 class="title" id="title">Superjoy Studios</h1>
