@@ -11,7 +11,6 @@ import Projects from "../components/projects/projects.astro";
 
 const landingData = await getLandingContent();
 const projectsData = await getAllProjects();
-
 const seo = {
   // title: "Mimotype",
   // description: "Join us in shaping the future of the optoelectronics industry.",
@@ -22,6 +21,7 @@ const seo = {
 <Layout seo={seo}>
   <Loader
     imageSrc={landingData.imageUrl}
+    lqip={landingData.lqip}
     description={landingData.description}
   />
   <div class="scroll-to" id="scrollTo">
@@ -39,7 +39,10 @@ const seo = {
       </svg>
     </span>
   </div>
-  <Partners partnerImages={landingData.partnerImages} />
+  <Partners
+    partnerImages={landingData.partnerImages}
+    lqip={landingData.partnerImagesLQIP}
+  />
   <section id="projectsCarousel">
     <Projects data={projectsData} />
   </section>
@@ -132,6 +135,8 @@ const seo = {
   #letschat {
     background: var(--color-lightpurple);
     overflow-x: hidden;
+    #letschat-blob {
+    }
   }
   .blend-mode {
     color: var(--color-darkpurple);

@@ -76,7 +76,9 @@ const { imageSrc, description } = Astro.props;
           width={1703}
           height={960}
           src={imageSrc}
-          class="hero-image"
+          data-src={imageSrc}
+          alt="landing image"
+          class="hero-image blur-up"
           id="hero-image"
           format="webp"
         />

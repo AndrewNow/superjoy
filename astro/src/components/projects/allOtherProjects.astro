@@ -43,10 +43,10 @@ const { data, setTextColor } = Astro.props;
       data.map((project) => {
         return (
           <Image
+            data-src={project.imageUrl}
+            src={project.lqip}
             class="cursor-media-content"
             id={project.code}
-            data-media-src={project.code}
-            src={project.imageUrl}
             alt="cursor preview image"
             width={350}
             height={350}
@@ -113,6 +113,7 @@ const { data, setTextColor } = Astro.props;
 
         .cursor-media-content {
           position: absolute;
+          object-fit: cover;
         }
       }
       .image-hovered {

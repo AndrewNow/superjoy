@@ -89,6 +89,11 @@ html {
   background-color: var(--primary-light);
 }
 
+.blur-up {
+  filter: blur(20px);
+  transition: filter .3s ease-out;
+}
+
 .lenis.lenis-smooth {
   scroll-behavior: auto;
 }

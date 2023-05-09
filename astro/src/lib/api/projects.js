@@ -26,6 +26,7 @@ export async function getProjectPage() {
     allProjects[]-> {
       projectName,
       "imageUrl": mainImage.asset->url,
+      "lqip": mainImage.asset->metadata.lqip,
       video,
       description,
       gameMode, 
@@ -33,6 +34,7 @@ export async function getProjectPage() {
       date,
       code,
       "additionalImages": imageArray[].asset->url,
+      "additionalImagesLQIP": imageArray[].asset->metadata.lqip,
       "slug": slug.current,
     }
   }`;
