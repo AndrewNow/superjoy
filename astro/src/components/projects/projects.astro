@@ -91,7 +91,11 @@ let setBackgroundColor = backgroundColor
       }
     </div>
     <!-- All other projects -->
-    <AllOtherProjects data={allOtherProjectData} setTextColor={setTextColor} />
+    <AllOtherProjects
+      data={allOtherProjectData}
+      setTextColor={setTextColor}
+      setBackgroundColor={setBackgroundColor}
+    />
   </div>
 </div>
 
@@ -172,6 +176,9 @@ let setBackgroundColor = backgroundColor
     transform: translateY(0%);
   }
   .parallax-item2 {
+    a {
+      cursor: none;
+    }
     transform: translateY(-15%);
     // border: 1px solid red;
   }
@@ -206,6 +213,9 @@ let setBackgroundColor = backgroundColor
       a {
         text-decoration: none;
         color: var(--setTextColor);
+      }
+      a:hover {
+        text-decoration: underline;
       }
       text-transform: uppercase;
       margin: 3rem;

@@ -1,11 +1,11 @@
 ---
 import { getSanityImageURL } from "../../components/utils/helpers.js";
 import { Image } from "@astrojs/image/components";
-const { data, setTextColor } = Astro.props;
+const { data, setTextColor, setBackgroundColor } = Astro.props;
 ---
 
 <div id="container">
-  <h3>More projects</h3>
+  <h3>More Projects</h3>
   {
     data.map((project) => {
       return (
@@ -57,7 +57,7 @@ const { data, setTextColor } = Astro.props;
     }
   </div>
 
-  <style lang="scss" define:vars={{ setTextColor }}>
+  <style lang="scss" define:vars={{ setTextColor, setBackgroundColor }}>
     #container {
       h3 {
         text-align: center;
@@ -75,14 +75,38 @@ const { data, setTextColor } = Astro.props;
       color: var(--setTextColor);
       display: flex;
       justify-content: space-between;
-
+      align-items: center;
+      transition: var(--transition-smooth);
       h5 {
         text-transform: uppercase;
+      }
+      h5,
+      p {
+        position: relative;
+        z-index: 2;
+      }
+
+      &:after {
+        content: "";
+        background: var(--setTextColor);
+        position: absolute;
+        z-index: 0;
+        bottom: 0;
+        width: 100%;
+        height: 0%;
+        left: 0;
+        transition: var(--transition-smooth);
       }
     }
 
     .hover-project-item:last-child {
       border-bottom: 3px solid var(--setTextColor);
+    }
+    .hover-project-item:hover {
+      color: var(--setBackgroundColor);
+      &:after {
+        height: 100%;
+      }
     }
 
     .cursor {
@@ -318,9 +342,12 @@ const { data, setTextColor } = Astro.props;
           // }
           image.addEventListener("mouseenter", () => {
             this.scaleCursor(this.Cursor.children[1], 1);
+            document.body.style.cursor = "none";
+            console.log(document.body.style);
           });
           image.addEventListener("mouseleave", () => {
             this.scaleCursor(this.Cursor.children[1], 0);
+            document.body.style.cursor = "default";
           });
         });
 
