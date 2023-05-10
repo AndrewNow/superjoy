@@ -377,7 +377,6 @@ const { data, setTextColor, setBackgroundColor } = Astro.props;
           image.addEventListener("mouseenter", () => {
             this.scaleCursor(this.Cursor.children[1], 1);
             document.body.style.cursor = "none";
-            console.log(document.body.style);
           });
           image.addEventListener("mouseleave", () => {
             this.scaleCursor(this.Cursor.children[1], 0);

@@ -151,10 +151,17 @@ let setBackgroundColor = backgroundColor
   const item = document.querySelector(".parallax-item");
   const item2 = document.querySelectorAll(".parallax-item2");
 
-  scroll(animate(item, { transform: "translateY(33%)" }), {
-    target: parent,
-    offset: ["0 0", "1 1"],
-  });
+  scroll(
+    ({ y }) => (item.style.transform = `translateY(${y.progress * 33}%)`),
+    {
+      target: parent,
+      offset: ["0 600px", "1 1"],
+    }
+  );
+  // scroll(animate(item, { transform: "translateY(33%)" }), {
+  //   target: parent,
+  //   offset: ["0 0", "1 1"],
+  // });
 
   item2.forEach((item) => {
     scroll(animate(item, { transform: "translateY(20%)" }), {
@@ -170,6 +177,7 @@ let setBackgroundColor = backgroundColor
   }
   .parallax-item,
   .parallax-item2 {
+    will-change: transform;
     position: relative;
     // width: 100%;
     // height: 100%;
