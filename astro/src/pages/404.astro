@@ -144,7 +144,6 @@ import Layout from "../layouts/PageLayout.astro";
 
   setTimeout(() => {
     const duration = videoContainer.duration;
-    console.log(duration);
     const minutes = Math.floor(duration / 60);
     const seconds = Math.floor(duration % 60);
     const formattedDuration = `${minutes.toString().padStart(2, "0")}:${seconds
