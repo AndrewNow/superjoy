@@ -7,7 +7,7 @@ const { textColor, backgroundColor } = Astro.props;
   <div class="flex">
     <div class="flex-item">
       <div class="text-wrapper">
-        <h2>Let's chat</h2>
+        <h2>Let's chat!</h2>
         <p>
           We know this new Metaverse thing can be confusing but won't worry, we
           can help!
@@ -47,6 +47,17 @@ const { textColor, backgroundColor } = Astro.props;
     }
     p {
       width: 60%;
+    }
+  }
+  @media (max-width: 1280px) {
+    .flex {
+      flex-direction: column;
+    }
+    .text-wrapper {
+      margin-bottom: 5rem;
+      p {
+        width: 100%;
+      }
     }
   }
 </style>

@@ -243,6 +243,26 @@ const { textColor, backgroundColor } = Astro.props;
     width: 100%;
     justify-content: space-between;
   }
+
+  @media (max-width: 768px) {
+    .form-group {
+      flex-direction: column;
+
+      label {
+        width: 100%;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      input,
+      textarea {
+        width: 100%;
+      }
+    }
+    .flex-container {
+      padding: 1rem 2rem;
+      border-radius: 25px;
+    }
+  }
 </style>
 
 <script>

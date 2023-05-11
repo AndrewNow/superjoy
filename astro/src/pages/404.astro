@@ -3,11 +3,273 @@ import Layout from "../layouts/PageLayout.astro";
 ---
 
 <Layout>
-  <div class="block"></div>
+  <div class="block">
+    <div class="player-wrapper">
+      <div class="player">
+        <video class="video-container">
+          <source
+            src="https://ftp.f1nalboss.de/data/imgly/videoplayer/testvid.mp4"
+            type="video/mp4"
+          />
+          <source
+            src="https://ftp.f1nalboss.de/data/imgly/videoplayer/testvid.mp4"
+            type="video/webm"
+          />
+          <p>No HTML5 video supported</p>
+        </video>
+        <button class="volume-button" title="Toggle Mute">Unmute</button>
+        <button class="play-button" title="Toggle Play"> ►</button>
+        <div class="controls">
+          <div class="progress">
+            <div class="progress__filled"></div>
+          </div>
+          <div class="playback-times">
+            <div class="total-duration">00:00</div>
+            <div class="current-time"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </Layout>
 
 <style lang="scss">
   .block {
-    height: 50vh;
+    height: 70vh;
+    width: 100%;
+    position: relative;
+  }
+  .player-wrapper {
+    position: relative;
+    margin: 10rem auto;
+    width: 95%;
+    max-width: 750px;
+  }
+  .player {
+    overflow: hidden;
+  }
+  .video-container {
+    width: 100%;
+  }
+  // .{
+  //   // background: none;
+  //   // border: 0;
+  //   // line-height: 1;
+  //   // // color: red;
+  //   // text-align: center;
+  //   // outline: 0;
+  //   // padding: 0;
+  //   // cursor: pointer;
+  //   // max-width: 50px;
+  // }
+  .controls {
+    display: flex;
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translate(-50%, 1px);
+    width: 90%;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    transition: var(--hover-transition);
+    // background: rgba(0, 0, 0, 0.1);
+  }
+  .volume-button {
+    transition: var(--hover-transition);
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 20px;
+    opacity: 0;
+  }
+  .play-button {
+    transition: var(--hover-transition);
+    position: absolute;
+    top: 50px;
+    right: 0;
+    opacity: 1;
+  }
+  .controls > * {
+    flex: 1;
+  }
+  .progress {
+    flex: 10;
+    position: relative;
+    display: flex;
+    flex-basis: 100%;
+    /* background: rgba(0,0,0,0.5); */
+    background: rgba(255, 255, 255, 0.192);
+    backdrop-filter: blur(20px) saturate(120%) brightness(1.35);
+    border-radius: 20px;
+    cursor: pointer;
+    height: 7px;
+    transition: var(--hover-transition);
+    overflow: hidden;
+  }
+  .progress__filled {
+    // border-left-radius: 20px;
+    transition: flex-basis 250ms linear;
+    width: 50%;
+    background: var(--primary-light);
+    flex: 0;
+    flex-basis: 0%;
+  }
+  .playback-times {
+    transition: var(--hover-transition);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    padding-bottom: 0;
+    opacity: 0;
+    .total-duration,
+    .current-time {
+      font-size: 14px;
+      font-family: "Aktiv-Regular";
+      color: white;
+    }
   }
 </style>
+
+<script>
+  const videoContainer = document.querySelector(".video-container");
+  const playBtn = document.querySelector(".play-button");
+  const volumeBtn = document.querySelector(".volume-button");
+  const progress = document.querySelector(".progress");
+  const progressBar = document.querySelector(".progress__filled");
+  const totalDuration = document.querySelector(".total-duration");
+  const setCurrentTime = document.querySelector(".current-time");
+  const controls = document.querySelector(".controls");
+  const playbackTimes = document.querySelector(".playback-times");
+
+  setTimeout(() => {
+    const duration = videoContainer.duration;
+    console.log(duration);
+    const minutes = Math.floor(duration / 60);
+    const seconds = Math.floor(duration % 60);
+    const formattedDuration = `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+    totalDuration.innerHTML = formattedDuration;
+  }, 50);
+
+  function togglePlay() {
+    if (videoContainer.paused || videoContainer.ended) {
+      videoContainer.play();
+    } else {
+      videoContainer.pause();
+    }
+  }
+
+  function updatePlayBtn() {
+    playBtn.innerHTML = videoContainer.paused ? "►" : "❚❚";
+  }
+
+  volumeBtn.addEventListener("click", () => {
+    if (videoContainer.muted) {
+      videoContainer.muted = false;
+      volumeBtn.textContent = "Mute";
+    } else {
+      videoContainer.muted = true;
+      volumeBtn.textContent = "Unmute";
+    }
+  });
+
+  function handleProgress() {
+    const currentTime = videoContainer.currentTime;
+    const duration = videoContainer.duration;
+    const timeLeft = duration - currentTime;
+    const timeLeftFormatted = `-${formatTime(timeLeft)}`;
+
+    const progressPercentage = (currentTime / duration) * 100;
+    progressBar.style.flexBasis = `${progressPercentage}%`;
+
+    setCurrentTime.innerHTML = timeLeftFormatted;
+  }
+
+  function formatTime(time) {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  }
+
+  function jump(e) {
+    const position =
+      (e.offsetX / progress.offsetWidth) * videoContainer.duration;
+    videoContainer.currentTime = position;
+  }
+
+  // change progress size on hover
+  progress.addEventListener("mouseover", () => {
+    progress.style.height = "20px";
+  });
+  progress.addEventListener("mouseleave", () => {
+    progress.style.height = "10px";
+  });
+
+  // when video container is hovered, update UI elements
+  let timeoutId;
+  videoContainer.addEventListener("mouseover", () => {
+    // move out of view
+    controls.style.bottom = "15px";
+    // controls.style.transform = "translate(-50%, -30px)";
+    playbackTimes.style.opacity = "1";
+    volumeBtn.style.opacity = "1";
+  });
+
+  videoContainer.addEventListener("mouseleave", (event) => {
+    timeoutId = setTimeout(() => {
+      if (
+        !controls.contains(event.relatedTarget) ||
+        !volumeBtn.contains(event.relatedTarget)
+      ) {
+        // return in view
+        controls.style.bottom = "-5px";
+        // controls.style.transform = "translate(-50%, 0px)";
+        playbackTimes.style.opacity = "0";
+        volumeBtn.style.opacity = "0";
+      }
+    }, 200);
+  });
+  controls.addEventListener("mouseenter", () => {
+    clearTimeout(timeoutId);
+  });
+  controls.addEventListener("mouseleave", (event) => {
+    timeoutId = setTimeout(() => {
+      if (!videoContainer.contains(event.relatedTarget)) {
+        // return in view
+        controls.style.bottom = "-5px";
+        // controls.style.transform = "translate(-50%, 0px)";
+        playbackTimes.style.opacity = "0";
+        volumeBtn.style.opacity = "0";
+      }
+    }, 200);
+  });
+  volumeBtn.addEventListener("mouseenter", () => {
+    clearTimeout(timeoutId);
+  });
+  volumeBtn.addEventListener("mouseleave", (event) => {
+    timeoutId = setTimeout(() => {
+      if (!videoContainer.contains(event.relatedTarget)) {
+        // return in view
+        controls.style.transform = "translate(-50%, 0px)";
+        playbackTimes.style.opacity = "0";
+        volumeBtn.style.opacity = "0";
+      }
+    }, 200);
+  });
+
+  playBtn.addEventListener("click", togglePlay);
+  videoContainer.addEventListener("click", togglePlay);
+  videoContainer.addEventListener("play", updatePlayBtn);
+  videoContainer.addEventListener("pause", updatePlayBtn);
+  videoContainer.addEventListener("timeupdate", handleProgress);
+
+  let mousedown = false;
+  progress.addEventListener("click", jump);
+  progress.addEventListener("mousedown", () => (mousedown = true));
+  progress.addEventListener("mousemove", (e) => mousedown && jump(e));
+  progress.addEventListener("mouseup", () => (mousedown = false));
+</script>
