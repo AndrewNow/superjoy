@@ -2,7 +2,7 @@
 const { data } = Astro.props;
 import SanityPortableText from "../SanityPortableText.astro";
 import Button from "../Button.astro";
-import AstroHeadbob from "../AstroHeadbob.astro";
+import AstroHeadbobBig from "../AstroHeadbobBig.astro";
 ---
 
 <section id="whoweare-section">
@@ -35,7 +35,9 @@ import AstroHeadbob from "../AstroHeadbob.astro";
       </div>
       <div class="flex-area" data-second-row="true">
         <div class="svg-wrapper">
-          <AstroHeadbob />
+          <span class="logo">
+            <AstroHeadbobBig color={"var(--primary-light)"} />
+          </span>
           <!-- <svg
           width="277"
           height="193"
@@ -207,7 +209,7 @@ import AstroHeadbob from "../AstroHeadbob.astro";
   }
   .svg-wrapper {
     position: relative;
-    svg {
+    .logo {
       width: auto;
       position: absolute;
       bottom: 0;
