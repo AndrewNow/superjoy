@@ -23,7 +23,7 @@ const seo = {
     imageSrc={landingData.imageUrl}
     description={landingData.description}
   />
-  <div class="scroll-to" id="scrollTo">
+  <!-- <div class="scroll-to" id="scrollTo">
     <span class="blend-mode">
       <svg
         width="68"
@@ -37,7 +37,7 @@ const seo = {
           fill="var(--color-darkpurple)"></path>
       </svg>
     </span>
-  </div>
+  </div> -->
   <Partners
     images={landingData.partnerImg}
     lqip={landingData.partnerImagesLQIP}
@@ -78,6 +78,9 @@ const seo = {
 <script>
   // init lenis
   import Lenis from "@studio-freight/lenis";
+  import { interpolate } from "flubber";
+  import { scroll } from "motion";
+
   const lenis = new Lenis({
     lerp: 0.075,
   });
@@ -97,8 +100,6 @@ const seo = {
   });
 
   // letschat blob animation
-  import { interpolate } from "flubber";
-  import { scroll } from "motion";
   const path = document.getElementById("letschat-blob");
   const parent = document.getElementById("letschat");
 

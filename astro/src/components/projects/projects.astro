@@ -17,9 +17,13 @@ let setBackgroundColor = backgroundColor
 
 <div id="project-parent">
   <header class="header">
-    <h3>
-      Our projects <span class="project-count">
-        <h5>{data.allProjects.length}</h5>
+    <h3 id="projectsInView">
+      <span class="word">Our</span>
+      <span class="word"
+        >Projects
+        <span class="project-count">
+          <h5>{data.allProjects.length}</h5>
+        </span>
       </span>
     </h3>
   </header>
@@ -100,13 +104,30 @@ let setBackgroundColor = backgroundColor
 </div>
 
 <script>
-  import { animate, scroll, inView } from "motion";
+  import { animate, scroll, stagger, inView } from "motion";
 
   const featuredProjectInView = document.getElementById("featured-project");
   const featuredProjectHideImage = document.getElementById("hide-featured");
   const featuredProjectImage = document.getElementById(
     "featured-project-image"
   );
+
+  const textInView = document.getElementById("projectsInView");
+  const words = document.querySelectorAll(".word");
+
+  inView(textInView, () => {
+    animate(
+      words,
+      { opacity: 1, transform: "translateY(0px)" },
+      {
+        duration: 0.5,
+        delay: stagger(0.1, {
+          easing: "linear",
+          //  amount: "all"
+        }),
+      }
+    );
+  });
 
   inView(featuredProjectInView, ({ target }) => {
     animate(
@@ -170,6 +191,16 @@ let setBackgroundColor = backgroundColor
 <style lang="scss" define:vars={{ setTextColor, setBackgroundColor }}>
   #project-parent {
     background: var(--setBackgroundColor);
+  }
+  #projectsInView {
+    display: block;
+    overflow: hidden;
+
+    .word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(50px);
+    }
   }
   .parallax-item,
   .parallax-item2 {

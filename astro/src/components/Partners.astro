@@ -12,7 +12,7 @@ const { lqip, images } = Astro.props;
   </h3>
   <div class="partner-grid">
     {
-      images.map((imageSrc, i) => {
+      images.map((imageSrc) => {
         return (
           <div class="grid-item">
             <Image
@@ -46,7 +46,6 @@ const { lqip, images } = Astro.props;
         duration: 0.5,
         delay: stagger(0.1, {
           easing: "linear",
-          //  amount: "all"
         }),
       }
     );
@@ -60,7 +59,6 @@ const { lqip, images } = Astro.props;
       { opacity: 1, transform: "translateY(0px)" },
       {
         duration: 0.5,
-        // amount: "all",
         delay: stagger(0.1, {
           easing: "linear",
           from: "center",
@@ -74,7 +72,7 @@ const { lqip, images } = Astro.props;
   .wrapper {
     width: 100%;
     margin: 10rem auto;
-    margin-bottom: 20rem;
+    margin-bottom: 12rem;
     h3 {
       text-transform: capitalize;
       color: var(--color-darkpurple);
